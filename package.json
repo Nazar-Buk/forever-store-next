@@ -9,13 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.4.1"
+    "@hookform/devtools": "^4.4.0",
+    "@hookform/resolvers": "^5.1.1",
+    "axios": "^1.10.0",
+    "next": "15.4.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-hook-form": "^7.60.0",
+    "react-loader-spinner": "^6.1.6",
+    "react-toastify": "^11.0.5",
+    "sass": "^1.89.2",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
     "eslint": "^9",
-    "eslint-config-next": "15.4.1",
-    "@eslint/eslintrc": "^3"
+    "eslint-config-next": "15.4.1"
   }
 }

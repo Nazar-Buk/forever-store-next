@@ -1,3 +1,5 @@
+// Спільний layout (шапка, футер, meta, стилі)
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
