@@ -1,0 +1,22 @@
+@use "../base/variables" as v;
+
+@media (max-width: 992px) {
+  section.newsletter {
+    .newsletter__container.newsletter-body {
+      h3.newsletter__title {
+      }
+
+      p.newsletter__sub-title {
+      }
+
+      form.input-subscribe {
+        input.email {
+          width: 70%;
+        }
+
+        button.subscribe-btn {
+        }
+      }
+    }
+  }
+}

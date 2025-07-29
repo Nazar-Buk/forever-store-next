@@ -1,0 +1,249 @@
+@use "../base/variables" as v;
+
+section.product-page {
+  section.product__container {
+    .product__box {
+      margin-top: 50px;
+      margin-bottom: 157px;
+      display: flex;
+      gap: 50px;
+
+      .product__images-box {
+        display: flex;
+        gap: 17px;
+
+        .small-images {
+          max-height: 600px;
+          overflow-y: auto;
+          overflow-x: hidden;
+          scrollbar-gutter: stable;
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          min-width: 140px;
+
+          &::-webkit-scrollbar {
+            width: 8px; // Ширина вертикального скролу
+            height: 8px; // Висота горизонтального скролу
+          }
+
+          // Стилізація доріжки (фон під скролом)
+          &::-webkit-scrollbar-track {
+            background-color: #f0f0f0;
+            border-radius: 4px;
+          }
+
+          // Стилізація повзунка (сам скрол)
+          &::-webkit-scrollbar-thumb {
+            background-color: #1d1d1d; // Колір повзунка
+            border-radius: 4px;
+            &:hover {
+              background-color: #555; // Колір при наведенні
+            }
+          }
+
+          // Стилізація кута, де горизонтальний і вертикальний скрол перетинаються
+          &::-webkit-scrollbar-corner {
+            background-color: transparent;
+          }
+
+          /* Стилізація скролу для Firefox */
+          scrollbar-width: thin; /* Варіанти: auto, thin, none */
+          scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.1); /* Повзунок і фон */
+
+          .wrap-small-img {
+            cursor: pointer;
+            width: 140px;
+
+            img {
+              aspect-ratio: 140/160;
+              object-fit: cover;
+            }
+          }
+        }
+
+        .large-image {
+          .wrap-large-img {
+            img {
+              //////////////////////////
+              // щоб збільшити розмір картинки та зробити її адаптивною до картинки треба додати
+              // width: 590px;
+              // max-width: 100%;
+              //////////////////////////
+
+              width: 600px;
+              min-width: 260px;
+              aspect-ratio: 590/680;
+              object-fit: cover;
+            }
+          }
+        }
+
+        .scroll-tip {
+          display: none;
+        }
+      }
+
+      .product__details-box {
+        padding-top: 10px;
+
+        .details__title {
+          color: v.$product-title-color;
+          font-size: v.$product-title-fz;
+          font-weight: v.$product-title-fw;
+          margin-bottom: 23px;
+        }
+
+        .details__rating {
+          margin-bottom: 30px;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+
+          .rating__stars {
+            display: flex;
+            gap: 10px;
+
+            .wrap-star {
+              img {
+                width: 22px;
+                height: 22px;
+              }
+            }
+          }
+
+          .rating__counts {
+            font-weight: 400;
+          }
+        }
+
+        .details__price {
+          margin-bottom: 30px;
+          font-weight: v.$product-price-fw;
+          font-size: v.$product-price-fz;
+          color: v.$product-price-color;
+        }
+
+        p.details__small-desc {
+          max-width: 670px;
+          line-height: 1.75; /* 28/16 */
+          font-size: v.$product-small-desc-fz;
+          font-weight: v.$product-small-desc-fw;
+          color: v.$product-small-desc-color;
+          margin-bottom: 30px;
+        }
+
+        .details__choose-size {
+          p.choose-size__title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #656565;
+            margin-bottom: 30px;
+          }
+
+          .choose-size__items {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 42px;
+
+            .choose-size__item {
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              width: 61px;
+              height: 61px;
+              border: 2px solid #ebebeb;
+              background-color: #fbfbfb;
+              color: #1d1d1d;
+              font-weight: 400;
+
+              &.active {
+                border-color: rgb(255, 153, 0);
+              }
+            }
+          }
+        }
+
+        button.add-to-cart-btn {
+          font-weight: 600;
+        }
+
+        hr {
+          max-width: 500px;
+          margin: 38px 0 20px;
+        }
+
+        .details__policy {
+          p.policy {
+            font-weight: 400;
+            color: #555555;
+            line-height: 1.75; /* 28/16 */
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  section.product__description {
+    padding-bottom: clamp(2.5rem, 0.813rem + 8.44vw, 10.938rem); // 175px
+
+    .description__container {
+      .description__body {
+        .description__title-tab {
+          display: inline-block;
+          font-weight: 700;
+          padding: clamp(0.625rem, 0.45rem + 0.88vw, 1.5rem)
+            clamp(0.938rem, 0.688rem + 1.25vw, 2.188rem); //24px 35px;
+          border-top: v.$product-desc-border;
+          border-left: v.$product-desc-border;
+          border-right: v.$product-desc-border;
+        }
+
+        .description-text-box {
+          padding: clamp(0.313rem, -0.375rem + 3.44vw, 3.75rem)
+            clamp(0.313rem, -0.525rem + 4.19vw, 4.5rem)
+            clamp(0.313rem, -0.813rem + 5.63vw, 5.938rem)
+            clamp(0.313rem, -0.25rem + 2.81vw, 3.125rem); // 60px 72px 95px 50px;
+          border: v.$product-desc-border;
+
+          p.description__text {
+            font-size: 16px;
+            line-height: 1.75; /* 28/16 */
+
+            &:first-child {
+              margin-bottom: 30px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  section.related-products {
+    padding-bottom: clamp(2.5rem, 0.5rem + 10vw, 12.5rem);
+
+    .related-products__container {
+      .wrap-related-products__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .title {
+          margin-bottom: 30px;
+        }
+
+        // hera are cards
+        .product__cards {
+          grid-template-columns: repeat(5, 1fr);
+
+          a.product-card {
+          }
+        }
+      }
+    }
+  }
+}

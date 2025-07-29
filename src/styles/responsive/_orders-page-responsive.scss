@@ -1,0 +1,68 @@
+@use "../base/variables" as v;
+
+@media (max-width: 500px) {
+  section.orders-page {
+    .orders__container {
+      .orders__body {
+        .title {
+        }
+
+        .orders__table {
+          .orders__order {
+            &:first-child {
+            }
+
+            .order__description {
+              .warp-img-description {
+                img {
+                }
+              }
+
+              .description-box {
+                max-width: 322px;
+                width: auto;
+
+                .description__title {
+                }
+
+                .description__info {
+                  .info__price {
+                  }
+
+                  .info__quantity {
+                  }
+
+                  .info__size {
+                  }
+                }
+
+                .wrap-description__date {
+                  .description__date {
+                  }
+
+                  p {
+                  }
+                }
+              }
+            }
+
+            .wrap-status-order-btn-box {
+              .order__status {
+                .status__circle {
+                }
+
+                .status__text {
+                }
+              }
+
+              .order__btn {
+                button.secondary-btn {
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

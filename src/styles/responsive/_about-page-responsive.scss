@@ -1,0 +1,159 @@
+@use "../base/variables" as v;
+
+@media (max-width: 1300px) {
+  section.about-page {
+    .about__container {
+      .about__body {
+        .title {
+          h2 {
+          }
+        }
+
+        .about__info-box {
+          .info__image {
+            flex: 0 0 550px;
+
+            img {
+            }
+          }
+
+          .info__text {
+            margin-top: 0;
+            p {
+            }
+
+            b {
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  section.about-page {
+    .about__container {
+      .about__body {
+        .title {
+          h2 {
+          }
+        }
+
+        .about__info-box {
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+
+          .info__image {
+            flex: none;
+            max-width: 714px;
+
+            img {
+            }
+          }
+
+          .info__text {
+            margin-top: 0;
+            p {
+            }
+
+            b {
+            }
+          }
+        }
+
+        section.choose-us {
+          .title {
+            h2 {
+              text-align: center;
+            }
+          }
+
+          .choose-us__table {
+            grid-template-rows: repeat(3, 385px);
+            grid-template-columns: minmax(300px, 517px);
+            justify-content: center;
+            border: unset;
+
+            .choose-us__table-cell {
+              border: 1px solid v.$border-color;
+
+              &:not(:last-child) {
+              }
+
+              &:nth-child(2) {
+                border-top: none;
+                border-bottom: none;
+              }
+
+              .cell__content {
+                b {
+                }
+
+                p {
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  section.about-page {
+    .about__container {
+      .about__body {
+        .title {
+          h2 {
+          }
+        }
+
+        .about__info-box {
+          .info__image {
+            img {
+            }
+          }
+
+          .info__text {
+            p {
+            }
+
+            b {
+            }
+          }
+        }
+
+        section.choose-us {
+          .title {
+            h2 {
+            }
+          }
+
+          .choose-us__table {
+            .choose-us__table-cell {
+              &:not(:last-child) {
+              }
+
+              &:nth-child(2) {
+              }
+
+              .cell__content {
+                text-align: center;
+                padding: 10px;
+
+                b {
+                }
+
+                p {
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

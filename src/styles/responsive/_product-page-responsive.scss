@@ -1,0 +1,307 @@
+@use "../base/variables" as v;
+
+@media (max-width: 1200px) {
+  section.product-page {
+    section.product__container {
+      .product__box {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .product__images-box {
+          .small-images {
+            .wrap-small-img {
+              cursor: pointer;
+
+              img {
+              }
+            }
+          }
+
+          .large-image {
+            .wrap-large-img {
+              img {
+              }
+            }
+          }
+        }
+
+        .product__details-box {
+          .details__title {
+          }
+
+          .details__rating {
+            .rating__stars {
+              .wrap-star {
+                img {
+                }
+              }
+            }
+
+            .rating__counts {
+            }
+          }
+
+          .details__price {
+          }
+
+          p.details__small-desc {
+          }
+
+          .details__choose-size {
+            p.choose-size__title {
+            }
+
+            .choose-size__items {
+              .choose-size__item {
+                &.active {
+                }
+              }
+            }
+          }
+
+          button.add-to-cart-btn {
+          }
+
+          hr {
+            max-width: 100%;
+          }
+
+          .details__policy {
+            p.policy {
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  section.product-page {
+    section.product__container {
+      .product__box {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .product__images-box {
+          .small-images {
+            .wrap-small-img {
+              cursor: pointer;
+
+              img {
+              }
+            }
+          }
+
+          .large-image {
+            .wrap-large-img {
+              img {
+              }
+            }
+          }
+        }
+
+        .product__details-box {
+          .details__title {
+          }
+
+          .details__rating {
+            .rating__stars {
+              .wrap-star {
+                img {
+                }
+              }
+            }
+
+            .rating__counts {
+            }
+          }
+
+          .details__price {
+          }
+
+          p.details__small-desc {
+          }
+
+          .details__choose-size {
+            p.choose-size__title {
+            }
+
+            .choose-size__items {
+              .choose-size__item {
+                &.active {
+                }
+              }
+            }
+          }
+
+          button.add-to-cart-btn {
+          }
+
+          hr {
+            max-width: 100%;
+          }
+
+          .details__policy {
+            p.policy {
+            }
+          }
+        }
+      }
+    }
+
+    section.related-products {
+      .related-products__container {
+        .wrap-related-products__content {
+          // hera are cards
+          .product__cards {
+            grid-template-columns: repeat(4, 1fr);
+
+            a.product-card {
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  section.product-page {
+    section.related-products {
+      .related-products__container {
+        .wrap-related-products__content {
+          // hera are cards
+          .product__cards {
+            grid-template-columns: repeat(3, 1fr);
+
+            a.product-card {
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  section.product-page {
+    section.product__container {
+      .product__box {
+        .product__images-box {
+          flex-direction: column;
+
+          .small-images {
+            order: 2;
+
+            flex-direction: row;
+            max-width: calc(100svw - (v.$padding-main-container * 2));
+            overflow-x: scroll;
+            scroll-snap-type: inline;
+
+            .wrap-small-img {
+              min-width: 140px;
+
+              img {
+              }
+            }
+          }
+
+          .large-image {
+            order: 1;
+
+            .wrap-large-img {
+              img {
+              }
+            }
+          }
+
+          .scroll-tip {
+            display: flex;
+            order: 3;
+            justify-content: center;
+            align-items: center;
+
+            svg {
+              width: 67px;
+              height: 38px;
+              fill: #868686;
+
+              &.scroll__arrow-left {
+                transform: rotate(180deg);
+              }
+
+              &.scroll__arrow-right {
+              }
+            }
+
+            .tip-text {
+            }
+          }
+        }
+
+        .product__details-box {
+          .details__title {
+          }
+
+          .details__rating {
+            .rating__stars {
+              .wrap-star {
+                img {
+                }
+              }
+            }
+
+            .rating__counts {
+            }
+          }
+
+          .details__price {
+          }
+
+          p.details__small-desc {
+          }
+
+          .details__choose-size {
+            p.choose-size__title {
+            }
+
+            .choose-size__items {
+              .choose-size__item {
+                &.active {
+                }
+              }
+            }
+          }
+
+          button.add-to-cart-btn {
+          }
+
+          hr {
+          }
+
+          .details__policy {
+            p.policy {
+            }
+          }
+        }
+      }
+    }
+
+    section.related-products {
+      .related-products__container {
+        .wrap-related-products__content {
+          // hera are cards
+          .product__cards {
+            grid-template-columns: repeat(2, 1fr);
+
+            a.product-card {
+            }
+          }
+        }
+      }
+    }
+  }
+}

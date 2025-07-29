@@ -1,0 +1,188 @@
+// // _typography.scss
+
+// // Змінні для типографії
+// $font-primary: "Arial, sans-serif";
+// $font-secondary: "Georgia, serif";
+// $font-size-base: 16px;
+// $line-height-base: 1.5;
+// $heading-color: #333;
+// $text-color: #666;
+
+// // Загальні стилі для тексту
+// body {
+//   font-family: $font-primary;
+//   font-size: $font-size-base;
+//   line-height: $line-height-base;
+//   color: $text-color;
+// }
+
+// // Стилі для заголовків
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//   color: $heading-color;
+//   font-family: $font-secondary;
+//   line-height: 1.2;
+//   margin-bottom: 1rem;
+// }
+
+// h1 {
+//   font-size: 2.5rem;
+// }
+// h2 {
+//   font-size: 2rem;
+// }
+// h3 {
+//   font-size: 1.75rem;
+// }
+// h4 {
+//   font-size: 1.5rem;
+// }
+// h5 {
+//   font-size: 1.25rem;
+// }
+// h6 {
+//   font-size: 1rem;
+// }
+
+// // Стилі для параграфів
+// p {
+//   margin-bottom: 1rem;
+// }
+
+// // Стилі для списків
+// ul,
+// ol {
+//   padding-left: 1.5rem;
+//   margin-bottom: 1rem;
+// }
+// li {
+//   line-height: $line-height-base;
+// }
+
+//////////////////////////////////////////
+
+@use "./variables" as v;
+
+// // Загальні стилі для тексту
+body {
+  font-family: v.$font-primary;
+  //   font-size: $font-size-base;
+  //   line-height: $line-height-base;
+  //   color: $text-color;
+}
+
+h2 {
+  font-size: v.$title-font-size;
+  font-weight: v.$title-font-weight;
+  color: v.$title-color;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: v.$newsletter-font-size;
+  font-weight: v.$newsletter-font-weight;
+  color: v.$newsletter-color;
+}
+
+h4 {
+  color: v.$footer-heading-color;
+  font-weight: v.$footer-heading-font-weight;
+  font-size: v.$footer-heading-font-size;
+  line-height: v.$footer-heading-line-height;
+}
+
+h5 {
+  color: v.$h5-color;
+  font-size: v.$h5-font-size;
+  font-weight: v.$h5-font-weight;
+  text-transform: uppercase;
+}
+
+h6 {
+  color: v.$h6-color;
+  font-size: v.$h6-font-size;
+  font-weight: v.$h6-font-weight;
+  text-transform: uppercase;
+}
+
+p {
+  color: v.$paragraph-color;
+  font-size: v.$paragraph-font-size;
+  font-weight: v.$paragraph-font-weight;
+}
+
+button {
+  font-size: v.$btn-font-size;
+  background-color: v.$btn-bg;
+  color: v.$btn-color;
+  font-weight: v.$btn-font-weight;
+  border: v.$btn-border;
+  padding: clamp(0.813rem, 0.713rem + 0.5vw, 1.313rem)
+    clamp(1.25rem, 0.962rem + 1.44vw, 2.688rem); // 21px 43px to 13px 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: v.$btn-hover-bg;
+    color: v.$btn-hover-color;
+  }
+
+  &:disabled,
+  &[disabled] {
+    background-color: v.$secondary-color;
+
+    &:hover {
+      color: v.$btn-color;
+    }
+  }
+
+  &.secondary-btn {
+    font-size: 20px;
+    font-weight: 400;
+    color: #454545;
+    background-color: v.$primary-color;
+    border: 1px solid v.$border-color;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: v.$accent-color;
+      color: v.$primary-color;
+      border: 1px solid v.$accent-color;
+    }
+  }
+}
+
+input {
+  &:focus-visible {
+    border: 1px solid orange !important;
+    outline: none;
+  }
+}
+
+input[type="checkbox"] {
+  border: v.$checkbox-border;
+}
+
+input[type="radio"] {
+  accent-color: green;
+  min-width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+select {
+  font-size: 16px;
+}
+
+.error {
+  color: v.$color-error;
+}
+
+.disabledDiv {
+  pointer-events: none;
+  opacity: 0.5;
+}

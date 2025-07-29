@@ -1,0 +1,87 @@
+@use "../base/variables" as v;
+
+.custom-select {
+  position: relative;
+
+  border: v.$select-border;
+  width: v.$select-width;
+  padding: v.$select-padding;
+
+  margin-bottom: 23px;
+  cursor: pointer;
+
+  .custom-select__checked-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 4px 0;
+  }
+
+  svg.drop-down-arrow {
+    position: absolute;
+    right: calc(v.$select-padding-right / 2 - v.$select-adornment-width / 2);
+    top: calc(50% - v.$select-adornment-width / 2);
+
+    fill: v.$select-adornment-color;
+    stroke: v.$select-adornment-color;
+    width: v.$select-adornment-width;
+  }
+
+  .custom-select__items {
+    position: absolute;
+    top: 100%;
+    left: -1px;
+    z-index: 10;
+
+    width: calc(100% + 2px);
+    border: v.$select-items-border;
+    max-height: 250px;
+    overflow-y: auto;
+    background-color: v.$select-items-bg;
+
+    &::-webkit-scrollbar {
+      width: 8px; // Ширина вертикального скролу
+      height: 8px; // Висота горизонтального скролу
+    }
+
+    // Стилізація доріжки (фон під скролом)
+    &::-webkit-scrollbar-track {
+      background-color: #f0f0f0;
+      border-radius: 4px;
+    }
+
+    // Стилізація повзунка (сам скрол)
+    &::-webkit-scrollbar-thumb {
+      background-color: #1d1d1d; // Колір повзунка
+      border-radius: 4px;
+      &:hover {
+        background-color: #555; // Колір при наведенні
+      }
+    }
+
+    // Стилізація кута, де горизонтальний і вертикальний скрол перетинаються
+    &::-webkit-scrollbar-corner {
+      background-color: transparent;
+    }
+
+    /* Стилізація скролу для Firefox */
+    scrollbar-width: thin; /* Варіанти: auto, thin, none */
+    scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.1); /* Повзунок і фон */
+
+    .custom-select__item {
+      padding: 10px 15px;
+      border-bottom: v.$select-items-border;
+      background-color: v.$select-items-bg;
+      cursor: pointer;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: v.$select-items-bg-hover;
+        color: v.$select-items-color-hover;
+      }
+    }
+  }
+}

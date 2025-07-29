@@ -1,0 +1,16 @@
+@use "./base/index" as base;
+@use "./components/index" as components;
+@use "./pages/index" as pages;
+
+@use "./responsive/index" as responsive;
+
+[class*="__container"] {
+  max-width: 1620px; // 1590px + 15px + 15px
+  margin: 0 auto;
+  // overflow: 0 15px;
+  padding: 0 base.$padding-main-container; // так підключив змінну
+}
+
+body {
+  background-color: #f4f4f9;
+}

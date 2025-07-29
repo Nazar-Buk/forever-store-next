@@ -1,0 +1,41 @@
+@use "../base/variables" as v;
+
+section.error-page {
+  .error__container {
+    .error__body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .error__title {
+        font-size: clamp(0.75rem, 0.65rem + 0.5vw, 1.25rem); // 20px;
+        font-family: v.$font-secondary;
+        font-weight: 700;
+        text-align: center;
+        margin: 50px 0;
+      }
+
+      a {
+        display: flex;
+        margin-bottom: 20px;
+
+        h2 {
+          color: v.$primary-color;
+          background-color: v.$accent-color;
+          padding: 15px;
+          font-size: 16px;
+          font-weight: 500;
+        }
+      }
+
+      .wrap-err-img {
+        max-width: 800px;
+
+        img {
+          max-height: 100%;
+        }
+      }
+    }
+  }
+}

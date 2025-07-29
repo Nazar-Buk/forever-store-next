@@ -1,0 +1,265 @@
+// // Так оголошувати зміні
+// $bg-color-1: rgba(0, 230, 0, 0.616);
+// $color-1: green;
+
+// // Основні кольори (base colors)
+// // Ці кольори складають базову палітру, яка використовуватиметься для створення відтінків і контрастів на сайті:
+// $color-primary: #3498db; // Основний колір сайту
+// $color-secondary: #2ecc71; // Додатковий колір, що підкреслює основний
+// $color-tertiary: #e74c3c; // Третинний колір для особливих акцентів
+// $color-accent: #f1c40f; // Акцентний колір для важливих елементів
+
+// //  Відтінки сірого (grayscale)
+// // Відтінки сірого використовуються для фону, обрамлення і неактивних елементів:
+// $color-white: #ffffff;
+// $color-light-gray: #f7f7f7;
+// $color-gray: #bdc3c7;
+// $color-dark-gray: #2c3e50;
+// $color-black: #000000;
+
+// // Стани і сповіщення (status and alert colors)
+// // Ці кольори підходять для відображення різних станів, таких як успіх, попередження або помилка:
+// $color-success: #27ae60; // Для успішних повідомлень чи індикаторів
+// $color-warning: #f39c12; // Для попереджень
+// $color-error: #e74c3c; // Для помилок
+// $color-info: #3498db; // Для інформативних повідомлень
+
+// // Фон і межі (backgrounds and borders)
+// // Кольори фону можуть бути різноманітними для різних елементів, як от секції, кнопки, навігація тощо:
+// $background-primary: #ecf0f1; // Основний фон
+// $background-secondary: #ffffff; // Фон для карток і контейнерів
+// $border-color: $color-gray; // Колір для рамок
+// $border-color-light: $color-light-gray; // Світлі рамки для поділу елементів
+
+// // Теми (для підтримки світлої та темної тем)
+// // В залежності від обраної теми (світлої або темної), можна змінювати значення цих змінних:
+// $theme-light-bg: #ffffff;
+// $theme-light-text: #333333;
+
+// $theme-dark-bg: #333333;
+// $theme-dark-text: #ffffff;
+
+///////////////////////////////////////////
+
+// ############################ MAIN CONTAINER ############################
+
+$padding-main-container: 15px;
+
+// ############################ END MAIN CONTAINER ############################
+
+// #### FONTS ####
+
+$font-primary: "Outfit", serif;
+$font-secondary: "Poppins", serif;
+$font-tertiary: "Prata", serif;
+
+// #### COLORS ####
+
+$primary-color: #ffffff;
+$secondary-color: #868686;
+$accent-color: #000000;
+
+// extra colors
+$border-color: #adadad;
+$color-error: #e74c3c;
+$color-success: #00a625;
+$pending-color: orange;
+
+$active-color: $pending-color;
+
+// ############################ COMPONENTS ############################
+
+// #### Title ####
+$title-font-size: clamp(1.25rem, 1.063rem + 0.94vw, 2.188rem); // 35px to 20px
+$title-font-weight: 400;
+$title-color: #707070;
+$title-color-dark: #343434;
+$title-line-bg-color: #252525;
+
+// #### Button ####
+
+$btn-color: $primary-color;
+$btn-bg: $accent-color;
+$btn-font-size: 16px;
+$btn-font-weight: 400;
+$btn-border: 1px solid $accent-color;
+
+$btn-hover-color: $accent-color;
+$btn-hover-bg: $primary-color;
+
+// #### Typography ####
+
+$h5-color: #343434;
+$h5-font-size: 25px;
+$h5-font-weight: 400;
+
+$h6-color: #212121;
+$h6-font-size: 16px;
+$h6-font-weight: 600;
+
+// #### Paragraph ####
+$paragraph-color: #868686;
+$paragraph-font-size: clamp(0.938rem, 0.9rem + 0.19vw, 1.125rem); // 18px
+$paragraph-font-weight: 400;
+
+// #### Checkbox ####
+
+$checkbox-border: 1px solid #c1c1c1;
+
+$checkbox-name-color: #272727;
+$checkbox-name-font-size: 16px;
+$checkbox-name-font-weight: 300;
+
+// #### Product Item Card ####
+$product-card-name-font-size: 14px;
+$product-card-name-font-weight: 500;
+$product-card-name-color: #494949;
+
+$product-card-price-font-size: 16px;
+$product-card-price-font-weight: 500;
+$product-card-price-color: #494949;
+
+// #### Custom Select ####
+$select-adornment-width: 14px;
+$select-adornment-color: #cccccc;
+$select-border: 1px solid #cccccc;
+
+$select-padding-right: 35px;
+$select-padding: 10px $select-padding-right 10px 10px;
+$select-width: 250px;
+
+$select-items-border: 1px solid $secondary-color;
+$select-items-bg: $primary-color;
+
+$select-items-bg-hover: $secondary-color;
+$select-items-color-hover: $primary-color;
+
+// ############################ END COMPONENTS ############################
+
+// ############################ HEADER ############################
+
+// #### Navbar ####
+$header-bottom-border: 1px solid $border-color;
+
+$menu-item-font: $font-secondary;
+$menu-item-font-size: 16px;
+$menu-item-font-weight: 500;
+$menu-item-color: #2a2a2a;
+
+// #### Profile Menu ####
+
+$profile-menu-bg: #f8f8f8;
+$profile-menu-item-color: #5b5b5b;
+$profile-menu-item-size: 18px;
+$profile-menu-item-weight: 400;
+
+$profile-menu-item-color-hover: $accent-color;
+
+// #### Counter Header ####
+
+$counter-bg: $accent-color;
+$counter-font-size: 10px;
+$counter-font-weight: 600;
+$counter-font: $font-secondary;
+$counter-color: $primary-color;
+$counter-color-bg-active: $active-color;
+
+// #### Mobile Menu ####
+
+$mobile-menu-bg: $primary-color;
+$mobile-menu-color: $accent-color;
+$mobile-menu-font: $font-secondary;
+$mobile-menu-font-size: 18px;
+$mobile-menu-font-weight: 500;
+
+$mobile-menu-item-bg-active: $accent-color;
+$mobile-menu-item-color-active: $primary-color;
+
+// ############################ HERO ############################
+
+$hero-border-left: 1px solid $border-color;
+$hero-border-right: 1px solid $border-color;
+$hero-border-bottom: 1px solid $border-color;
+
+$hero-title-font: $font-tertiary;
+$hero-title-font-size: 60px;
+$hero-title-font-weight: 400;
+$hero-title-line-height: 1.2;
+$hero-title-color: #414141;
+
+// ############################ LATEST COLLECTIONS CARD ############################
+
+// ############################ OUR POLICY ############################
+
+$our-policy-title-font-weight: 600;
+$our-policy-title-font-size: 18px;
+$our-policy-title-color: #373737;
+
+// ############################ NEWSLETTER ############################
+
+$newsletter-color: #373737;
+$newsletter-font-size: clamp(1.375rem, 1.225rem + 0.75vw, 2.125rem); // 34px
+$newsletter-font-weight: 500;
+
+$newsletter-input-border: 1px solid #c7c7c7;
+
+// ############################ FOOTER ############################
+
+$footer-text-color: #595959;
+$footer-text-font-weight: 400;
+$footer-text-font-size: 18px;
+$footer-text-line-height: 1.66; /* 30px(було в макеті line-height ) / 18px (font-size)  */
+
+$footer-heading-color: #5a5a5a;
+$footer-heading-font-weight: 600;
+$footer-heading-font-size: 22px;
+$footer-heading-line-height: 1.66; /* 30px(було в макеті line-height ) / 18px (font-size)  */
+
+$footer-nav-item-color: $footer-text-color;
+$footer-nav-item-font-weight: 400;
+$footer-nav-item-font-size: 18px;
+$footer-nav-item-line-height: 1.66;
+
+$footer-copyright-border: 1px solid #bdbdbd;
+
+// ############################ SEARCH ############################
+
+$search-bottom-border: $header-bottom-border;
+$search-bg: rgba(134, 134, 134, 0.05);
+$search-border-radius: 25px;
+$search-icon-size: 25px;
+$cross-icon-size: 15px;
+
+// ############################ COLLECTION PAGE ############################
+
+$filter-category-border: 1px solid #c8c8c8;
+$select-sorting-border: 1px solid #c8c8c8;
+$filters-border: 1px solid #c8c8c8;
+$select-sorting-arrow-size: 14px;
+$select-color: $accent-color;
+
+// ############################ END COLLECTION PAGE ############################
+
+// ############################ PRODUCT PAGE ############################
+
+$product-title-fz: 34px; // 34px
+$product-title-fw: 500;
+$product-title-color: #3d3d3d;
+
+$product-price-fz: 32px;
+$product-price-fw: 500;
+$product-price-color: #2a2a2a;
+
+$product-small-desc-fz: 16px;
+$product-small-desc-fw: 400;
+$product-small-desc-color: #555555;
+
+$product-desc-border: 1px solid $border-color;
+
+// ############################ END PRODUCT PAGE ############################
+
+// ############################ CART PAGE ############################
+$border-radius-increase-decrease-btn: 10px;
+$cart-product-count-size: 40px;
+
+// ############################ END CART PAGE ############################

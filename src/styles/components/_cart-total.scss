@@ -1,0 +1,37 @@
+@use "../base/variables" as v;
+
+section.cart-total {
+  .cart-total__body {
+    color: v.$product-small-desc-color;
+    font-weight: 500;
+
+    .title {
+      margin-bottom: clamp(1.25rem, 0.912rem + 1.69vw, 2.938rem); //47px
+    }
+
+    .cart-totals__info {
+      .info__item {
+        padding: 17px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &:not(:last-child) {
+          border-bottom: 1px solid v.$border-color;
+        }
+
+        .info__name {
+          b {
+            font-size: 18px;
+            color: v.$accent-color;
+            font-weight: 700;
+          }
+        }
+
+        .info__price {
+          color: v.$accent-color;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+@use "../base/variables" as v;
+
+section.search {
+  .search__container {
+    .search__body {
+      padding-top: clamp(1.563rem, 1.25rem + 1.56vw, 3.125rem); // 50px
+      padding-bottom: clamp(1.563rem, 1.25rem + 1.56vw, 3.125rem); // 50px
+      border-bottom: v.$search-bottom-border;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: v.$search-bg;
+
+      .wrap-search {
+        position: relative;
+        width: 50%;
+
+        input.search-input {
+          width: 100%;
+          font-size: 18px;
+          padding: 10px 55px 10px 10px;
+
+          border: 2px solid v.$border-color;
+          border-top-right-radius: v.$search-border-radius;
+          border-bottom-right-radius: v.$search-border-radius;
+          border-top-left-radius: v.$search-border-radius;
+          border-bottom-left-radius: v.$search-border-radius;
+
+          &:focus-visible {
+            border: 2px solid orange !important;
+          }
+        }
+        .wrap-search-img {
+          cursor: pointer;
+          position: absolute;
+          width: v.$search-icon-size;
+          height: v.$search-icon-size;
+          top: calc(50% - (v.$search-icon-size / 2));
+          right: 25px;
+
+          img {
+          }
+        }
+      }
+
+      .wrap-close-search-img {
+        cursor: pointer;
+        width: v.$cross-icon-size;
+        height: v.$cross-icon-size;
+        margin-left: 20px;
+
+        img {
+        }
+      }
+    }
+  }
+}

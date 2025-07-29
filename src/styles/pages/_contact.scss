@@ -1,0 +1,57 @@
+@use "../base/variables" as var;
+
+section.contact-page {
+  padding-top: clamp(2.5rem, 1.938rem + 2.81vw, 5.313rem); // 85px
+  padding-bottom: clamp(2.5rem, 1.938rem + 2.81vw, 5.313rem); // 85px
+
+  .contact__container {
+    .contact__body {
+      .title {
+        text-align: center;
+        margin-bottom: clamp(2.5rem, 1.938rem + 2.81vw, 5.313rem); // 85px
+      }
+
+      .contact-content {
+        display: flex;
+        justify-content: center;
+        gap: clamp(1.25rem, 0.875rem + 1.88vw, 3.125rem); // 50px
+
+        .image-box {
+          flex: 0 1 600px;
+
+          img {
+            aspect-ratio: 1/1;
+          }
+        }
+
+        .contact__description {
+          .description__title {
+            margin-top: 50px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #4e4e4e;
+          }
+
+          p {
+            line-height: 1.8;
+            font-weight: 400;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+          }
+
+          a {
+            display: block;
+            color: #6d6d6d;
+            line-height: 1.8;
+            font-size: 18px;
+          }
+
+          button.secondary-btn {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}

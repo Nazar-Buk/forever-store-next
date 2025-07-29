@@ -1,0 +1,100 @@
+@use "../base/variables" as v;
+
+footer.footer {
+  .footer__container.footer__body {
+    color: v.$footer-text-color;
+    font-weight: v.$footer-text-font-weight;
+    font-size: v.$footer-text-font-size;
+    line-height: v.$footer-text-line-height;
+
+    .footer__columns {
+      display: flex;
+      justify-content: space-between;
+      gap: 60px;
+      margin-bottom: clamp(2.5rem, 2.225rem + 1.38vw, 3.875rem); // 62px
+
+      .footer__left-column {
+        &.first-column {
+          a.wrap-footer-logo {
+            display: block;
+            max-width: 166px;
+
+            img {
+              aspect-ratio: 166/47;
+            }
+          }
+
+          p.first-column__text {
+            margin-top: 36px;
+            max-width: 644px;
+          }
+        }
+      }
+
+      .footer__right-column {
+        display: flex;
+        gap: clamp(1.25rem, -19.901rem + 34.11vw, 14rem); // 224px
+        justify-content: space-between;
+        padding-top: 33px;
+
+        h4 {
+          margin-bottom: 40px;
+        }
+
+        .second-column {
+          min-width: 120px;
+
+          nav.second-column__navigation {
+            ul.second-column__menu {
+              li {
+                a.second-column__menu-item {
+                  display: block;
+                  color: v.$footer-nav-item-color;
+                  font-weight: v.$footer-nav-item-font-weight;
+                  font-size: v.$footer-nav-item-font-size;
+                  line-height: v.$footer-nav-item-line-height;
+                  margin-bottom: 25px;
+                }
+              }
+            }
+          }
+        }
+
+        .third-column {
+          a.third-column__phone {
+            display: block;
+            color: v.$footer-nav-item-color;
+            font-weight: v.$footer-nav-item-font-weight;
+            font-size: v.$footer-nav-item-font-size;
+            line-height: v.$footer-nav-item-line-height;
+            margin-bottom: 25px;
+          }
+
+          a.third-column__email {
+            display: block;
+            color: v.$footer-nav-item-color;
+            font-weight: v.$footer-nav-item-font-weight;
+            font-size: v.$footer-nav-item-font-size;
+            line-height: v.$footer-nav-item-line-height;
+            margin-bottom: 25px;
+          }
+        }
+      }
+    }
+  }
+
+  .footer__copyright {
+    .copyright__container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      border-top: v.$footer-copyright-border;
+
+      p.copyright__text {
+        text-align: center;
+      }
+    }
+  }
+}

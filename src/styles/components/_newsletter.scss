@@ -1,0 +1,43 @@
+@use "../base/variables" as v;
+
+section.newsletter {
+  margin-bottom: clamp(2.5rem, -0.313rem + 14.06vw, 16.563rem); // 265px
+  margin-top: clamp(2.5rem, 0.25rem + 11.25vw, 13.75rem); // 220px
+
+  .newsletter__container.newsletter-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h3.newsletter__title {
+    }
+
+    p.newsletter__sub-title {
+      margin-top: 20px;
+      margin-bottom: 46px;
+      text-align: center;
+    }
+
+    form.input-subscribe {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: clamp(3.125rem, 2.323rem + 1.29vw, 3.875rem); // 62px to 50px
+
+      input.email {
+        width: calc(554px * 100% / 1590px);
+        height: 100%;
+        border: v.$newsletter-input-border;
+        padding-left: 20px;
+        padding-right: 20px;
+        font-size: 16px;
+      }
+
+      button.subscribe-btn {
+        height: 100%;
+      }
+    }
+  }
+}

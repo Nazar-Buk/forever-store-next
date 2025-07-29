@@ -1,0 +1,41 @@
+@use "../base/variables" as var;
+
+@media (max-width: 992px) {
+  section.contact-page {
+    .contact__container {
+      .contact__body {
+        .title {
+        }
+
+        .contact-content {
+          flex-direction: column;
+          align-items: center;
+
+          .image-box {
+            flex: none;
+            max-width: 600px;
+
+            img {
+            }
+          }
+
+          .contact__description {
+            text-align: center;
+
+            .description__title {
+            }
+
+            p {
+            }
+
+            a {
+            }
+
+            button.secondary-btn {
+            }
+          }
+        }
+      }
+    }
+  }
+}

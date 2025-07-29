@@ -1,0 +1,6 @@
+@media (max-width: 992px) {
+  // only for small screens, use this class ONLY in .jsx files
+  .sm-ds-none {
+    display: none !important;
+  }
+}

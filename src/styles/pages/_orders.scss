@@ -1,0 +1,128 @@
+@use "../base/variables" as v;
+
+section.orders-page {
+  padding-top: clamp(1.875rem, 0.8rem + 5.38vw, 7.25rem); // 116px
+  padding-bottom: clamp(1.875rem, 0.8rem + 5.38vw, 7.25rem); // 116px
+
+  .orders__container {
+    .orders__body {
+      .title {
+        margin-bottom: clamp(1.25rem, 1rem + 1.25vw, 2.5rem); // 40px
+      }
+
+      .orders__table {
+        .orders__order {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          flex-wrap: wrap;
+          padding-top: 22px;
+          padding-bottom: 25px;
+          border-bottom: 1px solid v.$border-color;
+
+          &:first-child {
+            border-top: 1px solid v.$border-color;
+          }
+
+          .order__description {
+            display: flex;
+            margin-right: clamp(0rem, -9.375rem + 18.75vw, 13.125rem); // 210px
+
+            .warp-img-description {
+              img {
+                width: 114px;
+                height: 131px;
+                object-fit: cover;
+                max-width: none;
+              }
+            }
+
+            .description-box {
+              width: 322px;
+              margin-left: 25px;
+              color: #494949;
+
+              .description__title {
+                margin-top: clamp(0rem, -0.22rem + 0.7vw, 0.625rem); // 10px
+                font-weight: 500;
+                font-size: clamp(1.063rem, 1.025rem + 0.19vw, 1.25rem); // 20px
+              }
+
+              .description__info {
+                margin-top: 20px;
+                display: flex;
+                gap: 18px;
+                align-items: center;
+                flex-wrap: wrap;
+
+                .info__price {
+                  font-weight: 300;
+                  font-size: clamp(1.125rem, 1.05rem + 0.38vw, 1.5rem); // 24px
+                }
+
+                .info__quantity {
+                  font-weight: 400;
+                  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem); // 20px
+                }
+
+                .info__size {
+                  font-weight: 400;
+                  font-size: clamp(1.125rem, 1.1rem + 0.13vw, 1.25rem); // 20px
+                }
+              }
+
+              .wrap-description__date {
+                display: flex;
+                align-items: center;
+                margin-top: clamp(0.875rem, 0.7rem + 0.88vw, 1.75rem); // 28px
+                font-size: clamp(1rem, 0.975rem + 0.13vw, 1.125rem); // 18px
+                font-weight: 400;
+
+                .description__date {
+                  margin-right: 4px;
+                }
+
+                p {
+                  font-size: clamp(1rem, 0.975rem + 0.13vw, 1.125rem); // 18px
+                }
+              }
+            }
+          }
+
+          .wrap-status-order-btn-box {
+            display: flex;
+            gap: 20px;
+            flex-grow: 1;
+
+            .order__status {
+              display: flex;
+              align-items: center;
+              gap: 6px;
+
+              .status__circle {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background-color: v.$color-success;
+              }
+
+              .status__text {
+                color: #454554;
+                font-weight: 400;
+                font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem); // 20px
+              }
+            }
+
+            .order__btn {
+              margin-left: auto;
+
+              button.secondary-btn {
+                font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem); // 20px
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

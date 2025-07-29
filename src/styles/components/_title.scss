@@ -1,0 +1,24 @@
+@use "../base/variables" as v;
+
+.title {
+  h2 {
+    span {
+      position: relative;
+      padding-right: clamp(3.75rem, 3.375rem + 0.83vw, 4.375rem); // 70px
+      display: inline-block;
+      font-weight: 600;
+      color: v.$title-color-dark;
+
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: calc(50% - 1px);
+        display: block;
+        width: 50px;
+        height: 2px;
+        background-color: v.$title-line-bg-color;
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@use "../base/variables" as v;
+
+@media (max-width: 768px) {
+  section.search {
+    .search__container {
+      .search__body {
+        .wrap-search {
+          width: 80%;
+
+          input.search-input {
+            &:focus-visible {
+            }
+          }
+          .wrap-search-img {
+            img {
+            }
+          }
+        }
+
+        .wrap-close-search-img {
+          img {
+          }
+        }
+      }
+    }
+  }
+}
