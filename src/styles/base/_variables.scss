@@ -48,10 +48,10 @@ $padding-main-container: 15px;
 // ############################ END MAIN CONTAINER ############################
 
 // #### FONTS ####
-
-$font-primary: "Outfit", serif;
-$font-secondary: "Poppins", serif;
-$font-tertiary: "Prata", serif;
+// я назвав їх у layout.js, а тут закоментував
+// $font-primary: "Outfit", serif;
+// $font-secondary: "Poppins", serif;
+// $font-tertiary: "Prata", serif;
 
 // #### COLORS ####
 
@@ -141,7 +141,7 @@ $select-items-color-hover: $primary-color;
 // #### Navbar ####
 $header-bottom-border: 1px solid $border-color;
 
-$menu-item-font: $font-secondary;
+$menu-item-font: var(--font-secondary);
 $menu-item-font-size: 16px;
 $menu-item-font-weight: 500;
 $menu-item-color: #2a2a2a;
@@ -160,7 +160,7 @@ $profile-menu-item-color-hover: $accent-color;
 $counter-bg: $accent-color;
 $counter-font-size: 10px;
 $counter-font-weight: 600;
-$counter-font: $font-secondary;
+$counter-font: var(--font-secondar) y;
 $counter-color: $primary-color;
 $counter-color-bg-active: $active-color;
 
@@ -168,7 +168,7 @@ $counter-color-bg-active: $active-color;
 
 $mobile-menu-bg: $primary-color;
 $mobile-menu-color: $accent-color;
-$mobile-menu-font: $font-secondary;
+$mobile-menu-font: var(--font-secondar) y;
 $mobile-menu-font-size: 18px;
 $mobile-menu-font-weight: 500;
 
@@ -181,7 +181,7 @@ $hero-border-left: 1px solid $border-color;
 $hero-border-right: 1px solid $border-color;
 $hero-border-bottom: 1px solid $border-color;
 
-$hero-title-font: $font-tertiary;
+$hero-title-font: var(--font-tertiary);
 $hero-title-font-size: 60px;
 $hero-title-font-weight: 400;
 $hero-title-line-height: 1.2;

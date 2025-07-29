@@ -14,7 +14,7 @@ section.login-page {
       .title {
         h2 {
           span {
-            font-family: v.$font-tertiary;
+            font-family: var(--font-tertiary);
             font-size: 40px;
             font-weight: 400;
             line-height: 3; /* 120/40 */
