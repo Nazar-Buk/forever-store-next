@@ -1,18 +1,11 @@
 // Спільний layout (шапка, футер, meta, стилі)
+// children -- це всі сторінки, вони сюди тягнуться
 
 import { Geist, Geist_Mono, Outfit, Poppins, Prata } from "next/font/google";
-// import "./globals.css";
-import "../styles/main.scss";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import "../styles/main.scss"; // підключив стилі до всього застосунку
+import ShopContext from "../context/ShopContext";
+// import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -47,7 +40,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${outfit.variable} ${poppins.variable} ${prata.variable}`}
       >
-        {children}
+        <ShopContext>
+          {/* <Navbar /> */}
+          <main>{children}</main>
+          <Footer />
+        </ShopContext>
       </body>
     </html>
   );
