@@ -4,7 +4,7 @@
 import { Geist, Geist_Mono, Outfit, Poppins, Prata } from "next/font/google";
 import "../styles/main.scss"; // підключив стилі до всього застосунку
 import ShopContext from "../context/ShopContext";
-// import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const outfit = Outfit({
@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
         className={`${outfit.variable} ${poppins.variable} ${prata.variable}`}
       >
         <ShopContext>
-          {/* <Navbar /> */}
+          <Navbar />
           <main>{children}</main>
           <Footer />
         </ShopContext>

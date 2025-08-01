@@ -1,18 +1,20 @@
 "use client";
 
 import { useContext, useState, useEffect } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 import { assets } from "../../public/assets/assets";
 import { ShopContext } from "../context/ShopContext";
+import NavItem from "../components/NavItem";
 // import Loader from "./Loader";
 
 export default function Header() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const adminPanelUrl = import.meta.env.VITE_ADMIN_PANEL_URL;
+  const pathName = usePathname();
+  const router = useRouter();
+  const adminPanelUrl = process.env.NEXT_PUBLIC_ADMIN_PANEL_URL;
 
   const [visible, setVisible] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -76,7 +78,7 @@ export default function Header() {
       if (response.data.success) {
         // console.log(response, "response Logout");
         setIsLoading(false);
-        navigate("/login");
+        router.push("/login");
         toast.success(response.data.message);
       } else {
         setIsLoading(false);
@@ -92,38 +94,38 @@ export default function Header() {
   return (
     <header className="header__container">
       <div className="header__content">
-        <Link to="/" className="header__logo">
+        <Link href="/" className="header__logo">
           <img src={assets.logo} alt="logo" />
         </Link>
         <nav>
           <ul className="header__menu">
             <li>
-              <NavLink to="/" className="menu__item">
+              <NavItem href="/" customClass={"menu__item"}>
                 <p>HOME</p>
-              </NavLink>
+              </NavItem>
             </li>
             <li>
-              <NavLink to="/collection" className="menu__item">
+              <NavItem href="/collection" customClass={"menu__item"}>
                 <p>COLLECTION</p>
-              </NavLink>
+              </NavItem>
             </li>
             <li>
-              <NavLink to="/about-us" className="menu__item">
+              <NavItem href="/about-us" customClass={"menu__item"}>
                 <p>ABOUT</p>
-              </NavLink>
+              </NavItem>
             </li>
             <li>
-              <NavLink to="/contact" className="menu__item">
+              <NavItem href="/contact" customClass={"menu__item"}>
                 <p>CONTACT</p>
-              </NavLink>
+              </NavItem>
             </li>
           </ul>
         </nav>
         <div className="header__action-bar">
           <div
             onClick={() => {
-              if (location.pathname !== "/collection") {
-                navigate("/collection");
+              if (pathName !== "/collection") {
+                router.push("/collection");
               }
 
               setShowSearch(true);
@@ -133,7 +135,7 @@ export default function Header() {
             <img src={assets.search_icon} alt="search" />
           </div>
           <div className="wrap-icon profile">
-            <Link to="/login">
+            <Link href="/login">
               <img src={assets.profile_icon} alt="profile-icon" />
             </Link>
             <div className="profile__menu">
@@ -142,7 +144,7 @@ export default function Header() {
               {isAuthenticated && (
                 <p
                   className="profile__item"
-                  // onclick={() => navigate(adminPanelUrl)}
+                  onclick={() => router.push(adminPanelUrl)}
                 >
                   <a href={adminPanelUrl}>Admin Panel</a>
                 </p>
@@ -153,12 +155,12 @@ export default function Header() {
                 </p>
               ) : (
                 <p className="profile__item">
-                  <Link to="/login">Login</Link>
+                  <Link href="/login">Login</Link>
                 </p>
               )}
             </div>
           </div>
-          <Link to="/cart" className="wrap-icon cart-icon">
+          <Link href="/cart" className="wrap-icon cart-icon">
             <img src={assets.cart_icon} alt="shopping cart" />
             <p className={`${cartTotalCount && "active"}`}>{cartTotalCount}</p>
           </Link>
@@ -217,24 +219,24 @@ export default function Header() {
           <nav>
             <ul onClick={() => isOpenMobileMenu(false)} className="mobile-menu">
               <li>
-                <NavLink to="/" className="mobile-menu__item">
+                <NavItem href="/" customClass={"mobile-menu__item"}>
                   <p>HOME</p>
-                </NavLink>
+                </NavItem>
               </li>
               <li>
-                <NavLink to="/collection" className="mobile-menu__item">
+                <NavItem href="/collection" customClass={"mobile-menu__item"}>
                   <p>COLLECTION</p>
-                </NavLink>
+                </NavItem>
               </li>
               <li>
-                <NavLink to="/about-us" className="mobile-menu__item">
+                <NavItem href="/about-us" customClass={"mobile-menu__item"}>
                   <p>ABOUT</p>
-                </NavLink>
+                </NavItem>
               </li>
               <li>
-                <NavLink to="/contact" className="mobile-menu__item">
+                <NavItem href="/contact" customClass={"mobile-menu__item"}>
                   <p>CONTACT</p>
-                </NavLink>
+                </NavItem>
               </li>
             </ul>
           </nav>
@@ -302,7 +304,7 @@ export default function Header() {
                 setShowSearch(true);
                 isOpenMobileMenu(false);
               }}
-              to="/collection"
+              href="/collection"
               className="search"
             >
               <div className="wrap-icon">
@@ -312,7 +314,7 @@ export default function Header() {
             </Link>
 
             <Link
-              to="/cart"
+              href="/cart"
               className="cart"
               onClick={() => isOpenMobileMenu(false)}
             >
