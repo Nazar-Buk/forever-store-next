@@ -3,9 +3,10 @@
 
 import { Geist, Geist_Mono, Outfit, Poppins, Prata } from "next/font/google";
 import "../styles/main.scss"; // підключив стилі до всього застосунку
-import ShopContext from "../context/ShopContext";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import ShopContext from "@/context/ShopContext";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import RemoveInitialLoader from "@/components/RemoveInitialLoader";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -40,6 +41,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${outfit.variable} ${poppins.variable} ${prata.variable}`}
       >
+        <div id="loader">
+          <div className="spinner"></div>
+        </div>
+        <RemoveInitialLoader />
         <ShopContext>
           <Navbar />
           <main>{children}</main>

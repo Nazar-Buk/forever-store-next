@@ -2,102 +2,90 @@
 
 // import Image from "next/image";
 // import styles from "./page.module.css";
+import axios from "axios";
 
-export default function Home() {
+import Hero from "@/components/Hero";
+import OurPolicy from "@/components/OurPolicy";
+import Newsletter from "@/components/Newsletter";
+import BestSeller from "@/components/BestSeller";
+import LatestCollections from "@/components/LatestCollections";
+
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+// console.log(backendUrl, "backendUrl from home");
+
+const getBestsellers = async () => {
+  try {
+    const response = await axios.get(backendUrl + "/api/product/bestsellers");
+    // console.dir(response.data, { depth: null, colors: true }); // щоб побачити все що треба в консолі
+
+    if (response.data.success) {
+      return {
+        data: response.data.bestsellersForSection || [],
+        error: null,
+      };
+    } else {
+      throw new Error(response.data.message || "Something went wrong!");
+    }
+  } catch (error) {
+    console.log(error.message || "Something went wrong!");
+    return {
+      data: [],
+      error: error.message || "Something went wrong!",
+    };
+  }
+};
+
+const getLatestProducts = async () => {
+  try {
+    const response = await axios.get(
+      backendUrl + "/api/product/latest-products"
+    );
+
+    if (response.data.success) {
+      return {
+        data: response.data.latestProductsForSection || [],
+        error: null,
+      };
+    } else {
+      throw new Error(response?.data?.message || "Something went wrong!");
+    }
+  } catch (error) {
+    console.log(error.message || "Something went wrong!");
+    return {
+      data: [],
+      error: error.message || "Something went wrong!",
+    };
+  }
+};
+
+export default async function Home() {
+  const { data: bestsellers, error: bestsellersError } = await getBestsellers(); // тут я поклав data у константу bestsellers, error поклав у константу bestsellersError
+  // console.dir(bestsellers, { depth: null, colors: true });
+  // console.log("bestsellers ======");
+  // console.dir(bestsellersError, { depth: null, colors: true });
+  // console.log("bestsellersError ======");
+
+  const { data: latestProducts, error: latestProductsError } =
+    await getLatestProducts();
+
+  // console.dir(latestProducts, { depth: null, colors: true });
+  // console.log("latestProducts ======");
+  // console.dir(latestProductsError, { depth: null, colors: true });
+  // console.log("latestProductsError ======");
+
   return (
-    // <div className={styles.page}>
-    //   <main className={styles.main}>
-    //     <Image
-    //       className={styles.logo}
-    //       src="/next.svg"
-    //       alt="Next.js logo"
-    //       width={180}
-    //       height={38}
-    //       priority
-    //     />
-    //     <ol>
-    //       <li>
-    //         Get started by editing дфдфдф <code>src/app/page.js</code>.
-    //       </li>
-    //       <li>Save and see your changes instantly. Nazar</li>
-    //     </ol>
-
-    //     <div className={styles.ctas}>
-    //       <a
-    //         className={styles.primary}
-    //         href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-    //         target="_blank"
-    //         rel="noopener noreferrer"
-    //       >
-    //         <Image
-    //           className={styles.logo}
-    //           src="/vercel.svg"
-    //           alt="Vercel logomark"
-    //           width={20}
-    //           height={20}
-    //         />
-    //         Deploy now
-    //       </a>
-    //       <a
-    //         href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-    //         target="_blank"
-    //         rel="noopener noreferrer"
-    //         className={styles.secondary}
-    //       >
-    //         Read our docs
-    //       </a>
-    //     </div>
-    //   </main>
-    //   <footer className={styles.footer}>
-    //     <a
-    //       href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       <Image
-    //         aria-hidden
-    //         src="/file.svg"
-    //         alt="File icon"
-    //         width={16}
-    //         height={16}
-    //       />
-    //       Learn
-    //     </a>
-    //     <a
-    //       href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       <Image
-    //         aria-hidden
-    //         src="/window.svg"
-    //         alt="Window icon"
-    //         width={16}
-    //         height={16}
-    //       />
-    //       Examples
-    //     </a>
-    //     <a
-    //       href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       <Image
-    //         aria-hidden
-    //         src="/globe.svg"
-    //         alt="Globe icon"
-    //         width={16}
-    //         height={16}
-    //       />
-    //       Go to nextjs.org →
-    //     </a>
-    //   </footer>
-    // </div>
-    <div>
-      <h1>Home Page</h1>
-      <p>Welcome to the home page of our Next.js application!</p>
-      <p>Explore the features and functionalities we offer.</p>
-      jhjhbj
+    <div className="home-page">
+      <Hero />
+      <LatestCollections
+        latestProducts={latestProducts}
+        latestProductsError={latestProductsError}
+      />
+      <BestSeller
+        bestsellers={bestsellers}
+        bestsellersError={bestsellersError}
+      />
+      <OurPolicy />
+      <Newsletter />
     </div>
   );
 }

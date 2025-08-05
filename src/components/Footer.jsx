@@ -1,4 +1,3 @@
-"use client";
 import Link from "next/link";
 
 import { assets } from "../../public/assets/assets";
