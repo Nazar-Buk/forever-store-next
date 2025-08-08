@@ -3,12 +3,11 @@
 import { useContext } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 import { ShopContext } from "@/context/ShopContext";
 
 const ProductItem = ({ id, images, price, name, setSize }) => {
-  const params = useParams();
-  console.log(params, "params from prodict item");
   const { productId } = useParams(); // потім треба буде коли буде бек і база даних
   const { currency } = useContext(ShopContext);
 

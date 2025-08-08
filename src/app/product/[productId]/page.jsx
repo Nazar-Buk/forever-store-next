@@ -9,8 +9,9 @@ import ClientProduct from "./ClientProduct"; // компонент, який б�
 export default async function Product({ params }) {
   //   const params = useParams();
   const { productId } = await params;
-  console.log(productId, "productId");
-  console.log("laallalala");
+
+  // console.log("===================");
+  // console.dir(params, { depth: null, colors: true });
 
   return (
     <>

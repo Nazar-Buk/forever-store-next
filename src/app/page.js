@@ -60,18 +60,9 @@ const getLatestProducts = async () => {
 
 export default async function Home() {
   const { data: bestsellers, error: bestsellersError } = await getBestsellers(); // тут я поклав data у константу bestsellers, error поклав у константу bestsellersError
-  // console.dir(bestsellers, { depth: null, colors: true });
-  // console.log("bestsellers ======");
-  // console.dir(bestsellersError, { depth: null, colors: true });
-  // console.log("bestsellersError ======");
 
   const { data: latestProducts, error: latestProductsError } =
     await getLatestProducts();
-
-  // console.dir(latestProducts, { depth: null, colors: true });
-  // console.log("latestProducts ======");
-  // console.dir(latestProductsError, { depth: null, colors: true });
-  // console.log("latestProductsError ======");
 
   return (
     <div className="home-page">

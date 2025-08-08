@@ -1,9 +1,13 @@
 import Title from "./Title";
 import ProductItem from "./ProductItem";
+import ToastSSRMessage from "@/utils/toastSSRMessage";
 
 const BestSeller = ({ bestsellers, bestsellersError }) => {
   return (
     <section className="best-sellers">
+      {bestsellersError && (
+        <ToastSSRMessage message={bestsellersError} type="error" />
+      )}
       <div className="best-sellers__container">
         <div className="wrap-best-sellers__content">
           <Title text1="Best " text2="Seller" />

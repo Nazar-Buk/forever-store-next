@@ -1,9 +1,13 @@
 import Title from "./Title";
 import ProductItem from "./ProductItem";
+import ToastSSRMessage from "@/utils/ToastSSRMessage";
 
-const LatestCollections = ({ latestProducts }) => {
+const LatestCollections = ({ latestProducts, latestProductsError }) => {
   return (
     <section className="latest-collection">
+      {latestProductsError && (
+        <ToastSSRMessage message={latestProductsError} type="error" />
+      )}
       <div className="latest-collection__container">
         <div className="wrap-latest-collection__content">
           <Title text1="Latest " text2="Collections" />
