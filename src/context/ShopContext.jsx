@@ -206,6 +206,8 @@ const ShopContextProvider = (props) => {
     getProductsData();
   }, []);
 
+  const [checkedSize, setChekedSize] = useState("");
+
   const value = {
     products,
     currency,
@@ -226,6 +228,8 @@ const ShopContextProvider = (props) => {
     isLoading,
     setIsLoading,
     // isAuthenticated,
+    checkedSize,
+    setChekedSize,
   };
 
   return (

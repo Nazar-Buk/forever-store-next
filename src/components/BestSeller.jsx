@@ -1,6 +1,6 @@
 import Title from "./Title";
 import ProductItem from "./ProductItem";
-import ToastSSRMessage from "@/utils/toastSSRMessage";
+import ToastSSRMessage from "@/utils/ToastSSRMessage";
 
 const BestSeller = ({ bestsellers, bestsellersError }) => {
   return (

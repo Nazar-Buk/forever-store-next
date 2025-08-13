@@ -1,24 +1,81 @@
 // Самі сторінки треба робити переважно ssr,
 // а от компоненти вже можуть піддаватися гідрації та використовувати реакт через "use client"
 
-// "use client";
-// import { useParams } from "next/navigation"; // парцює коли є "use client";
+import axios from "axios";
 
 import ClientProduct from "./ClientProduct"; // компонент, який буде гідратуватися на клієнті
 
-export default async function Product({ params }) {
-  //   const params = useParams();
-  const { productId } = await params;
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-  // console.log("===================");
-  // console.dir(params, { depth: null, colors: true });
+const fetchProductData = async (productId) => {
+  try {
+    const response = await axios.post(backendUrl + "/api/product/single", {
+      productId,
+      // productId: "67f50cbae3550da216e4c393",
+    });
+
+    if (response.data.success) {
+      return { data: response.data.product, error: null };
+    } else {
+      throw new Error(response.data.message);
+    }
+  } catch (error) {
+    console.log(error, "error");
+    return {
+      data: {},
+      error: error?.response?.data?.message || error?.message,
+    };
+  }
+};
+
+const getRelatedProducts = async (productData) => {
+  try {
+    const response = await axios.post(backendUrl + "/api/product/related", {
+      category: productData?.category,
+      subCategory: productData?.subCategory,
+      productId: productData?._id,
+    });
+
+    if (response.data.success) {
+      return {
+        data: response.data.relatedProductsForSection,
+        error: null,
+      };
+    } else {
+      throw new Error(response.data.message);
+    }
+  } catch (error) {
+    console.log(error, "error");
+
+    return {
+      data: [],
+      error: error.response?.data?.message || "Something went wrong!",
+    };
+  }
+};
+
+export default async function Product({ params }) {
+  const { productId } = await params;
+  const { data: productData, error: productError } = await fetchProductData(
+    productId
+  );
+
+  const { data: relatedProducts, error: relatedProductsError } =
+    await getRelatedProducts(productData);
+
+  // console.log("=========error start==========");
+  // console.dir(relatedProductsError, { depth: null, colors: true });
+  // console.log("==========error end=========");
 
   return (
     <>
-      <h1>Product page</h1>
-      <p>{productId}</p>
-      <hr />
-      <ClientProduct />
+      <ClientProduct
+        initialProductData={productData}
+        productError={productError}
+        productId={productId}
+        relatedProducts={relatedProducts}
+        relatedProductsError={relatedProductsError}
+      />
     </>
   );
 }
