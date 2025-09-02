@@ -9,6 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RemoveInitialLoader from "@/components/RemoveInitialLoader";
 import ToastProvider from "@/utils/ToastProvider";
+import SearchBar from "@/components/SearchBar";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -50,6 +51,7 @@ export default function RootLayout({ children }) {
         <RemoveInitialLoader />
         <ShopContext>
           <Navbar />
+          <SearchBar />
           <main>{children}</main>
           <Footer />
         </ShopContext>

@@ -5,11 +5,12 @@ import { usePathname } from "next/navigation";
 
 export default function NavItem({ href, customClass, children }) {
   const pathName = usePathname();
+  const linkPath = typeof href === "string" ? href : href.pathname;
 
   return (
     <Link
       href={href}
-      className={`${pathName === href ? "active" : ""} ${customClass}`}
+      className={`${pathName === linkPath ? "active" : ""} ${customClass}`}
     >
       {children}
     </Link>

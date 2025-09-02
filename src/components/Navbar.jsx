@@ -105,7 +105,22 @@ export default function Header() {
               </NavItem>
             </li>
             <li>
-              <NavItem href="/collection" customClass={"menu__item"}>
+              <NavItem
+                href={{
+                  pathname: "/collection",
+                  query: {
+                    page: 1,
+                    limit: 10,
+                    category: "",
+                    subCategory: "",
+                    priceFrom: "",
+                    priceTo: "",
+                    sort: "date_new",
+                    search: "",
+                  },
+                }}
+                customClass={"menu__item"}
+              >
                 <p>COLLECTION</p>
               </NavItem>
             </li>

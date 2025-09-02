@@ -2,6 +2,7 @@
 
 import { createContext, useEffect, useState } from "react";
 // import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -11,8 +12,15 @@ export const ShopContext = createContext(); // створюємо контекс
 
 const ShopContextProvider = (props) => {
   // const [searchParams, setSearchParams] = useSearchParams(); // ця шляпа вміє працювати із адресною строкою
+  const searchParams = useSearchParams(); // ця шляпа вміє працювати із адресною строкою
 
-  // const [search, setSearch] = useState(searchParams.get("search") || "");
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const param = searchParams.get("search");
+    setSearch(param || "");
+  }, [searchParams]);
+
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
   const [products, setProducts] = useState([]);
@@ -212,8 +220,8 @@ const ShopContextProvider = (props) => {
     products,
     currency,
     delivery_fee,
-    // search,
-    // setSearch,
+    search,
+    setSearch,
     showSearch,
     setShowSearch,
     cartItems,
