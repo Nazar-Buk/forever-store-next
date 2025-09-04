@@ -66,6 +66,10 @@ const PlaceOrder = () => {
 
   const onSubmit = (data) => {
     console.log(data, "Form Submitted!");
+
+    if (isDirty && isValid && !isSubmitting) {
+      router.push("/orders");
+    }
   };
 
   return (
@@ -230,11 +234,11 @@ const PlaceOrder = () => {
               </div>
             </div>
             <button
-              onClick={() => {
-                if (isDirty && isValid && !isSubmitting) {
-                  router.push("/orders");
-                }
-              }}
+              // onClick={() => {
+              //   if (isDirty && isValid && !isSubmitting) {
+              //     router.push("/orders");
+              //   }
+              // }}
               disabled={isSubmitting}
               type="submit"
             >
