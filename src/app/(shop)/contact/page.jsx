@@ -1,6 +1,6 @@
 import Title from "@/components/Title";
 import Newsletter from "@/components/Newsletter";
-import { assets } from "../../../public/assets/assets";
+import { assets } from "../../../../public/assets/assets";
 
 export default async function Contact() {
   return (

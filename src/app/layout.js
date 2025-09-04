@@ -5,11 +5,9 @@ import { Geist, Geist_Mono, Outfit, Poppins, Prata } from "next/font/google";
 import "../styles/main.scss"; // підключив стилі до всього застосунку
 
 import ShopContext from "@/context/ShopContext";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import NetworkStatus from "@/components/NetworkStatus";
 import RemoveInitialLoader from "@/components/RemoveInitialLoader";
 import ToastProvider from "@/utils/ToastProvider";
-import SearchBar from "@/components/SearchBar";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -50,10 +48,12 @@ export default function RootLayout({ children }) {
         <ToastProvider />
         <RemoveInitialLoader />
         <ShopContext>
-          <Navbar />
-          <SearchBar />
-          <main>{children}</main>
-          <Footer />
+          <NetworkStatus />
+          {/* <Navbar />
+          <SearchBar /> */}
+          {/* <main>{children}</main> */}
+          {children}
+          {/* <Footer /> */}
         </ShopContext>
       </body>
     </html>

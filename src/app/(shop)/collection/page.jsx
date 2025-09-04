@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import ClientCollection from "@/app/collection/ClientCollection";
+import ClientCollection from "@/app/(shop)/collection/ClientCollection";
 
 export const dynamic = "force-dynamic";
 

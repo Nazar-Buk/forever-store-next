@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { ShopContext } from "../../../context/ShopContext";
-import { assets } from "../../../../public/assets/assets";
+import { ShopContext } from "../../../../context/ShopContext";
+import { assets } from "../../../../../public/assets/assets";
 import RelatedProducts from "@/components/RelatedProducts";
 import ToastSSRMessage from "@/utils/ToastSSRMessage";
 
@@ -65,6 +65,12 @@ export default function ClientProduct({
     (a, b) => desiredSizesOrder.indexOf(a) - desiredSizesOrder.indexOf(b)
     // indexOf — це метод, який шукає індекс (позицію) елемента в масиві або підрядка в рядку.
   );
+
+  useEffect(() => {
+    if (checkedSize) {
+      setSize(checkedSize);
+    }
+  }, []);
 
   return (
     <>
@@ -194,7 +200,7 @@ export default function ClientProduct({
                   onClick={() => {
                     if (checkedSize) {
                       updateCartProduct(checkedSize, size, productId);
-                      router("/cart");
+                      router.push("/cart");
                     } else {
                       addToCart(productId, size);
                     }

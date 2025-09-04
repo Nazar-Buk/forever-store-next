@@ -214,7 +214,7 @@ const ShopContextProvider = (props) => {
     getProductsData();
   }, []);
 
-  const [checkedSize, setChekedSize] = useState("");
+  const [checkedSize, setCheckedSize] = useState("");
 
   const value = {
     products,
@@ -237,7 +237,7 @@ const ShopContextProvider = (props) => {
     setIsLoading,
     // isAuthenticated,
     checkedSize,
-    setChekedSize,
+    setCheckedSize,
   };
 
   return (

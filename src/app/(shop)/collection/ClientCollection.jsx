@@ -11,7 +11,7 @@ import ProductItem from "@/components/ProductItem";
 import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
 import CollectionsFilters from "@/components/CollectionsFilters";
-import { assets } from "../../../public/assets/assets";
+import { assets } from "../../../../public/assets/assets";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
