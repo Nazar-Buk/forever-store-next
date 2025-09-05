@@ -73,7 +73,7 @@ const Cart = () => {
                   >
                     <div className="wrap-cart__product-img">
                       <img
-                        src={productData.images[0].url}
+                        src={productData?.images[0].url}
                         alt="product image"
                       />
                     </div>
