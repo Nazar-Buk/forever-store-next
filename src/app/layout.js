@@ -1,13 +1,11 @@
 // Спільний layout (шапка, футер, meta, стилі)
 // children -- це всі сторінки, вони сюди тягнуться
 
+import { Suspense } from "react";
 import { Geist, Geist_Mono, Outfit, Poppins, Prata } from "next/font/google";
 import "../styles/main.scss"; // підключив стилі до всього застосунку
 
-import ShopContext from "@/context/ShopContext";
-import NetworkStatus from "@/components/NetworkStatus";
-import RemoveInitialLoader from "@/components/RemoveInitialLoader";
-import ToastProvider from "@/utils/ToastProvider";
+import ClientProviders from "@/components/ClientProviders";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -45,16 +43,9 @@ export default function RootLayout({ children }) {
         <div id="loader">
           <div className="spinner"></div>
         </div>
-        <ToastProvider />
-        <RemoveInitialLoader />
-        <ShopContext>
-          <NetworkStatus />
-          {/* <Navbar />
-          <SearchBar /> */}
-          {/* <main>{children}</main> */}
-          {children}
-          {/* <Footer /> */}
-        </ShopContext>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ClientProviders>{children}</ClientProviders>
+        </Suspense>
       </body>
     </html>
   );

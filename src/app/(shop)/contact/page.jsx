@@ -1,6 +1,6 @@
 import Title from "@/components/Title";
 import Newsletter from "@/components/Newsletter";
-// import { assets } from "../../../../public/assets/assets";
+import { assets } from "../../../../public/assets/assets";
 
 export default async function Contact() {
   return (
@@ -10,8 +10,7 @@ export default async function Contact() {
           <Title text1="Contact " text2="Us" />
           <div className="contact-content">
             <div className="image-box">
-              {/* <img src={assets.contact_img} alt="contact image" /> */}
-              <img src="/assets/contact_img" alt="contact image" />
+              <img src={assets.contact_img} alt="contact image" />
             </div>
             <div className="contact__description">
               <div className="description__title">Our Store</div>
