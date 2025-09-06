@@ -155,7 +155,21 @@ const Cart = () => {
           <div className="wrap-empty-img">
             <img src={assets.empty_cart} alt="empty card icon" />
           </div>
-          <Link href="/collection">
+          <Link
+            href={{
+              pathname: "/collection",
+              query: {
+                page: 1,
+                limit: 10,
+                category: "",
+                subCategory: "",
+                priceFrom: "",
+                priceTo: "",
+                sort: "date_new",
+                search: "",
+              },
+            }}
+          >
             <button>Go To Product Page</button>
           </Link>
         </div>

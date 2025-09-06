@@ -140,7 +140,19 @@ export default function Header() {
           <div
             onClick={() => {
               if (pathName !== "/collection") {
-                router.push("/collection");
+                router.push({
+                  pathname: "/collection",
+                  query: {
+                    page: 1,
+                    limit: 10,
+                    category: "",
+                    subCategory: "",
+                    priceFrom: "",
+                    priceTo: "",
+                    sort: "date_new",
+                    search: "",
+                  },
+                });
               }
 
               setShowSearch(true);
