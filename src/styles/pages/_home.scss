@@ -85,6 +85,8 @@
 
         .hero__picture {
           flex: 0 1 838px;
+          overflow: hidden;
+          position: relative;
           // height: 500px;
 
           // img {
@@ -96,6 +98,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover; // без цього відео буде зберігати свої пропорції і height: 100%; не працюватиме
+            display: block;
           }
         }
       }
