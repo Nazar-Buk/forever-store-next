@@ -40,7 +40,6 @@ const Cart = () => {
       }
     }
 
-    console.log(tempData, "tempData");
     setCartData(tempData);
   }, [cartItems]);
 
@@ -66,9 +65,7 @@ const Cart = () => {
                 <div key={index} className="cart__product">
                   <Link
                     href={`/product/${item._id}`}
-                    // state={checkedSize} // Так передавати стейт через Link !!!
-
-                    onClick={() => setCheckedSize(item.size)}
+                    onClick={() => setCheckedSize(item?.size)}
                     className="wrap-image-details"
                   >
                     <div className="wrap-cart__product-img">

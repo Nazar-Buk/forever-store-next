@@ -2,8 +2,6 @@
 
 import { useEffect, useState, useContext, useRef } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-import { toast } from "react-toastify";
 
 import { ShopContext } from "../../../../context/ShopContext";
 import { assets } from "../../../../../public/assets/assets";
@@ -25,6 +23,7 @@ export default function ClientProduct({
     addToCart,
     updateCartProduct,
     checkedSize,
+    setCheckedSize,
   } = useContext(ShopContext);
 
   const smallPicturesBoxRef = useRef(null);
@@ -70,6 +69,12 @@ export default function ClientProduct({
     if (checkedSize) {
       setSize(checkedSize);
     }
+
+    // Cleanup: виконається при розмонтуванні цього компонента
+    return () => {
+      // щоб працювало коректно треба вимкнути strict mode, це не важко =)))
+      setCheckedSize("");
+    };
   }, []);
 
   return (

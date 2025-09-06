@@ -26,6 +26,7 @@ const ShopContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [checkedSize, setCheckedSize] = useState("");
 
   const currency = "$";
   const delivery_fee = 10; // вартість доставки
@@ -103,7 +104,7 @@ const ShopContextProvider = (props) => {
       setCartItems(cartData);
       toast.success("Product was updated");
     } else {
-      toast.success("Product wasn't updated");
+      toast.error("Product wasn't updated");
     }
   };
   //////////////////////////////////////////////////
@@ -213,8 +214,6 @@ const ShopContextProvider = (props) => {
   useEffect(() => {
     getProductsData();
   }, []);
-
-  const [checkedSize, setCheckedSize] = useState("");
 
   const value = {
     products,
