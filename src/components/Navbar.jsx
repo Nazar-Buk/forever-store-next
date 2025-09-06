@@ -239,7 +239,22 @@ export default function Header() {
                 </NavItem>
               </li>
               <li>
-                <NavItem href="/collection" customClass={"mobile-menu__item"}>
+                <NavItem
+                  href={{
+                    pathname: "/collection",
+                    query: {
+                      page: 1,
+                      limit: 10,
+                      category: "",
+                      subCategory: "",
+                      priceFrom: "",
+                      priceTo: "",
+                      sort: "date_new",
+                      search: "",
+                    },
+                  }}
+                  customClass={"mobile-menu__item"}
+                >
                   <p>COLLECTION</p>
                 </NavItem>
               </li>
@@ -319,7 +334,19 @@ export default function Header() {
                 setShowSearch(true);
                 isOpenMobileMenu(false);
               }}
-              href="/collection"
+              href={{
+                pathname: "/collection",
+                query: {
+                  page: 1,
+                  limit: 10,
+                  category: "",
+                  subCategory: "",
+                  priceFrom: "",
+                  priceTo: "",
+                  sort: "date_new",
+                  search: "",
+                },
+              }}
               className="search"
             >
               <div className="wrap-icon">

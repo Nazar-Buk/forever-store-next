@@ -86,7 +86,7 @@
 // import hero_video from "./hero_video1.mp4";
 
 export const assets = {
-  logo: "/assets/logo.png", // треба писати /assetsЯ
+  logo: "/assets/logo.png", // треба писати /assets
   hero_img: "/assets/hero_img.png",
   cart_icon: "/assets/cart_icon.png",
   dropdown_icon: "/assets/dropdown_icon.svg",
