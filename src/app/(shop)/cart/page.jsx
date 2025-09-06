@@ -75,12 +75,12 @@ const Cart = () => {
                       />
                     </div>
                     <div className="cart__product-details">
-                      <p className="details__name">{productData.name}</p>
+                      <p className="details__name">{productData?.name}</p>
                       <div className="wrap-details__price-size">
                         <p className="details__price">
-                          {currency} {productData.price * item.quantity}
+                          {currency} {productData?.price * item?.quantity}
                         </p>
-                        <div className="details__size">{item.size}</div>
+                        <div className="details__size">{item?.size}</div>
                       </div>
                     </div>
                   </Link>
