@@ -6,8 +6,6 @@ import ProductItem from "./ProductItem";
 const RelatedProducts = (props) => {
   const { relatedProducts, setSize } = props;
 
-  console.log(relatedProducts, "relatedProducts");
-
   return (
     <section className="related-products">
       <div className="related-products__container">

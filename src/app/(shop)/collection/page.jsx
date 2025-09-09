@@ -4,6 +4,10 @@ import ClientCollection from "@/app/(shop)/collection/ClientCollection";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: "Collection",
+};
+
 export default async function Collection({ searchParams }) {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   // можливо search треба тягнути із контексту а не відси)))

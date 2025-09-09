@@ -2,6 +2,10 @@ import Title from "@/components/Title";
 import Newsletter from "@/components/Newsletter";
 import { assets } from "../../../../public/assets/assets";
 
+export const metadata = {
+  title: "About",
+};
+
 export default function About() {
   return (
     <section className="about-page">

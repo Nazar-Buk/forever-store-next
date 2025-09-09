@@ -2,6 +2,10 @@ import Title from "@/components/Title";
 import Newsletter from "@/components/Newsletter";
 import { assets } from "../../../../public/assets/assets";
 
+export const metadata = {
+  title: "Contact",
+};
+
 export default async function Contact() {
   return (
     <section className="contact-page">

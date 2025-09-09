@@ -4,6 +4,7 @@
 import axios from "axios";
 
 import ClientProduct from "./ClientProduct"; // компонент, який буде гідратуватися на клієнті
+import { title } from "process";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -54,8 +55,32 @@ const getRelatedProducts = async (productData) => {
   }
 };
 
+export async function generateMetadata({ params }) {
+  const { productId } = await params;
+
+  const response = await fetchProductData(productId);
+  console.log("=========response generateMetaData start==========");
+  console.dir(response, { depth: null, colors: true });
+  console.log("==========response generateMetaData end=========");
+
+  const productData = response.data;
+  return {
+    title: productData?.name,
+    description: productData?.description,
+    openGraph: {
+      // для соцмереж
+      images: [
+        {
+          url: productData?.images[0]?.url,
+        },
+      ],
+    },
+  };
+}
+
 export default async function Product({ params }) {
   const { productId } = await params;
+
   const { data: productData, error: productError } = await fetchProductData(
     productId
   );
