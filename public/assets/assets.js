@@ -87,6 +87,7 @@
 
 export const assets = {
   logo: "/assets/logo.png", // треба писати /assets
+  logo2: "/assets/logo2.jpg",
   hero_img: "/assets/hero_img.png",
   cart_icon: "/assets/cart_icon.png",
   dropdown_icon: "/assets/dropdown_icon.svg",

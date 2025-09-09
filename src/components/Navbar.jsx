@@ -95,7 +95,7 @@ export default function Header() {
     <header className="header__container">
       <div className="header__content">
         <Link href="/" className="header__logo">
-          <img src={assets.logo} alt="logo" />
+          <img src={assets.logo2} alt="logo" />
         </Link>
         <nav>
           <ul className="header__menu">
@@ -240,7 +240,7 @@ export default function Header() {
         </div>
         <div className="wrap-menu-content">
           <div className="header__mobile-logo">
-            <img src={assets.logo} alt="logo" />
+            <img src={assets.logo2} alt="logo" />
           </div>
           <nav>
             <ul onClick={() => isOpenMobileMenu(false)} className="mobile-menu">

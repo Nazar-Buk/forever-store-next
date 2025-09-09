@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer__columns">
           <div className="footer__left-column first-column">
             <Link href="/" className="wrap-footer-logo">
-              <img src={assets.logo} alt="footer logo" />
+              <img src={assets.logo2} alt="footer logo" />
             </Link>
             <p className="first-column__text">
               Lorem Ipsum is simply dummy text of the printing and typesetting

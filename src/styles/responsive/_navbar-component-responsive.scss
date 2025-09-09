@@ -96,6 +96,10 @@
           margin: 0 auto;
 
           img {
+            aspect-ratio: 166 / 60;
+            object-fit: cover;
+            border: 1px transparent;
+            border-radius: 50px;
           }
         }
         nav {

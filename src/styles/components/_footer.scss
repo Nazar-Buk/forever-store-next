@@ -20,7 +20,11 @@ footer.footer {
             max-width: 166px;
 
             img {
-              aspect-ratio: 166/47;
+              // aspect-ratio: 166/47;
+              aspect-ratio: 166/60;
+              object-fit: cover;
+              border: 1px transparent;
+              border-radius: 50px;
             }
           }
 

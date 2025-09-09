@@ -13,6 +13,13 @@ header.header__container {
       display: block;
       flex: 0 0 166px;
       aspect-ratio: 166/47;
+
+      img {
+        aspect-ratio: 166/60;
+        object-fit: cover;
+        border: 1px transparent;
+        border-radius: 50px;
+      }
     }
 
     nav {
