@@ -18,7 +18,8 @@ const fetchAllProducts = async () => {
 };
 
 export default async function sitemap(params) {
-  const allProducts = (await fetchAllProducts()) || [];
+  //   const allProducts = (await fetchAllProducts()) || [];
+  const allProducts = await fetchAllProducts();
 
   const productsData = allProducts.map((product) => ({
     url: `${siteUrl}/product/${product._id}`,
