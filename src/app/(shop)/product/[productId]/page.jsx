@@ -4,7 +4,6 @@
 import axios from "axios";
 
 import ClientProduct from "./ClientProduct"; // компонент, який буде гідратуватися на клієнті
-import { title } from "process";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -59,9 +58,9 @@ export async function generateMetadata({ params }) {
   const { productId } = await params;
 
   const response = await fetchProductData(productId);
-  console.log("=========response generateMetaData start==========");
-  console.dir(response, { depth: null, colors: true });
-  console.log("==========response generateMetaData end=========");
+  // console.log("=========response generateMetaData start==========");
+  // console.dir(response, { depth: null, colors: true });
+  // console.log("==========response generateMetaData end=========");
 
   const productData = response.data;
   return {
