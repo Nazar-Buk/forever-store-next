@@ -4,18 +4,20 @@ import { useContext, useEffect, useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ShopContext } from "@/context/ShopContext";
+import axios from "axios";
 
+import { ShopContext } from "@/context/ShopContext";
 import { assets } from "../../../../public/assets/assets";
 import Title from "@/components/Title";
 import CartTotal from "@/components/CartTotal";
+
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const Cart = () => {
   // const navigate = useNavigate();
   const router = useRouter();
 
   const {
-    products,
     currency,
     cartItems,
     updateQuantity,
@@ -24,6 +26,7 @@ const Cart = () => {
   } = useContext(ShopContext);
 
   const [cartData, setCartData] = useState([]);
+  const [allCartProducts, setAllCartProducts] = useState([]);
 
   useEffect(() => {
     const tempData = [];
@@ -43,6 +46,56 @@ const Cart = () => {
     setCartData(tempData);
   }, [cartItems]);
 
+  const fetchProductData = async (productId) => {
+    try {
+      const response = await axios.post(backendUrl + "/api/product/single", {
+        productId,
+        // productId: "67f50cbae3550da216e4c393",
+      });
+
+      if (response.data.success) {
+        return { data: response.data.product, error: null };
+      } else {
+        throw new Error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error, "error");
+      return {
+        data: {},
+        error: error?.response?.data?.message || error?.message,
+      };
+    }
+  };
+
+  const getAllCartProducts = async () => {
+    const promises = cartData.map((item) => fetchProductData(item._id));
+    const results = await Promise.allSettled(promises);
+
+    // відфільтровуємо успішні запити
+    const successfulProducts = results
+      .filter((result) => result.status === "fulfilled")
+      .map((result) => result.value.data);
+
+    // відфільтровуємо НЕ успішні запити
+    const failedProducts = results
+      .filter((result) => result.status === "rejected")
+      .map((result) => result.reason);
+
+    return successfulProducts;
+  };
+
+  // ⚡️ завантажуємо всі продукти, коли змінюється cartData
+  useEffect(() => {
+    if (!cartData.length) return;
+
+    const fetchAllCartProducts = async () => {
+      const cartProducts = await getAllCartProducts();
+      setAllCartProducts(cartProducts);
+    };
+
+    fetchAllCartProducts();
+  }, [cartData.length]);
+
   return (
     <section className="cart-page">
       {cartData.length ? (
@@ -56,7 +109,7 @@ const Cart = () => {
             </div>
 
             {cartData.map((item, index) => {
-              const productData = products.find(
+              const productData = allCartProducts?.find(
                 (product) => product._id === item._id
               );
 
@@ -143,7 +196,7 @@ const Cart = () => {
             })}
           </div>
           <div className="cart-total-box">
-            <CartTotal />
+            <CartTotal allCartProducts={allCartProducts} />
             <button onClick={() => router.push("/place-order")}>
               Proceed to checkout
             </button>
