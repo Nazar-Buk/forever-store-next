@@ -61,9 +61,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${outfit.variable} ${poppins.variable} ${prata.variable}`}
       >
-        <div id="loader">
+        {/* <div id="loader">
           <div className="spinner"></div>
-        </div>
+        </div> */}
         <Suspense fallback={<div>Loading...</div>}>
           <ClientProviders>{children}</ClientProviders>
         </Suspense>
