@@ -4,6 +4,7 @@
 // import Image from "next/image";
 // import styles from "./page.module.css";
 import axios from "axios";
+export const dynamic = "force-dynamic"; // ❗ каже Next: не кешуй, рендери завжди свіжо
 
 import Hero from "@/components/Hero";
 import OurPolicy from "@/components/OurPolicy";
@@ -16,7 +17,9 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const getBestsellers = async () => {
   try {
-    const response = await axios.get(backendUrl + "/api/product/bestsellers");
+    const response = await axios.get(backendUrl + "/api/product/bestsellers", {
+      headers: { "Cache-Control": "no-cache" }, // щоб точно не брало з кеша
+    });
     // console.dir(response.data, { depth: null, colors: true }); // щоб побачити все що треба в консолі
 
     if (response.data.success) {
@@ -39,7 +42,10 @@ const getBestsellers = async () => {
 const getLatestProducts = async () => {
   try {
     const response = await axios.get(
-      backendUrl + "/api/product/latest-products"
+      backendUrl + "/api/product/latest-products",
+      {
+        headers: { Cache_Control: "no-cache" }, // щоб точно не брало з кеша
+      }
     );
 
     if (response.data.success) {
