@@ -1,0 +1,28 @@
+@use "../base/variables" as v;
+
+section.success-page {
+  .success__container {
+    .success-payment-box {
+      text-align: center;
+      margin: 40px 0;
+
+      h1 {
+        margin: 20px 0;
+        font-weight: 900;
+        font-size: 30px;
+        color: v.$color-success;
+      }
+
+      img.success-payment {
+        width: 40%;
+        aspect-ratio: 1/1;
+        border-radius: 36px;
+        margin-bottom: 30px;
+      }
+
+      a {
+        display: block;
+      }
+    }
+  }
+}
