@@ -109,6 +109,7 @@ export const assets = {
   empty_cart: "/assets/empty_cart.png",
   empty_products: "/assets/empty_products.jpg",
   hero_video: "/assets/hero_video1.mp4",
+  success_payment: "/assets/success-payment.jpg",
 };
 
 // export const products = [

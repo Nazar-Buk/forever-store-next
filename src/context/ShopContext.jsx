@@ -198,6 +198,8 @@ const ShopContextProvider = (props) => {
     getProductsData();
   }, []);
 
+  const [stripeProductData, setStripeProductData] = useState([]);
+
   const value = {
     products,
     currency,
@@ -219,6 +221,8 @@ const ShopContextProvider = (props) => {
     // isAuthenticated,
     checkedSize,
     setCheckedSize,
+    stripeProductData,
+    setStripeProductData,
   };
 
   return (

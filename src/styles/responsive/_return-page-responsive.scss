@@ -1,0 +1,37 @@
+@use "../base/variables" as v;
+
+@media (max-width: 1200px) {
+  section.success-page {
+    .success__container {
+      .success-payment-box {
+        h1 {
+        }
+
+        img.success-payment {
+          width: 60%;
+        }
+
+        a {
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  section.success-page {
+    .success__container {
+      .success-payment-box {
+        h1 {
+        }
+
+        img.success-payment {
+          width: 90%;
+        }
+
+        a {
+        }
+      }
+    }
+  }
+}

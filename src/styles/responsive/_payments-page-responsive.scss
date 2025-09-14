@@ -3,10 +3,16 @@
 @media (max-width: 1100px) {
   section.payment-page {
     .payment__container {
+      &.custom-stripe-container {
+      }
+
       flex-direction: column;
       align-items: center;
 
       .wrap__title_and_payment__body {
+        &.custom-stripe-box {
+        }
+
         .title {
         }
 
@@ -58,7 +64,13 @@
 @media (max-width: 480px) {
   section.payment-page {
     .payment__container {
+      &.custom-stripe-container {
+      }
+
       .wrap__title_and_payment__body {
+        &.custom-stripe-box {
+        }
+
         .title {
         }
 

@@ -5,11 +5,19 @@ section.payment-page {
   padding-bottom: clamp(2.5rem, 1.55rem + 4.75vw, 7.25rem); // 116px;
 
   .payment__container {
+    &.custom-stripe-container {
+      flex-direction: column;
+    }
+
     display: flex;
     justify-content: space-between;
     gap: 60px;
 
     .wrap__title_and_payment__body {
+      &.custom-stripe-box {
+        width: 100%;
+      }
+
       .title {
         margin-bottom: clamp(1.25rem, 0.875rem + 1.88vw, 3.125rem); // 50px
       }

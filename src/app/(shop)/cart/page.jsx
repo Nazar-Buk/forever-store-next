@@ -24,6 +24,7 @@ const Cart = () => {
     updateQuantity,
     removeAllCartProducts,
     setCheckedSize,
+    setStripeProductData,
   } = useContext(ShopContext);
 
   const [isLoadingState, setIsLoadingState] = useState({
@@ -111,6 +112,21 @@ const Cart = () => {
 
     fetchAllCartProducts();
   }, [cartData.length]);
+
+  useEffect(() => {
+    const stripeProducts = cartData.map((itemCartData) => {
+      const itemAllCartProducts = allCartProducts.find(
+        (item) => item._id === itemCartData._id
+      );
+
+      return {
+        ...itemAllCartProducts,
+        quantity: itemCartData.quantity,
+      };
+    });
+
+    setStripeProductData(stripeProducts);
+  }, [cartData, allCartProducts]);
 
   const isLoading = isLoadingState.isProductsLoading;
 
