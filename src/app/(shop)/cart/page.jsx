@@ -25,6 +25,8 @@ const Cart = () => {
     removeAllCartProducts,
     setCheckedSize,
     setStripeProductData,
+    allCartProducts,
+    setAllCartProducts,
   } = useContext(ShopContext);
 
   const [isLoadingState, setIsLoadingState] = useState({
@@ -32,7 +34,6 @@ const Cart = () => {
   });
 
   const [cartData, setCartData] = useState([]);
-  const [allCartProducts, setAllCartProducts] = useState([]);
 
   useEffect(() => {
     const tempData = [];

@@ -11,6 +11,7 @@ import Title from "@/components/Title";
 import CartTotal from "@/components/CartTotal";
 import CODForm from "@/components/forms/CODForm";
 import StripeService from "@/services/StripeService";
+import LiqPayService from "@/services/LiqPayService";
 import { assets } from "../../../../public/assets/assets";
 
 const schema = yup.object({
@@ -44,7 +45,7 @@ const schema = yup.object({
 
 const paymentMethodTitles = {
   stripe: { text1: "Stripe ", text2: "Information" },
-  razorpay: { text1: "Razorpay ", text2: "Information" },
+  liqpay: { text1: "LiqPay ", text2: "Information" },
   cod: { text1: "Delivery ", text2: "Information" },
 };
 
@@ -95,18 +96,21 @@ const PlaceOrder = () => {
     <section className="payment-page">
       <div
         className={`payment__container ${
-          checkPaymentMethodType === "stripe" ? "custom-stripe-container" : ""
+          checkPaymentMethodType !== "cod" ? "custom-payment-container" : ""
         }`}
       >
         <div
           className={`wrap__title_and_payment__body ${
-            checkPaymentMethodType === "stripe" ? "custom-stripe-box" : ""
+            checkPaymentMethodType !== "cod" ? "custom-payment-box" : ""
           }`}
         >
           <Title
             text1={paymentMethodTitles[checkPaymentMethodType].text1}
             text2={paymentMethodTitles[checkPaymentMethodType].text2}
           />
+
+          {checkPaymentMethodType === "liqpay" && <LiqPayService />}
+
           {checkPaymentMethodType === "stripe" && <StripeService />}
 
           {checkPaymentMethodType === "cod" && (
@@ -143,15 +147,15 @@ const PlaceOrder = () => {
             <div className="payment-box">
               <div className="wrap-radio-input">
                 <input
-                  className="razorpay"
+                  className="liqpay"
                   type="radio"
                   {...register("payment_method")}
-                  value="razorpay"
-                  id="razorpay"
+                  value="liqpay"
+                  id="liqpay"
                 />
               </div>
-              <label className="razorpay" htmlFor="razorpay">
-                <img src={assets.razorpay_logo} alt="razorpay" />
+              <label className="liqpay" htmlFor="liqpay">
+                <img src={assets.liqpay_logo} alt="liqpay" />
               </label>
             </div>
             <div className="payment-box">

@@ -131,6 +131,25 @@ const ShopContextProvider = (props) => {
     return totalCount;
   };
 
+  const [allCartProducts, setAllCartProducts] = useState([]);
+
+  const getCartAmount = () => {
+    let totalAmount = 0;
+
+    for (const items in cartItems) {
+      let itemInfo = allCartProducts?.find((product) => product._id === items);
+
+      for (const item in cartItems[items]) {
+        try {
+          if (cartItems[items][item] > 0) {
+            totalAmount += itemInfo.price * cartItems[items][item];
+          }
+        } catch (e) {}
+      }
+    }
+    return totalAmount;
+  };
+
   const updateQuantity = (itemId, size, quantity) => {
     let cartData = structuredClone(cartItems);
 
@@ -223,6 +242,9 @@ const ShopContextProvider = (props) => {
     setCheckedSize,
     stripeProductData,
     setStripeProductData,
+    getCartAmount,
+    allCartProducts,
+    setAllCartProducts,
   };
 
   return (

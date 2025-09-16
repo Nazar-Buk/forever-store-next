@@ -5,24 +5,7 @@ import { ShopContext } from "@/context/ShopContext";
 import Title from "@/components/Title";
 
 const CartTotal = ({ allCartProducts }) => {
-  const { currency, delivery_fee, cartItems } = useContext(ShopContext);
-
-  const getCartAmount = () => {
-    let totalAmount = 0;
-
-    for (const items in cartItems) {
-      let itemInfo = allCartProducts?.find((product) => product._id === items);
-
-      for (const item in cartItems[items]) {
-        try {
-          if (cartItems[items][item] > 0) {
-            totalAmount += itemInfo.price * cartItems[items][item];
-          }
-        } catch (e) {}
-      }
-    }
-    return totalAmount;
-  };
+  const { currency, delivery_fee, getCartAmount } = useContext(ShopContext);
 
   return (
     <section className="cart-total">

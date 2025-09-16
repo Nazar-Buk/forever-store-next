@@ -5,7 +5,7 @@ section.payment-page {
   padding-bottom: clamp(2.5rem, 1.55rem + 4.75vw, 7.25rem); // 116px;
 
   .payment__container {
-    &.custom-stripe-container {
+    &.custom-payment-container {
       flex-direction: column;
     }
 
@@ -14,7 +14,7 @@ section.payment-page {
     gap: 60px;
 
     .wrap__title_and_payment__body {
-      &.custom-stripe-box {
+      &.custom-payment-box {
         width: 100%;
       }
 
@@ -119,7 +119,7 @@ section.payment-page {
               &.stripe {
               }
 
-              &.razorpay {
+              &.liqpay {
               }
 
               &.cod {
@@ -138,9 +138,11 @@ section.payment-page {
               padding-right: 75px;
             }
 
-            &.razorpay {
+            &.liqpay {
               padding-left: 22px;
-              padding-right: 53px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
             }
 
             &.cod {
