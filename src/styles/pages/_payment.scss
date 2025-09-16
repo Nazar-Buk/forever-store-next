@@ -66,6 +66,14 @@ section.payment-page {
           }
         }
       }
+
+      .liqpay-go-to-product-box {
+        a {
+          display: block;
+          text-align: center;
+          margin-top: 30px;
+        }
+      }
     }
 
     .payment__methods-and-cart-totals {
