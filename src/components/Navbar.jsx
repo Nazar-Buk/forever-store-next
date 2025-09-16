@@ -62,8 +62,6 @@ export default function Header() {
     checkAuth();
   }, []);
 
-  console.log(isAuthenticated, "isAuthenticated");
-
   const logout = async () => {
     try {
       setIsLoading(true);
