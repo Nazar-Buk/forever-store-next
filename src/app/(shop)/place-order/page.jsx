@@ -1,6 +1,7 @@
 // place-order це те саме що і checkout
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 // import { DevTool } from "@hookform/devtools";
 import { useForm } from "react-hook-form";
@@ -9,6 +10,7 @@ import * as yup from "yup";
 
 import Title from "@/components/Title";
 import CartTotal from "@/components/CartTotal";
+import Loader from "@/components/Loader";
 import CODForm from "@/components/forms/CODForm";
 import StripeService from "@/services/StripeService";
 import LiqPayService from "@/services/LiqPayService";
@@ -52,6 +54,11 @@ const paymentMethodTitles = {
 const PlaceOrder = () => {
   const router = useRouter();
 
+  const [loadingState, setLoadingState] = useState({
+    loadingStripe: false,
+    loadingLiqPay: false,
+  });
+
   const form = useForm({
     defaultValues: {
       firstName: "",
@@ -71,7 +78,6 @@ const PlaceOrder = () => {
   const { register, control, handleSubmit, formState, watch, clearErrors } =
     form;
   const { errors, isDirty, isValid, isSubmitting } = formState;
-  console.log(errors, "errors");
 
   const checkPaymentMethodType = watch("payment_method");
 
@@ -92,105 +98,115 @@ const PlaceOrder = () => {
     }
   };
 
+  const loading = loadingState.loadingStripe || loadingState.loadingLiqPay;
+
   return (
-    <section className="payment-page">
-      <div
-        className={`payment__container ${
-          checkPaymentMethodType !== "cod" ? "custom-payment-container" : ""
-        }`}
-      >
+    <>
+      {loading && <Loader />}
+
+      <section className="payment-page">
         <div
-          className={`wrap__title_and_payment__body ${
-            checkPaymentMethodType !== "cod" ? "custom-payment-box" : ""
+          className={`payment__container ${
+            checkPaymentMethodType !== "cod" ? "custom-payment-container" : ""
           }`}
         >
-          <Title
-            text1={paymentMethodTitles[checkPaymentMethodType].text1}
-            text2={paymentMethodTitles[checkPaymentMethodType].text2}
-          />
-
-          {checkPaymentMethodType === "liqpay" && <LiqPayService />}
-
-          {checkPaymentMethodType === "stripe" && <StripeService />}
-
-          {checkPaymentMethodType === "cod" && (
-            <CODForm
-              handleSubmit={handleSubmit}
-              onSubmit={onSubmit}
-              register={register}
-              errors={errors}
+          <div
+            className={`wrap__title_and_payment__body ${
+              checkPaymentMethodType !== "cod" ? "custom-payment-box" : ""
+            }`}
+          >
+            <Title
+              text1={paymentMethodTitles[checkPaymentMethodType].text1}
+              text2={paymentMethodTitles[checkPaymentMethodType].text2}
             />
-          )}
 
-          {/* <DevTool control={control} /> */}
-        </div>
+            {checkPaymentMethodType === "liqpay" && (
+              <LiqPayService setLoadingState={setLoadingState} />
+            )}
 
-        <div className="payment__methods-and-cart-totals">
-          {checkPaymentMethodType === "cod" && <CartTotal />}
+            {checkPaymentMethodType === "stripe" && (
+              <StripeService setLoadingState={setLoadingState} />
+            )}
 
-          <Title text1="Payment " text2="Method" />
-          <div className="payments-group">
-            <div className="payment-box">
-              <div className="wrap-radio-input">
-                <input
-                  className="stripe"
-                  type="radio"
-                  {...register("payment_method")}
-                  value="stripe"
-                  id="stripe"
-                />
-              </div>
-              <label className="stripe" htmlFor="stripe">
-                <img src={assets.stripe_logo} alt="stripe" />
-              </label>
-            </div>
-            <div className="payment-box">
-              <div className="wrap-radio-input">
-                <input
-                  className="liqpay"
-                  type="radio"
-                  {...register("payment_method")}
-                  value="liqpay"
-                  id="liqpay"
-                />
-              </div>
-              <label className="liqpay" htmlFor="liqpay">
-                <img src={assets.liqpay_logo} alt="liqpay" />
-              </label>
-            </div>
-            <div className="payment-box">
-              <div className="wrap-radio-input">
-                <input
-                  className="cod"
-                  type="radio"
-                  {...register("payment_method")}
-                  value="cod"
-                  id="cod"
-                />
-              </div>
-              <label className="cod" htmlFor="cod">
-                CASH ON DELIVERY
-              </label>
-            </div>
+            {checkPaymentMethodType === "cod" && (
+              <CODForm
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+                register={register}
+                errors={errors}
+              />
+            )}
+
+            {/* <DevTool control={control} /> */}
           </div>
-          {checkPaymentMethodType === "cod" && (
-            <button
-              // onClick={() => {
-              //   if (isDirty && isValid && !isSubmitting) {
-              //     router.push("/orders");
-              //   }
-              // }}
-              disabled={isSubmitting}
-              type="button" // навмисно написав button, бо кнопка не у формі, submit буде шукати її і не буде працювати
-              // onClick={() => handleSubmit(onSubmit)()} //() треба викликати функцію
-              onClick={handlePay}
-            >
-              Place payment
-            </button>
-          )}
+
+          <div className="payment__methods-and-cart-totals">
+            {checkPaymentMethodType === "cod" && <CartTotal />}
+
+            <Title text1="Payment " text2="Method" />
+            <div className="payments-group">
+              <div className="payment-box">
+                <div className="wrap-radio-input">
+                  <input
+                    className="stripe"
+                    type="radio"
+                    {...register("payment_method")}
+                    value="stripe"
+                    id="stripe"
+                  />
+                </div>
+                <label className="stripe" htmlFor="stripe">
+                  <img src={assets.stripe_logo} alt="stripe" />
+                </label>
+              </div>
+              <div className="payment-box">
+                <div className="wrap-radio-input">
+                  <input
+                    className="liqpay"
+                    type="radio"
+                    {...register("payment_method")}
+                    value="liqpay"
+                    id="liqpay"
+                  />
+                </div>
+                <label className="liqpay" htmlFor="liqpay">
+                  <img src={assets.liqpay_logo} alt="liqpay" />
+                </label>
+              </div>
+              <div className="payment-box">
+                <div className="wrap-radio-input">
+                  <input
+                    className="cod"
+                    type="radio"
+                    {...register("payment_method")}
+                    value="cod"
+                    id="cod"
+                  />
+                </div>
+                <label className="cod" htmlFor="cod">
+                  CASH ON DELIVERY
+                </label>
+              </div>
+            </div>
+            {checkPaymentMethodType === "cod" && (
+              <button
+                // onClick={() => {
+                //   if (isDirty && isValid && !isSubmitting) {
+                //     router.push("/orders");
+                //   }
+                // }}
+                disabled={isSubmitting}
+                type="button" // навмисно написав button, бо кнопка не у формі, submit буде шукати її і не буде працювати
+                // onClick={() => handleSubmit(onSubmit)()} //() треба викликати функцію
+                onClick={handlePay}
+              >
+                Place payment
+              </button>
+            )}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

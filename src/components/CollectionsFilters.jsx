@@ -99,7 +99,6 @@ const CollectionsFilters = (props) => {
     form;
 
   const { errors } = formState;
-  console.log(errors, "errors");
 
   const selectedCategory = watch("category") || {};
   const selectedSubCategory = watch("subCategory") || {};

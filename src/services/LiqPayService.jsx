@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useContext } from "react";
+import { useEffect, useContext } from "react";
 
 import { ShopContext } from "@/context/ShopContext";
 
-const LiqPayService = () => {
+const LiqPayService = ({ setLoadingState }) => {
   const { backendUrl, getCartAmount } = useContext(ShopContext);
-  const scriptLoaded = useRef(false); // гарантує, що скрипт підключиться лише один раз
 
-  const downloadLiqPayForm = async () => {
+  const downloadLiqPayForm = async (signal) => {
     try {
+      setLoadingState((prev) => ({ ...prev, loadingLiqPay: true }));
+
       const response = await fetch(`${backendUrl}/liqpay/embedded-pay`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -18,6 +19,7 @@ const LiqPayService = () => {
           description: `Замовлення #${Date.now()}`,
           order_id: Date.now(),
         }),
+        signal,
       });
 
       const { data, signature } = await response.json();
@@ -33,8 +35,13 @@ const LiqPayService = () => {
         initLiqPay(data, signature);
       }
     } catch (error) {
-      console.error("LiqPay payment error:", error);
+      if (error.name === "AbortError") {
+        console.log("Запит до LiqPay скасовано !");
+      } else {
+        console.error("LiqPay payment error:", error);
+      }
     } finally {
+      setLoadingState((prev) => ({ ...prev, loadingLiqPay: false }));
     }
   };
 
@@ -49,15 +56,23 @@ const LiqPayService = () => {
       .on("liqpay.callback", (result) =>
         console.log("liqpay.callback:", result)
       )
-      .on("liqpay.ready", () => console.log("LiqPay ready"))
+      .on("liqpay.ready", () => {
+        console.log("LiqPay ready");
+        setLoadingState((prev) => ({ ...prev, loadingLiqPay: false }));
+      })
       .on("liqpay.close", () => console.log("Checkout closed"));
   };
 
   useEffect(() => {
-    if (scriptLoaded.current) return; // якщо скрипт вже підключений, виходимо
-    scriptLoaded.current = true;
+    const abortController = new AbortController(); // Може зупинити запит
+    const signal = abortController.signal; // Прилінковує до запитів котрі треба зупинити
 
-    downloadLiqPayForm();
+    downloadLiqPayForm(signal);
+
+    return () => {
+      // Зупиняє запит коли компонент розмонтовується
+      abortController.abort();
+    };
   }, []);
   return <div id="liqpay-embed-container"></div>;
 };
