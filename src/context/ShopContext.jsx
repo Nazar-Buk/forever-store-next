@@ -218,6 +218,7 @@ const ShopContextProvider = (props) => {
   }, []);
 
   const [stripeProductData, setStripeProductData] = useState([]);
+  const [codProductData, setCodProductData] = useState([]);
 
   const value = {
     products,
@@ -245,6 +246,8 @@ const ShopContextProvider = (props) => {
     getCartAmount,
     allCartProducts,
     setAllCartProducts,
+    codProductData,
+    setCodProductData,
   };
 
   return (

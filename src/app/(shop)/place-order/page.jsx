@@ -1,12 +1,14 @@
 // place-order це те саме що і checkout
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 // import { DevTool } from "@hookform/devtools";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 import Title from "@/components/Title";
 import CartTotal from "@/components/CartTotal";
@@ -14,7 +16,11 @@ import Loader from "@/components/Loader";
 import CODForm from "@/components/forms/CODForm";
 import StripeService from "@/services/StripeService";
 import LiqPayService from "@/services/LiqPayService";
+import { ShopContext } from "@/context/ShopContext";
+
 import { assets } from "../../../../public/assets/assets";
+
+const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
 
 const schema = yup.object({
   firstName: yup.string().required("This field is required!"),
@@ -53,6 +59,7 @@ const paymentMethodTitles = {
 
 const PlaceOrder = () => {
   const router = useRouter();
+  const { backendUrl, codProductData, getCartAmount } = useContext(ShopContext);
 
   const [loadingState, setLoadingState] = useState({
     loadingStripe: false,
@@ -81,20 +88,47 @@ const PlaceOrder = () => {
 
   const checkPaymentMethodType = watch("payment_method");
 
-  const onSubmit = (data) => {
-    console.log(data, "Form Submitted!");
+  const onSubmit = async (data) => {
+    try {
+      console.log(data, "Form Submitted!");
+      const orderId = "23213129834238";
+      const totalAmount = getCartAmount();
 
-    if (isDirty && isValid && !isSubmitting) {
-      router.push("/orders");
-    }
-  };
+      const telegramProductsData = codProductData.map((product) => ({
+        quantity: product.quantity,
+        link: `${frontendUrl}/product/${product._id}`,
+        name: product.name,
+      }));
 
-  const handlePay = () => {
-    if (checkPaymentMethodType === "cod") {
-      handleSubmit(onSubmit)(); //() треба викликати функцію
-    } else {
-      clearErrors();
-      console.log("hahahahhahah");
+      if (isDirty && isValid && !isSubmitting) {
+        const response = await axios.post(
+          `${backendUrl}/api/tg-bot/send-tg-form`,
+          {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            street: data.street,
+            city: data.city,
+            state: data.state,
+            zipCode: data.zip_code,
+            country: data.country,
+            phone: data.phone,
+            orderId,
+            productsData: telegramProductsData,
+            price: totalAmount,
+          }
+        );
+
+        if (response.data.success) {
+          toast.success(response.data.message);
+          router.push("/orders");
+        } else {
+          toast.error(response.data.message);
+        }
+      }
+    } catch (error) {
+      console.log(error, "error");
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -198,7 +232,7 @@ const PlaceOrder = () => {
                 disabled={isSubmitting}
                 type="button" // навмисно написав button, бо кнопка не у формі, submit буде шукати її і не буде працювати
                 // onClick={() => handleSubmit(onSubmit)()} //() треба викликати функцію
-                onClick={handlePay}
+                onClick={handleSubmit(onSubmit)}
               >
                 Place payment
               </button>
