@@ -20,7 +20,7 @@ import { ShopContext } from "@/context/ShopContext";
 
 import { assets } from "../../../../public/assets/assets";
 
-const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
+const frontendUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
 const schema = yup.object({
   firstName: yup.string().required("This field is required!"),
