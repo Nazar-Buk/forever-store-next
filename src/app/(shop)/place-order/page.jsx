@@ -82,8 +82,7 @@ const PlaceOrder = () => {
     resolver: yupResolver(schema),
   });
 
-  const { register, control, handleSubmit, formState, watch, clearErrors } =
-    form;
+  const { register, control, handleSubmit, formState, watch } = form;
   const { errors, isDirty, isValid, isSubmitting } = formState;
 
   const checkPaymentMethodType = watch("payment_method");
@@ -132,7 +131,8 @@ const PlaceOrder = () => {
     }
   };
 
-  const loading = loadingState.loadingStripe || loadingState.loadingLiqPay;
+  const loading =
+    loadingState.loadingStripe || loadingState.loadingLiqPay || isSubmitting;
 
   return (
     <>
