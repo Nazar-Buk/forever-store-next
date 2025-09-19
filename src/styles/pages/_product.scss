@@ -48,11 +48,18 @@ section.product-page {
               height: 42px;
               opacity: 0.4;
 
+              &.swiper-slide-thumb-active img {
+                border-color: v.$active-color;
+              }
+
               img {
                 display: block;
                 width: 42px;
                 height: 42px;
                 object-fit: cover;
+
+                border: 2px solid transparent;
+                border-radius: 10px;
               }
             }
 

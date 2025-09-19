@@ -10,20 +10,20 @@
 
         .swiper-slider-box {
           background-color: #ffffff;
-          min-height: 680px;
           padding-top: 20px;
           padding-bottom: 20px;
 
           width: 100%;
-          aspect-ratio: 1200/850;
+          aspect-ratio: auto;
           flex-direction: column;
           height: auto;
+          max-height: 600px;
 
           .large-image-slider {
             order: 0;
             width: 100%;
             aspect-ratio: 1200/800;
-            min-height: 600px;
+            max-height: 350px;
 
             .swiper.mySwiper2 {
               width: 100%;
