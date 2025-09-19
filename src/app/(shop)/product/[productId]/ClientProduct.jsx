@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ShopContext } from "../../../../context/ShopContext";
 import { assets } from "../../../../../public/assets/assets";
 import RelatedProducts from "@/components/RelatedProducts";
+import ProductSwiperSlider from "@/components/sliders/ProductSwiperSlider";
 import ToastSSRMessage from "@/utils/ToastSSRMessage";
 
 export default function ClientProduct({
@@ -84,7 +85,8 @@ export default function ClientProduct({
         <section className="product-page">
           <section className="product__container">
             <div className="product__box">
-              <div className="product__images-box">
+              {/* START OLD SLIDER */}
+              {/* <div className="product__images-box">
                 {productData.images?.length > 1 && (
                   <div ref={smallPicturesBoxRef} className="small-images">
                     {productData.images.map((item, index) => {
@@ -157,6 +159,11 @@ export default function ClientProduct({
                     </svg>
                   </div>
                 )}
+              </div> */}
+              {/* END OLD SLIDER */}
+
+              <div className="swiper-slider-box">
+                <ProductSwiperSlider productData={productData} />
               </div>
               <div className="product__details-box">
                 <div className="details__title">{productData.name}</div>
