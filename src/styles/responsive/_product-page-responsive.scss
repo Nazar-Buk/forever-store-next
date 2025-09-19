@@ -35,7 +35,7 @@
 
                 img {
                   display: block;
-                  aspect-ratio: 1/1;
+                  aspect-ratio: auto;
                   object-fit: contain;
                 }
               }
@@ -224,8 +224,73 @@
   }
 }
 
+// потім повидаляй коментарі
 @media (max-width: 992px) {
   section.product-page {
+    section.product__container {
+      .product__box {
+        // flex-direction: column;
+        // align-items: center;
+        // justify-content: center;
+
+        .swiper-slider-box {
+          // background-color: aqua;
+          // min-height: 680px;
+          // padding-top: 20px;
+          // padding-bottom: 20px;
+
+          min-height: auto;
+
+          // width: 100%;
+          // aspect-ratio: 1200/850;
+          // flex-direction: column;
+          // height: auto;
+
+          .large-image-slider {
+            // order: 0;
+            // width: 100%;
+            // aspect-ratio: 1200/800;
+            // min-height: 600px;
+
+            aspect-ratio: 1/0.9;
+
+            min-height: auto;
+
+            .swiper.mySwiper2 {
+              // width: 100%;
+              // aspect-ratio: 1200/800;
+
+              .swiper-slide {
+                // width: 100%;
+                // align-items: center;
+
+                img {
+                  // display: block;
+                  // aspect-ratio: auto;
+                  // object-fit: contain;
+                }
+              }
+            }
+          }
+
+          .thumbs-image-slider {
+            // order: 1;
+            // width: 100%;
+
+            .swiper.mySwiper {
+              .swiper-slide {
+                img {
+                }
+              }
+
+              .swiper-slide-thumb-active {
+              }
+            }
+          }
+        }
+      }
+    }
+
     section.related-products {
       .related-products__container {
         .wrap-related-products__content {
