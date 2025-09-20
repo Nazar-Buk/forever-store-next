@@ -14,9 +14,13 @@ import "swiper/css/thumbs";
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 
-const ProductSwiperSlider = ({ productData }) => {
-  console.log(productData, "productData");
-
+const ProductSwiperSlider = ({
+  productData,
+  setIsOpenFullScreen,
+  mainSwiperRef,
+  modalSwiperRef,
+  setSlideInd,
+}) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
@@ -60,6 +64,12 @@ const ProductSwiperSlider = ({ productData }) => {
           thumbs={{ swiper: thumbsSwiper }}
           modules={[FreeMode, Navigation, Thumbs]}
           className="mySwiper2"
+          onSwiper={(swiper) => (mainSwiperRef.current = swiper)}
+          onSlideChange={(swiper) => {
+            if (modalSwiperRef.current) {
+              modalSwiperRef.current.slideTo(swiper.activeIndex);
+            }
+          }}
           breakpoints={{
             320: {
               // від 0px і вище
@@ -71,8 +81,13 @@ const ProductSwiperSlider = ({ productData }) => {
             },
           }}
         >
-          {productData.images?.map((imageData) => (
-            <SwiperSlide>
+          {productData.images?.map((imageData, ind) => (
+            <SwiperSlide
+              onClick={() => {
+                setIsOpenFullScreen(true);
+                setSlideInd(ind);
+              }}
+            >
               <img src={imageData?.url} />
             </SwiperSlide>
           ))}

@@ -5,9 +5,10 @@ import { useRouter } from "next/navigation";
 
 import { ShopContext } from "../../../../context/ShopContext";
 import { assets } from "../../../../../public/assets/assets";
+import ToastSSRMessage from "@/utils/ToastSSRMessage";
 import RelatedProducts from "@/components/RelatedProducts";
 import ProductSwiperSlider from "@/components/sliders/ProductSwiperSlider";
-import ToastSSRMessage from "@/utils/ToastSSRMessage";
+import FullScreenSliderModal from "@/components/modals/FullScreenSliderModal";
 
 export default function ClientProduct({
   initialProductData,
@@ -27,39 +28,51 @@ export default function ClientProduct({
     setCheckedSize,
   } = useContext(ShopContext);
 
-  const smallPicturesBoxRef = useRef(null);
+  const mainSwiperRef = useRef(null);
+  const modalSwiperRef = useRef(null);
 
   const [productData, setProductData] = useState(initialProductData); // було false
-  const [image, setImage] = useState(productData?.images?.[0].url || null);
   const [size, setSize] = useState("");
-  const [isScrollable, setIsScrollable] = useState(false);
+  const [isOpenFullScreen, setIsOpenFullScreen] = useState(false);
+  const [slideInd, setSlideInd] = useState(0);
 
-  const checkIfScrollableBox = () => {
-    const box = smallPicturesBoxRef.current;
+  {
+    /* START OLD SLIDER */
+  }
+  // const smallPicturesBoxRef = useRef(null);
 
-    if (box) {
-      setIsScrollable(box.scrollWidth > box.clientWidth);
-    }
+  // const [image, setImage] = useState(productData?.images?.[0].url || null);
+  // const [isScrollable, setIsScrollable] = useState(false);
 
-    if (productData.image?.length <= 1) {
-      setIsScrollable(false);
-    }
-  };
+  // const checkIfScrollableBox = () => {
+  //   const box = smallPicturesBoxRef.current;
 
-  useEffect(() => {
-    setImage(image);
-  }, [image]);
+  //   if (box) {
+  //     setIsScrollable(box.scrollWidth > box.clientWidth);
+  //   }
 
-  useEffect(() => {
-    checkIfScrollableBox();
-    window.addEventListener("resize", checkIfScrollableBox);
+  //   if (productData.image?.length <= 1) {
+  //     setIsScrollable(false);
+  //   }
+  // };
 
-    if (productData.images) {
-      setImage(productData.images[0].url);
-    }
+  // useEffect(() => {
+  //   setImage(image);
+  // }, [image]);
 
-    return () => window.removeEventListener("resize", checkIfScrollableBox);
-  }, [productData, productId]);
+  // useEffect(() => {
+  //   checkIfScrollableBox();
+  //   window.addEventListener("resize", checkIfScrollableBox);
+
+  //   if (productData.images) {
+  //     setImage(productData.images[0].url);
+  //   }
+
+  //   return () => window.removeEventListener("resize", checkIfScrollableBox);
+  // }, [productData, productId]);
+  {
+    /* END OLD SLIDER */
+  }
 
   const sortedProductSizes = productData.sizes?.sort(
     (a, b) => desiredSizesOrder.indexOf(a) - desiredSizesOrder.indexOf(b)
@@ -81,6 +94,15 @@ export default function ClientProduct({
   return (
     <>
       {productError && <ToastSSRMessage message={productError} type="error" />}
+      {isOpenFullScreen && (
+        <FullScreenSliderModal
+          productData={productData}
+          setIsOpenFullScreen={setIsOpenFullScreen}
+          slideInd={slideInd}
+          mainSwiperRef={mainSwiperRef}
+          modalSwiperRef={modalSwiperRef}
+        />
+      )}
       {Object.keys(productData).length ? (
         <section className="product-page">
           <section className="product__container">
@@ -163,7 +185,13 @@ export default function ClientProduct({
               {/* END OLD SLIDER */}
 
               <div className="swiper-slider-box">
-                <ProductSwiperSlider productData={productData} />
+                <ProductSwiperSlider
+                  productData={productData}
+                  setIsOpenFullScreen={setIsOpenFullScreen}
+                  modalSwiperRef={modalSwiperRef}
+                  mainSwiperRef={mainSwiperRef}
+                  setSlideInd={setSlideInd}
+                />
               </div>
               <div className="product__details-box">
                 <div className="details__title">{productData.name}</div>

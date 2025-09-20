@@ -1,0 +1,50 @@
+@use "../base/variables" as v;
+
+@media (max-width: 992px) {
+  section.full-screen-slider__modal {
+    padding: 15px 5px;
+
+    .close-btn {
+      img {
+      }
+    }
+
+    .wrap-thumbs-and-large-sliders {
+      flex-direction: column;
+
+      .swiper {
+      }
+
+      .thumbs-image-slider-box__modal {
+        width: 100%;
+        order: 1;
+
+        .swiper.swiper-thumbs__modal {
+          .swiper-slide {
+            &.swiper-slide-thumb-active img {
+            }
+
+            img {
+            }
+          }
+
+          .swiper-slide-thumb-active {
+          }
+        }
+      }
+
+      .large-image-slider-box___modal {
+        order: 0;
+        height: calc(100% - v.$thumbs-width - v.$thumbs-large_slider-gap);
+        width: 100%;
+
+        .swiper.swiper-large__modal {
+          .swiper-slide {
+            img {
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -105,6 +105,7 @@ export const assets = {
   razorpay_logo: "/assets/razorpay_logo.png",
   stripe_logo: "/assets/stripe_logo.png",
   cross_icon: "/assets/cross_icon.png",
+  close_white: "/assets/close-white.png",
   error_404: "/assets/error_404.gif",
   empty_cart: "/assets/empty_cart.png",
   empty_products: "/assets/empty_products.jpg",
