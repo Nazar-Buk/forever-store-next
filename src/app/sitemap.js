@@ -23,8 +23,9 @@ export default async function sitemap(params) {
 
   const productsData = allProducts.map((product) => ({
     url: `${siteUrl}/product/${product._id}`,
-    lastModified: product.date,
-    changeFrequency: "weekly",
+    // lastModified: product.date,
+    lastModified: new Date(),
+    changeFrequency: "daily",
   }));
   //   console.log("=========allProducts  start==========");
   //   console.dir(allProducts, { depth: null, colors: true });
