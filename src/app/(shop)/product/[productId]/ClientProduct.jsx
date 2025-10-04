@@ -26,6 +26,8 @@ export default function ClientProduct({
     updateCartProduct,
     checkedSize,
     setCheckedSize,
+    isSizesAvailable,
+    setIsSizesAvailable,
   } = useContext(ShopContext);
 
   const mainSwiperRef = useRef(null);
@@ -89,6 +91,10 @@ export default function ClientProduct({
       // щоб працювало коректно треба вимкнути strict mode, це не важко =)))
       setCheckedSize("");
     };
+  }, []);
+
+  useEffect(() => {
+    setIsSizesAvailable(!!productData.sizes.length);
   }, []);
 
   return (
@@ -220,29 +226,36 @@ export default function ClientProduct({
                   {productData.price}
                 </div>
                 <p className="details__small-desc">{productData.description}</p>
-                <div className="details__choose-size">
-                  <p className="choose-size__title">Select Size</p>
-                  <div className="choose-size__items">
-                    {sortedProductSizes?.map((item, index) => (
-                      <div
-                        onClick={() => setSize(item)}
-                        key={index}
-                        className={`choose-size__item ${
-                          item === size ? "active" : ""
-                        }`}
-                      >
-                        {item}
-                      </div>
-                    ))}
+                {isSizesAvailable && (
+                  <div className="details__choose-size">
+                    <p className="choose-size__title">Select Size</p>
+                    <div className="choose-size__items">
+                      {sortedProductSizes?.map((item, index) => (
+                        <div
+                          onClick={() => setSize(item)}
+                          key={index}
+                          className={`choose-size__item ${
+                            item === size ? "active" : ""
+                          }`}
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
                 <button
                   onClick={() => {
-                    if (checkedSize) {
-                      updateCartProduct(checkedSize, size, productId);
-                      router.push("/cart");
+                    if (isSizesAvailable) {
+                      if (checkedSize) {
+                        updateCartProduct(checkedSize, size, productId);
+
+                        router.push("/cart");
+                      } else {
+                        addToCart(productId, size, isSizesAvailable);
+                      }
                     } else {
-                      addToCart(productId, size);
+                      addToCart(productId, size, isSizesAvailable);
                     }
                   }}
                   className="add-to-cart-btn"

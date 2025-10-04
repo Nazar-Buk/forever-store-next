@@ -34,8 +34,13 @@ const ShopContextProvider = (props) => {
 
   const desiredSizesOrder = ["S", "M", "L", "XL", "XXL"];
 
-  const addToCart = async (itemId, size) => {
-    if (!size) {
+  const [isSizesAvailable, setIsSizesAvailable] = useState(false);
+
+  const addToCart = async (itemId, size, isSizesAvailable) => {
+    // Якщо товар без розмірів → ставимо ключ "nosize"
+    const normalizedSize = size || "nosize";
+
+    if (isSizesAvailable && !size) {
       // тут використовується !size, бо я хочу щоб іф виконався коли прийшла пуста стрічка,
       // як би було просто size, то не показувалося б повідомлення та не зупинялася фн addToCart
       toast.error("Choose size");
@@ -46,16 +51,16 @@ const ShopContextProvider = (props) => {
     let cartData = structuredClone(cartItems); // так робиться глибока копія об`єкта, без зміни оригіналу.
 
     if (cartData[itemId]) {
-      if (cartData[itemId][size]) {
-        cartData[itemId][size] += 1; // додаємо кількість товарів конкретного розміру
+      if (cartData[itemId][normalizedSize]) {
+        cartData[itemId][normalizedSize] += 1; // додаємо кількість товарів конкретного розміру
       } else {
-        cartData[itemId][size] = 1; // додаємо товар нового розміру
+        cartData[itemId][normalizedSize] = 1; // додаємо товар нового розміру
       }
 
       toast.success("Product was added");
     } else {
       cartData[itemId] = {}; // додаємо новий запис (товар)
-      cartData[itemId][size] = 1; // додаємо новий розмір до щойно зробленого товару
+      cartData[itemId][normalizedSize] = 1; // додаємо новий розмір до щойно зробленого товару
 
       toast.success("Product was added");
     }
@@ -151,9 +156,12 @@ const ShopContextProvider = (props) => {
   };
 
   const updateQuantity = (itemId, size, quantity) => {
+    // Якщо товар без розмірів → ставимо ключ "nosize"
+    const normalizedSize = size || "nosize";
+
     let cartData = structuredClone(cartItems);
 
-    cartData[itemId][size] = quantity;
+    cartData[itemId][normalizedSize] = quantity;
 
     setCartItems(cartData);
   };
@@ -241,6 +249,8 @@ const ShopContextProvider = (props) => {
     // isAuthenticated,
     checkedSize,
     setCheckedSize,
+    isSizesAvailable,
+    setIsSizesAvailable,
     stripeProductData,
     setStripeProductData,
     getCartAmount,
