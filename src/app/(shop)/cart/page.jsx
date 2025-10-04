@@ -174,7 +174,9 @@ const Cart = () => {
                             <p className="details__price">
                               {currency} {productData?.price * item?.quantity}
                             </p>
-                            <div className="details__size">{item?.size}</div>
+                            {item?.size !== "nosize" && (
+                              <div className="details__size">{item?.size}</div>
+                            )}
                           </div>
                         </div>
                       </Link>
