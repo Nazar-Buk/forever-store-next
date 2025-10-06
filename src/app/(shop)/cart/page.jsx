@@ -143,9 +143,9 @@ const Cart = () => {
             <div className="cart__container">
               <div className="cart__body">
                 <div className="wrap-title-remove-all">
-                  <Title text1="Your " text2="CART" />
+                  <Title text1="ВАША " text2="КОРЗИНА" />
                   <button onClick={() => removeAllCartProducts()}>
-                    Remove all
+                    Видалити всі
                   </button>
                 </div>
 
@@ -182,7 +182,7 @@ const Cart = () => {
                       </Link>
                       <div className="wrap-qty-trash">
                         <div className="wrap-qty-input">
-                          <label htmlFor={`qty-${index}`}>Quantity:</label>
+                          <label htmlFor={`qty-${index}`}>Кількість:</label>
                           <div className="wrap-btns-input">
                             <div
                               onClick={() => {
@@ -243,13 +243,13 @@ const Cart = () => {
               <div className="cart-total-box">
                 <CartTotal allCartProducts={allCartProducts} />
                 <button onClick={() => router.push("/place-order")}>
-                  Proceed to checkout
+                  Оформити замовлення
                 </button>
               </div>
             </div>
           ) : (
             <div className="empty-cart-box">
-              <h1>Your Cart Is Empty !</h1>
+              <h1>Ваша корзина пуста!</h1>
               <div className="wrap-empty-img">
                 <img src={assets.empty_cart} alt="empty card icon" />
               </div>
@@ -268,7 +268,7 @@ const Cart = () => {
                   },
                 }}
               >
-                <button>Go To Product Page</button>
+                <button>Сторінка з товарами</button>
               </Link>
             </div>
           )}

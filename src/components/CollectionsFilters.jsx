@@ -20,19 +20,15 @@ const filtersSchema = yup.object({
   }),
   priceFrom: yup
     .string()
-    .test(
-      "is-valid-priceFrom",
-      "The price must be a positive number!",
-      (value) => {
-        if (!value) return true; // дозволяє пусте поле
+    .test("is-valid-priceFrom", "Ціна має бути додатнім числом!", (value) => {
+      if (!value) return true; // дозволяє пусте поле
 
-        const num = Number(value);
-        return !isNaN(num) && num > 0;
-      }
-    )
+      const num = Number(value);
+      return !isNaN(num) && num > 0;
+    })
     .test(
       "price-range",
-      "Price To must be greater than Price From",
+      "Ціна 'До' має бути більшою від ціни 'Від'",
       function (value) {
         const { priceTo } = this.parent; // доступ до інших полів, тому я тут пишу саме function а не стрілкову
 
@@ -46,16 +42,12 @@ const filtersSchema = yup.object({
     ),
   priceTo: yup
     .string()
-    .test(
-      "is-valid-priceTo",
-      "The price must be a positive number!",
-      (value) => {
-        if (!value) return true; // дозволяє пусте поле
+    .test("is-valid-priceTo", "Ціна має бути додатнім числом!", (value) => {
+      if (!value) return true; // дозволяє пусте поле
 
-        const num = Number(value);
-        return !isNaN(num) && num > 0;
-      }
-    ),
+      const num = Number(value);
+      return !isNaN(num) && num > 0;
+    }),
 });
 
 const CollectionsFilters = (props) => {
@@ -129,7 +121,7 @@ const CollectionsFilters = (props) => {
         // щоб підкатегрія була пустою при зміні категорії
         "subCategory",
         {
-          optionLabel: "All Sub-Category",
+          optionLabel: "Всі під-категорії",
           optionValue: "",
         },
         {
@@ -167,13 +159,13 @@ const CollectionsFilters = (props) => {
   }, [categoryData, category, subCategory, priceFrom, priceTo]);
 
   useEffect(() => {
-    if (selectedCategory.optionLabel.toLowerCase().includes("all")) {
+    if (selectedCategory.optionLabel.toLowerCase().includes("всі")) {
       setCategory("");
     }
   }, [category]);
 
   useEffect(() => {
-    if (selectedSubCategory.optionLabel.toLowerCase().includes("all")) {
+    if (selectedSubCategory.optionLabel.toLowerCase().includes("всі")) {
       setSubCategory("");
     }
   }, [subCategory]);
@@ -189,7 +181,7 @@ const CollectionsFilters = (props) => {
         noValidate // тепер не браузер валідує форму а useForm
       >
         <div className="filter-item-box">
-          <h6>Category</h6>
+          <h6>Категорія</h6>
           <Controller
             name="category"
             control={control}
@@ -204,7 +196,7 @@ const CollectionsFilters = (props) => {
                   onBlur={onBlur}
                   isSelectOpen={isCategorySelectOpen}
                   setIsCustomSelectOpen={setIsCategorySelectOpen}
-                  emptyLabel="All Category"
+                  emptyLabel="Всі категорії"
                   selectData={categoryData.map((item) => ({
                     optionLabel: item.categoryLabel,
                     optionValue: item.categoryValue,
@@ -216,7 +208,7 @@ const CollectionsFilters = (props) => {
           <p className="error">{errors.category?.message}</p>
         </div>
         <div className="filter-item-box">
-          <h6>Sub-Category</h6>
+          <h6>Під-категорія</h6>
           <Controller
             name="subCategory"
             control={control}
@@ -232,7 +224,7 @@ const CollectionsFilters = (props) => {
                   onBlur={onBlur}
                   isSelectOpen={isSubCategorySelectOpen}
                   setIsCustomSelectOpen={setIsSubCategorySelectOpen}
-                  emptyLabel="All Sub-Category"
+                  emptyLabel="Всі під-категорії"
                   selectData={subCategoryData.map((item) => ({
                     optionLabel: item.subCategoryLabel,
                     optionValue: item.subCategoryValue,
@@ -246,13 +238,13 @@ const CollectionsFilters = (props) => {
         </div>
 
         <div className="filter-item-box">
-          <h6>Set Price</h6>
+          <h6>Ціна</h6>
           <div className="price__fields">
             <div className="price__field">
               <input
                 className="price__input"
                 type="number"
-                placeholder="From: "
+                placeholder="Від: "
                 {...register("priceFrom")}
               />
             </div>
@@ -260,7 +252,7 @@ const CollectionsFilters = (props) => {
               <input
                 className="price__input"
                 type="number"
-                placeholder="To: "
+                placeholder="До: "
                 {...register("priceTo")}
               />
             </div>
@@ -270,7 +262,7 @@ const CollectionsFilters = (props) => {
           </p>
         </div>
         <div className="wrap-buttons">
-          <button type="submit">Apply Filters</button>
+          <button type="submit">Застосувати</button>
           <button
             type="button"
             onClick={() => {
@@ -281,7 +273,7 @@ const CollectionsFilters = (props) => {
               reset(); // скидає всі поля до початкових значень (defaultValues)
             }}
           >
-            Clear
+            Очистити
           </button>
         </div>
       </form>

@@ -10,7 +10,7 @@ const RelatedProducts = (props) => {
     <section className="related-products">
       <div className="related-products__container">
         <div className="wrap-related-products__content">
-          <Title text1="Related " text2="Products" />
+          <Title text1="СХОЖІ " text2="ТОВАРИ" />
           <div className="product__cards">
             {relatedProducts.map((item) => (
               <ProductItem

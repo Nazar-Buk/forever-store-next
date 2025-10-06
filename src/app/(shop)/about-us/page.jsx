@@ -11,37 +11,38 @@ export default function About() {
     <section className="about-page">
       <div className="about__container">
         <div className="about__body">
-          <Title text1="About " text2="Us" />
+          <Title text1="Про " text2="Нас" />
           <div className="about__info-box">
             <div className="info__image">
               <img src={assets.about_img} alt="about page image" />
             </div>
             <div className="info__text">
               <p>
-                Forever was born out of a passion for innovation and a desire to
-                revolutionize the way people shop online. Our journey began with
-                a simple idea: to provide a platform where customers can easily
-                discover, explore, and purchase a wide range of products from
-                the comfort of their homes.
+                Buk Sklad народився з пристрасті до інновацій та прагнення
+                змінити спосіб, у який люди роблять покупки онлайн. Наша історія
+                розпочалася з простої ідеї: створити платформу, де клієнти
+                можуть легко знаходити, досліджувати та купувати широкий
+                асортимент товарів, не виходячи з дому.
               </p>
               <p>
-                Since our inception, we've worked tirelessly to curate a diverse
-                selection of high-quality products that cater to every taste and
-                preference. From fashion and beauty to electronics and home
-                essentials, we offer an extensive collection sourced from
-                trusted brands and suppliers.
+                Від самого початку ми невпинно працюємо над тим, щоб пропонувати
+                різноманітний вибір високоякісних товарів, які задовольнять
+                будь-який смак та вподобання. Від моди та косметики до
+                електроніки та предметів для дому — ми пропонуємо широкий
+                асортимент, що постачається від надійних брендів та
+                постачальників.
               </p>
-              <b>Our Mission</b>
+              <b>Наша Місія</b>
               <p>
-                Our mission at Forever is to empower customers with choice,
-                convenience, and confidence. We're dedicated to providing a
-                seamless shopping experience that exceeds expectations, from
-                browsing and ordering to delivery and beyond.
+                Наша місія у Buk Sklad — надавати клієнтам свободу вибору,
+                зручність та впевненість. Ми прагнемо забезпечити безперебійну
+                покупку, яка перевищує очікування, від перегляду товарів і
+                оформлення замовлення до доставки та подальшого обслуговування.
               </p>
             </div>
           </div>
           <section className="choose-us">
-            <Title text1="Why " text2="Choose Us" />
+            <Title text1="Чому " text2="Вибирають Нас" />
             <div className="choose-us__table">
               <div className="choose-us__table-cell">
                 <div className="cell__content">

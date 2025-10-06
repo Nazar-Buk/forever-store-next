@@ -17,7 +17,7 @@ const CODForm = (props) => {
                 type="text"
                 id="first-name"
                 className="delivery-info__field"
-                placeholder="First name"
+                placeholder="Імʼя"
                 {...register("firstName")}
               />
               <p className="error">{errors.firstName?.message}</p>
@@ -28,7 +28,7 @@ const CODForm = (props) => {
                 type="text"
                 id="last-name"
                 className="delivery-info__field"
-                placeholder="Last name"
+                placeholder="Прізвище"
                 {...register("lastName")}
               />
               <p className="error">{errors.lastName?.message}</p>
@@ -39,7 +39,7 @@ const CODForm = (props) => {
               type="email"
               id="email"
               className="delivery-info__field long-field"
-              placeholder="Email address"
+              placeholder="Ел. адреса"
               {...register("email")}
             />
             <p className="error">{errors.email?.message}</p>
@@ -50,7 +50,7 @@ const CODForm = (props) => {
               type="text"
               id="street"
               className="delivery-info__field long-field"
-              placeholder="Street"
+              placeholder="Вулиця"
               {...register("street")}
             />
             <p className="error">{errors.street?.message}</p>
@@ -62,7 +62,7 @@ const CODForm = (props) => {
                 type="text"
                 id="city"
                 className="delivery-info__field"
-                placeholder="City"
+                placeholder="Місто"
                 {...register("city")}
               />
               <p className="error">{errors.city?.message}</p>
@@ -73,7 +73,7 @@ const CODForm = (props) => {
                 type="text"
                 id="state"
                 className="delivery-info__field"
-                placeholder="State"
+                placeholder="Населений пункт"
                 {...register("state")}
               />
               <p className="error">{errors.state?.message}</p>
@@ -85,7 +85,7 @@ const CODForm = (props) => {
                 type="number"
                 id="zip-code"
                 className="delivery-info__field"
-                placeholder="Zip code"
+                placeholder="Поштовий індекс"
                 {...register("zip_code")}
               />
               <p className="error">{errors.zip_code?.message}</p>
@@ -96,7 +96,7 @@ const CODForm = (props) => {
                 type="text"
                 id="country"
                 className="delivery-info__field"
-                placeholder="Country"
+                placeholder="Країна"
                 {...register("country")}
               />
               <p className="error">{errors.country?.message}</p>
@@ -107,7 +107,7 @@ const CODForm = (props) => {
               type="text"
               id="phone"
               className="delivery-info__field long-field"
-              placeholder="Phone"
+              placeholder="Телефон"
               {...register("phone")}
             />
             <p className="error">{errors.phone?.message}</p>
