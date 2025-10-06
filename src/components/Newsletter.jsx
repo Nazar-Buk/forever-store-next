@@ -8,20 +8,22 @@ const Newsletter = () => {
   return (
     <section className="newsletter">
       <div className="newsletter__container newsletter-body">
-        <h3 className="newsletter__title">Subscribe now & get 20% off</h3>
+        <h3 className="newsletter__title">
+          Підпишись зараз & отримай 20% знижки
+        </h3>
         <p className="newsletter__sub-title">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry.
+          Підпишіться на нашу розсилку, щоб першими дізнаватися про новинки,
+          ексклюзивні пропозиції та спеціальні акції.
         </p>
         <form onSubmit={onSubmitHandler} className="input-subscribe">
           <input
             type="email"
             className="email"
-            placeholder="Enter email"
+            placeholder="Введіть емейл"
             required
           />
           <button type="submit" className="subscribe-btn">
-            SUBSCRIBE
+            Підписатися
           </button>
         </form>
       </div>

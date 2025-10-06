@@ -28,33 +28,33 @@ const schema = yup.object({
   email: yup
     .string()
     // .email("Email format is incorrect!") до сраки така валідація
-    .required("This field is required!")
+    .required("Це поле обовʼязкове!")
     .matches(
       /[a-z0-9\._%+!$&*=^|~#%'`?{}/\-]+@([a-z0-9\-]+\.){1,}([a-z]{2,16})/,
       "Email format is incorrect!"
     ),
-  street: yup.string().required("This field is required!"),
-  city: yup.string().required("This field is required!"),
+  street: yup.string().required("Це поле обовʼязкове!"),
+  city: yup.string().required("Це поле обовʼязкове!"),
   state: yup.string(),
   zip_code: yup
     .number()
-    .typeError("Zip code must be a valid number")
-    .required("This field is required!"),
-  country: yup.string().required("This field is required!"),
+    .typeError("Поштовий індекс має бути додатнім числом!")
+    .required("Це поле обовʼязкове!"),
+  country: yup.string().required("Це поле обовʼязкове!"),
   phone: yup
     .string()
     .matches(
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
-      "Invalid phone number format. Use this format '0965151515'"
+      "Неправильний формат номеру. Використовуйте такий формат '0965151515'"
     )
     // .matches(/^\+?[1-9]\d{1,14}$/, "Invalid phone number format")
     .required("This field is required!"),
 });
 
 const paymentMethodTitles = {
-  stripe: { text1: "Stripe ", text2: "Information" },
-  liqpay: { text1: "LiqPay ", text2: "Information" },
-  cod: { text1: "Delivery ", text2: "Information" },
+  stripe: { text1: "Stripe ", text2: "ДАНІ" },
+  liqpay: { text1: "LiqPay ", text2: "ДАНІ" },
+  cod: { text1: "Дані ", text2: "Для Доставки" },
 };
 
 const PlaceOrder = () => {
@@ -177,7 +177,7 @@ const PlaceOrder = () => {
           <div className="payment__methods-and-cart-totals">
             {checkPaymentMethodType === "cod" && <CartTotal />}
 
-            <Title text1="Payment " text2="Method" />
+            <Title text1="Метод " text2="Оплати" />
             <div className="payments-group">
               <div className="payment-box">
                 <div className="wrap-radio-input">
@@ -218,7 +218,7 @@ const PlaceOrder = () => {
                   />
                 </div>
                 <label className="cod" htmlFor="cod">
-                  CASH ON DELIVERY
+                  ОПЛАТА НА ПОШТІ
                 </label>
               </div>
             </div>
@@ -234,7 +234,7 @@ const PlaceOrder = () => {
                 // onClick={() => handleSubmit(onSubmit)()} //() треба викликати функцію
                 onClick={handleSubmit(onSubmit)}
               >
-                Place payment
+                Здійснити оплату
               </button>
             )}
           </div>

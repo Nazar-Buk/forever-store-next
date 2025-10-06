@@ -29,7 +29,7 @@ const Pagination = (props) => {
     <div className="pagination-box">
       <div className="pagination-content">
         <div className="left-context-block">
-          <span>Products per page:</span>
+          <span>Кількість на сторінці:</span>
           <select
             className="products-per-page"
             name="products-per-page"
@@ -46,7 +46,7 @@ const Pagination = (props) => {
         </div>
         <div className="right-content-block">
           <span className="pagination-text">
-            {start} / {end} of {totalCount}
+            {start} / {end} із {totalCount}
           </span>
 
           <button

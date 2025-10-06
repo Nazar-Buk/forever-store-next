@@ -10,10 +10,10 @@ const LatestCollections = ({ latestProducts, latestProductsError }) => {
       )}
       <div className="latest-collection__container">
         <div className="wrap-latest-collection__content">
-          <Title text1="Latest " text2="Collections" />
+          <Title text1="Наші " text2="Новинки" />
           <p className="sub-title">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the.
+            Ознайомтеся з нашими новими колекціями та оберіть свій стиль на
+            кожен день.
           </p>
           <div className="product__cards">
             {latestProducts.map((item) => (

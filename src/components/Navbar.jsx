@@ -99,7 +99,7 @@ export default function Header() {
           <ul className="header__menu">
             <li>
               <NavItem href="/" customClass={"menu__item"}>
-                <p>HOME</p>
+                <p>ГОЛОВНА</p>
               </NavItem>
             </li>
             <li>
@@ -119,17 +119,17 @@ export default function Header() {
                 }}
                 customClass={"menu__item"}
               >
-                <p>COLLECTION</p>
+                <p>ТОВАРИ</p>
               </NavItem>
             </li>
             <li>
               <NavItem href="/about-us" customClass={"menu__item"}>
-                <p>ABOUT</p>
+                <p>ПРО НАС</p>
               </NavItem>
             </li>
             <li>
               <NavItem href="/contact" customClass={"menu__item"}>
-                <p>CONTACT</p>
+                <p>КОНТАКТИ</p>
               </NavItem>
             </li>
           </ul>
@@ -163,8 +163,8 @@ export default function Header() {
               <img src={assets.profile_icon} alt="profile-icon" />
             </Link>
             <div className="profile__menu">
-              <p className="profile__item">My Profile</p>
-              <p className="profile__item">Orders</p>
+              <p className="profile__item">Мій кабінет</p>
+              <p className="profile__item">Замовлення</p>
               {isAuthenticated && (
                 <p
                   className="profile__item"
@@ -175,11 +175,11 @@ export default function Header() {
               )}
               {isAuthenticated ? (
                 <p className="profile__item" onClick={logout}>
-                  Logout
+                  Вихід
                 </p>
               ) : (
                 <p className="profile__item">
-                  <Link href="/login">Login</Link>
+                  <Link href="/login">Вхід</Link>
                 </p>
               )}
             </div>
@@ -244,7 +244,7 @@ export default function Header() {
             <ul onClick={() => isOpenMobileMenu(false)} className="mobile-menu">
               <li>
                 <NavItem href="/" customClass={"mobile-menu__item"}>
-                  <p>HOME</p>
+                  <p>ГОЛОВНА</p>
                 </NavItem>
               </li>
               <li>
@@ -264,17 +264,17 @@ export default function Header() {
                   }}
                   customClass={"mobile-menu__item"}
                 >
-                  <p>COLLECTION</p>
+                  <p>ТОВАРИ</p>
                 </NavItem>
               </li>
               <li>
                 <NavItem href="/about-us" customClass={"mobile-menu__item"}>
-                  <p>ABOUT</p>
+                  <p>ПРО НАС</p>
                 </NavItem>
               </li>
               <li>
                 <NavItem href="/contact" customClass={"mobile-menu__item"}>
-                  <p>CONTACT</p>
+                  <p>КОНТАКТИ</p>
                 </NavItem>
               </li>
             </ul>

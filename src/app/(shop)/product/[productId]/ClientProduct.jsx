@@ -260,7 +260,7 @@ export default function ClientProduct({
                   }}
                   className="add-to-cart-btn"
                 >
-                  {checkedSize ? "EDIT PRODUCT" : "ADD TO CART"}
+                  {checkedSize ? "РЕДАГУВАТИ ТОВАР" : "ДОДАТИ ДО КОРЗИНИ"}
                 </button>
                 <hr />
                 <div className="details__policy">
@@ -278,17 +278,17 @@ export default function ClientProduct({
           <section className="product__description">
             <div className="description__container">
               <div className="description__body">
-                <b className="description__title-tab">Description</b>
+                <b className="description__title-tab">Опис</b>
                 <div className="description-text-box">
                   <p className="description__text">
-                    An e-commerce website is an online platform that facilitates
-                    the buying and selling of products or services over the
-                    internet. It serves as a virtual marketplace where
-                    businesses and individuals can showcase their products,
-                    interact with customers, and conduct transactions without
-                    the need for a physical presence. E-commerce websites have
-                    gained immense popularity due to their convenience,
-                    accessibility, and the global reach they offer.
+                    E-commerce вебсайт — це онлайн-платформа, яка забезпечує
+                    купівлю та продаж товарів або послуг через інтернет. Він
+                    слугує віртуальним ринком, де бізнеси та приватні особи
+                    можуть демонструвати свої продукти, взаємодіяти з клієнтами
+                    та проводити транзакції без необхідності фізичної
+                    присутності. E-commerce сайти здобули величезну популярність
+                    завдяки зручності, доступності та глобальному охопленню, яке
+                    вони надають.
                   </p>
                   <p className="description__text">
                     E-commerce websites typically display products or services

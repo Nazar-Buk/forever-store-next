@@ -85,13 +85,13 @@ const ClientCollection = ({
       let encodedCategoryData;
       let encodedSubCategory;
 
-      if (categoryData.toLowerCase().includes("all")) {
+      if (categoryData.toLowerCase().includes("всі")) {
         encodedCategoryData = "";
       } else {
         encodedCategoryData = encodeURIComponent(categoryData); // закодовує кирилицю, бо так просто її на бек  не треба відправляти, а от на беку розкодовується автоматично
       }
 
-      if (subCategoryData.toLowerCase().includes("all")) {
+      if (subCategoryData.toLowerCase().includes("всі")) {
         encodedSubCategory = "";
       } else {
         encodedSubCategory = encodeURIComponent(subCategoryData);
@@ -186,7 +186,7 @@ const ClientCollection = ({
               className="wrap-filter-heading"
               onClick={() => setShowFilter(!showFilter)}
             >
-              <h5>FILTERS</h5>
+              <h5>ФІЛЬТРИ</h5>
               <svg
                 style={
                   showFilter
@@ -245,7 +245,7 @@ const ClientCollection = ({
             ref={productsSectionRef}
             className="collection-content__settings"
           >
-            <Title text1="All " text2="Collections" />
+            <Title text1="Наші " text2="Новинки" />
             <div className="wrap-sorting-select">
               <select
                 onChange={(e) => setSort(e.target.value)}
@@ -253,10 +253,14 @@ const ClientCollection = ({
                 name="sorting"
                 defaultValue={sort}
               >
-                <option value="date_new">Sort by: Newest</option>
-                <option value="date_old">Sort by: Oldest</option>
-                <option value="price_asc">Sort by: Low to High</option>
-                <option value="price_desc">Sort by: High to Low</option>
+                <option value="date_new">Сортувати за: Найновіші</option>
+                <option value="date_old">Сортувати за: Найстаріші</option>
+                <option value="price_asc">
+                  Сортувати за: Від дешевих до дорогих
+                </option>
+                <option value="price_desc">
+                  Сортувати за: Від дорогих до дешевих
+                </option>
               </select>
             </div>
           </div>
@@ -278,7 +282,7 @@ const ClientCollection = ({
                 </div>
               ) : (
                 <div className="empty-page">
-                  <h2>No Products</h2>
+                  <h2>Немає продуктів</h2>
                   <img src={assets.empty_products} alt="no product" />
                 </div>
               )}

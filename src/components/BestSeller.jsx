@@ -10,10 +10,11 @@ const BestSeller = ({ bestsellers, bestsellersError }) => {
       )}
       <div className="best-sellers__container">
         <div className="wrap-best-sellers__content">
-          <Title text1="Best " text2="Seller" />
+          <Title text1="Хіти " text2="Продажів" />
           <p className="sub-title">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the.
+            Топ-продажі, що завоювали серця покупців. Ознайомтеся з
+            найпопулярнішими товарами сезону, які поєднують стиль, комфорт та
+            якість, і оберіть свій фаворит серед них.
           </p>
           <div className="product__cards">
             {bestsellers.map((item) => (
