@@ -288,7 +288,7 @@ export default function Header() {
                 <div className="wrap-icon ">
                   <img src={assets.profile_icon} alt="profile-icon" />
                 </div>
-                <p>PROFILE</p>
+                <p>ПРОФІЛЬ</p>
 
                 <svg
                   className="profile__arrow"
@@ -327,10 +327,10 @@ export default function Header() {
                   className="profile__menu"
                 >
                   <Link>
-                    <li className="profile__item">MY PROFILE</li>
+                    <li className="profile__item">МІЙ КАБІНЕТ</li>
                   </Link>
                   <Link>
-                    <li className="profile__item">ORDERS</li>
+                    <li className="profile__item">ЗАМОВЛЕННЯ</li>
                   </Link>
                   <Link>
                     <li className="profile__item">LOGOUT</li>
@@ -361,7 +361,7 @@ export default function Header() {
               <div className="wrap-icon">
                 <img src={assets.search_icon} alt="search" />
               </div>
-              <p>SEARCH</p>
+              <p>ЗНАЙТИ ТОВАР</p>
             </Link>
 
             <Link
@@ -375,7 +375,7 @@ export default function Header() {
                   {cartTotalCount}
                 </p>
               </div>
-              <p className="cart__title">SHOPPING CART</p>
+              <p className="cart__title">КОРЗИНА</p>
             </Link>
           </div>
         </div>

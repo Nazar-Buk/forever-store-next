@@ -255,7 +255,7 @@ const Login = () => {
                 {currentState === "Login" ? "Sign Up" : "Create"}
               </button>
             </form>
-            <Link href="/">Go Shopping</Link>
+            <Link href="/">Перейти До Покупок</Link>
           </div>
         </div>
       </div>
