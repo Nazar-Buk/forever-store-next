@@ -163,16 +163,15 @@ export default function Header() {
               <img src={assets.profile_icon} alt="profile-icon" />
             </Link>
             <div className="profile__menu">
-              <p className="profile__item">Мій кабінет</p>
-              <p className="profile__item">Замовлення</p>
               {isAuthenticated && (
                 <p
                   className="profile__item"
-                  onclick={() => router.push(adminPanelUrl)}
+                  onClick={() => router.push(adminPanelUrl)}
                 >
-                  <a href={adminPanelUrl}>Admin Panel</a>
+                  <a href={adminPanelUrl}>Мій кабінет</a>
                 </p>
               )}
+              <p className="profile__item">Замовлення</p>
               {isAuthenticated ? (
                 <p className="profile__item" onClick={logout}>
                   Вихід
@@ -326,15 +325,24 @@ export default function Header() {
                   onClick={() => isOpenMobileMenu(false)}
                   className="profile__menu"
                 >
-                  <Link>
-                    <li className="profile__item">МІЙ КАБІНЕТ</li>
-                  </Link>
-                  <Link>
+                  {isAuthenticated && (
+                    <a href={adminPanelUrl} target="_blank">
+                      <li className="profile__item">МІЙ КАБІНЕТ</li>
+                    </a>
+                  )}
+
+                  <Link href="/orders">
                     <li className="profile__item">ЗАМОВЛЕННЯ</li>
                   </Link>
-                  <Link>
-                    <li className="profile__item">LOGOUT</li>
-                  </Link>
+                  {isAuthenticated ? (
+                    <Link href="/" onClick={logout}>
+                      <li className="profile__item">ВИХІД</li>
+                    </Link>
+                  ) : (
+                    <Link href="/login">
+                      <li className="profile__item">ВХІД</li>
+                    </Link>
+                  )}
                 </ul>
               )}
             </div>
