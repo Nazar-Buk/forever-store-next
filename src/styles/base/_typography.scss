@@ -157,6 +157,8 @@ button {
 }
 
 input {
+  font-size: 16px;
+
   &:focus-visible {
     border: 1px solid orange !important;
     outline: none;
