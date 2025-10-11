@@ -17,7 +17,7 @@ import { ShopContext } from "@/context/ShopContext";
 const Login = () => {
   //   const navigate = useNavigate();
   const router = useRouter();
-  const [currentState, setCurrentState] = useState("Login"); // Sign Up  // Login
+  const [currentState, setCurrentState] = useState("Логін"); // Sign Up  // Login
   const { backendUrl, isLoading, setIsLoading } = useContext(ShopContext);
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -25,9 +25,9 @@ const Login = () => {
     name: yup
       .string()
       // не можна тут писати інші валідації бо почне кусатися із .test()
-      .test("name", "This field is required!", (value) => {
+      .test("name", "Це поле обовʼязкове!", (value) => {
         // завжди має повертаи true або false !!!!!!
-        if (currentState === "Login") {
+        if (currentState === "Логін") {
           // якщо це логін то валідація не потрібна
           return true; // коли true то все ок, валідація успішна, коли false то валідація не пройшла і буде помилка
         }
@@ -41,18 +41,18 @@ const Login = () => {
     email: yup
       .string()
       // .email("Email format is incorrect!") до сраки така валідація
-      .required("This field is required!")
+      .required("Це поле обовʼязкове!")
       .matches(
         /[a-z0-9\._%+!$&*=^|~#%'`?{}/\-]+@([a-z0-9\-]+\.){1,}([a-z]{2,16})/,
-        "Email format is incorrect!"
+        "Неправильний формат емейлу!"
       ),
     password: yup
       .string()
-      .required("This field is required!")
-      .min(8, "Use 8 or more characters!")
+      .required("Це поле обовʼязкове!")
+      .min(8, "Мінімум 8 символів!")
       .test(
         "password-strength",
-        "Password must include uppercase, lowercase, number and special character",
+        "Пароль повинен складатися із Великих літер, малих літер, чисел та спеціальних символів, наприклад '#'",
         (value) => {
           // Перевіряє, чи є хоча б одна велика літера (A–Z)
           const hasUpperCase = /[A-Z]/.test(value);
@@ -94,7 +94,7 @@ const Login = () => {
 
       const response = await axios.post(
         backendUrl +
-          `/api/user/${currentState === "Login" ? "login" : "register"}`,
+          `/api/user/${currentState === "Логін" ? "login" : "register"}`,
         {
           name: data.name,
           email: data.email,
@@ -108,7 +108,7 @@ const Login = () => {
       if (response.data.success) {
         console.log(response, "response SUCCESS");
         setIsLoading(false);
-        toast.success("Successful registration!");
+        toast.success("Реєстрація успішна!");
         reset();
         router.push("/");
       } else {
@@ -131,14 +131,14 @@ const Login = () => {
           <Title text1="" text2={currentState} />
           <div className="form-box">
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
-              {currentState === "Login" ? (
+              {currentState === "Логін" ? (
                 ""
               ) : (
                 <div className="wrap-input">
                   <input
                     className="login__input"
                     type="text"
-                    placeholder="Name"
+                    placeholder="Імʼя"
                     id="name"
                     {...register("name")}
                   />
@@ -160,7 +160,7 @@ const Login = () => {
                 <input
                   className="login__input"
                   type={isShowPassword ? "text" : "password"}
-                  placeholder="Password"
+                  placeholder="Пароль"
                   id="password"
                   {...register("password")}
                 />
@@ -230,29 +230,29 @@ const Login = () => {
                 </div>
                 <p className="error">{errors.password?.message}</p>
               </div>
-              {currentState === "Login" ? (
+              {currentState === "Логін" ? (
                 <div className="settings-box">
-                  <p className="settings__text">Forgot your password?</p>
+                  <p className="settings__text">Звбули пароль?</p>
                   <p
-                    onClick={() => setCurrentState("Sing Up")}
+                    onClick={() => setCurrentState("Реєстрація")}
                     className="settings__text"
                   >
-                    Create account
+                    Створити акаунт
                   </p>
                 </div>
               ) : (
                 <div className="settings-box">
                   <p
-                    onClick={() => setCurrentState("Login")}
+                    onClick={() => setCurrentState("Логін")}
                     className="settings__text"
                     style={{ marginLeft: "auto" }}
                   >
-                    Login
+                    Логін
                   </p>
                 </div>
               )}
               <button type="submit">
-                {currentState === "Login" ? "Sign Up" : "Create"}
+                {currentState === "Логін" ? "Увійти" : "Створити"}
               </button>
             </form>
             <Link href="/">Перейти До Покупок</Link>

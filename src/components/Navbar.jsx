@@ -159,9 +159,7 @@ export default function Header() {
             <img src={assets.search_icon} alt="search" />
           </div>
           <div className="wrap-icon profile">
-            <Link href="/login">
-              <img src={assets.profile_icon} alt="profile-icon" />
-            </Link>
+            <img src={assets.profile_icon} alt="profile-icon" />
             <div className="profile__menu">
               {isAuthenticated && (
                 <p
