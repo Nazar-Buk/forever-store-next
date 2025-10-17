@@ -15,7 +15,7 @@ const Orders = () => {
         <div className="orders__body">
           <Title text1="MY " text2="ORDERS" />
           <div className="orders__table">
-            {products.slice(1, 4).map((item) => (
+            {/* {products.slice(1, 4).map((item) => (
               <div key={item._id} className="orders__order">
                 <div className="order__description">
                   <div className="warp-img-description">
@@ -47,7 +47,7 @@ const Orders = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>
