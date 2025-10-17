@@ -62,7 +62,16 @@ const PlaceOrder = () => {
 
   const scrollToPayment = () => {
     // paymentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // window.scrollTo({ top: 0, behavior: "smooth" });
+
+    const el = document.querySelector(".payment-page"); // або свій клас/ід
+    if (!el) return;
+
+    const top = window.pageYOffset + el.getBoundingClientRect().top; // точна позиція елемента на сторінці
+    window.scrollTo({
+      top,
+      behavior: "smooth",
+    });
   };
 
   const router = useRouter();
