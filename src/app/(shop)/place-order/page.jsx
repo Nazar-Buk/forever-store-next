@@ -1,7 +1,7 @@
 // place-order це те саме що і checkout
 "use client";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 // import { DevTool } from "@hookform/devtools";
 import { useForm } from "react-hook-form";
@@ -58,12 +58,25 @@ const paymentMethodTitles = {
 };
 
 const PlaceOrder = () => {
+  const paymentRef = useRef(null);
+
+  const scrollToPayment = () => {
+    paymentRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const router = useRouter();
-  const { backendUrl, codProductData, getCartAmount } = useContext(ShopContext);
+  const {
+    backendUrl,
+    codProductData,
+    getCartAmount,
+    setCartData,
+    isAuthenticated,
+  } = useContext(ShopContext);
 
   const [loadingState, setLoadingState] = useState({
     loadingStripe: false,
     loadingLiqPay: false,
+    getCartDataLoading: true,
   });
 
   const form = useForm({
@@ -86,6 +99,21 @@ const PlaceOrder = () => {
   const { errors, isDirty, isValid, isSubmitting } = formState;
 
   const checkPaymentMethodType = watch("payment_method");
+
+  const clearCart = async () => {
+    try {
+      const response = await axios.delete(backendUrl + "/api/cart/clear", {
+        withCredentials: true,
+      });
+
+      if (response.data.success) {
+        setCartData({});
+      }
+    } catch (error) {
+      console.log(error, "error");
+      toast.error(error.message);
+    }
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -120,6 +148,13 @@ const PlaceOrder = () => {
 
         if (response.data.success) {
           toast.success(response.data.message);
+          if (isAuthenticated) {
+            clearCart();
+          } else {
+            localStorage.removeItem("cart");
+            setCartData({});
+          }
+
           router.push("/orders");
         } else {
           toast.error(response.data.message);
@@ -131,6 +166,39 @@ const PlaceOrder = () => {
     }
   };
 
+  const getCartData = async () => {
+    try {
+      setLoadingState((prev) => ({ ...prev, getCartDataLoading: true }));
+
+      const response = await axios.get(backendUrl + "/api/cart/list", {
+        withCredentials: true,
+      });
+
+      if (response.data.success) {
+        setCartData(response.data.cart);
+        setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
+      } else {
+        toast.error(response.data.message);
+        setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
+      }
+    } catch (error) {
+      console.log(error, "error");
+      setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
+      toast.error(error.message);
+    } finally {
+      setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getCartData();
+    } else {
+      setCartData(JSON.parse(localStorage.getItem("cart")) || { items: [] });
+      setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
+    }
+  }, [isAuthenticated]);
+
   const loading =
     loadingState.loadingStripe || loadingState.loadingLiqPay || isSubmitting;
 
@@ -138,7 +206,7 @@ const PlaceOrder = () => {
     <>
       {loading && <Loader />}
 
-      <section className="payment-page">
+      <section ref={paymentRef} className="payment-page">
         <div
           className={`payment__container ${
             checkPaymentMethodType !== "cod" ? "custom-payment-container" : ""
@@ -179,7 +247,7 @@ const PlaceOrder = () => {
 
             <Title text1="Метод " text2="Оплати" />
             <div className="payments-group">
-              <div className="payment-box">
+              <div onClick={scrollToPayment} className="payment-box">
                 <div className="wrap-radio-input">
                   <input
                     className="stripe"
@@ -193,7 +261,7 @@ const PlaceOrder = () => {
                   <img src={assets.stripe_logo} alt="stripe" />
                 </label>
               </div>
-              <div className="payment-box">
+              <div onClick={scrollToPayment} className="payment-box">
                 <div className="wrap-radio-input">
                   <input
                     className="liqpay"
@@ -207,7 +275,7 @@ const PlaceOrder = () => {
                   <img src={assets.liqpay_logo} alt="liqpay" />
                 </label>
               </div>
-              <div className="payment-box">
+              <div onClick={scrollToPayment} className="payment-box">
                 <div className="wrap-radio-input">
                   <input
                     className="cod"

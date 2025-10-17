@@ -25,7 +25,7 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [checkedSize, setCheckedSize] = useState("");
 
   const currency = "$";
@@ -36,197 +36,145 @@ const ShopContextProvider = (props) => {
 
   const [isSizesAvailable, setIsSizesAvailable] = useState(false);
 
-  const addToCart = async (itemId, size, isSizesAvailable) => {
-    // Якщо товар без розмірів → ставимо ключ "nosize"
-    const normalizedSize = size || "nosize";
+  const [cartData, setCartData] = useState({});
 
-    if (isSizesAvailable && !size) {
-      // тут використовується !size, бо я хочу щоб іф виконався коли прийшла пуста стрічка,
-      // як би було просто size, то не показувалося б повідомлення та не зупинялася фн addToCart
-      toast.error("Choose size");
-
-      return; // зупиняє фн addToCart
-    }
-
-    let cartData = structuredClone(cartItems); // так робиться глибока копія об`єкта, без зміни оригіналу.
-
-    if (cartData[itemId]) {
-      if (cartData[itemId][normalizedSize]) {
-        cartData[itemId][normalizedSize] += 1; // додаємо кількість товарів конкретного розміру
-      } else {
-        cartData[itemId][normalizedSize] = 1; // додаємо товар нового розміру
-      }
-
-      toast.success("Product was added");
-    } else {
-      cartData[itemId] = {}; // додаємо новий запис (товар)
-      cartData[itemId][normalizedSize] = 1; // додаємо новий розмір до щойно зробленого товару
-
-      toast.success("Product was added");
-    }
-
-    // КОЖНІ КВАДРАТНІ ДУЖКИ ЦЕ ЯК КЛЮЧ ОБ'ЄКТА, ПІСЛЯ НИХ МОЖНА СТАВИТИ : (умовно)
-
-    ////////////////// отримаємо щось таке
-    // {
-    //   101: { S: 2, M: 1 }, // Товар із id 101 має 2 розміри S та 1 розмір M
-    //   102: { L: 3 }        // Товар із id 102 має 3 розміри L
-    // }
-    //////////////////
-
-    //////////////////
-    // ось структура коли є ще кольори
-    // cartData[itemId][color][size]
-    // addToCart(101, "blue", "L");
-    // Результат:
-    // cartItems = {
-    //   101: {
-    //     red: {
-    //       M: 2,
-    //       S: 1
-    //     },
-    //     blue: {
-    //       L: 1
-    //     }
-    //   }
-    // };
-    //////////////////
-
-    setCartItems(cartData);
-  };
-  //////////////////////////////////////////////////
-
-  const updateCartProduct = (oldSize, newSize, productId) => {
-    let cartData = structuredClone(cartItems);
-
-    if (cartData[productId][oldSize]) {
-      cartData[productId][newSize] = cartData[productId][oldSize];
-
-      if (oldSize !== newSize) {
-        delete cartData[productId][oldSize];
-      }
-
-      setCartItems(cartData);
-      toast.success("Product was updated");
-    } else {
-      toast.error("Product wasn't updated");
-    }
-  };
-  //////////////////////////////////////////////////
-
-  const getCartCount = () => {
-    let totalCount = 0;
-
-    for (const items in cartItems) {
-      // бігаємо по найстаршому по ієрархії об'єкту,  items -- об'єкт який в середині (в даному випадку це id  продукта)
-      for (const item in cartItems[items]) {
-        // проходжуся по об'єкту що нижче по ієрархії,  cartItems[items] -- пробігаю по об'єкту ключом якого є id  продукта;
-        // item -- конкретний об'єкт що є на кожній ітерації
-
-        try {
-          if (cartItems[items][item] > 0) {
-            // cartItems[items][item] -- кількість товарів даного розміру,
-            // саме їх ми і бужемо рахувати, щоб дізнатися скільки одиниць товарів у нас буде
-            totalCount = totalCount + cartItems[items][item];
-          }
-        } catch (error) {}
-      }
-    }
-
-    return totalCount;
-  };
-
-  const [allCartProducts, setAllCartProducts] = useState([]);
-
-  const getCartAmount = () => {
-    let totalAmount = 0;
-
-    for (const items in cartItems) {
-      let itemInfo = allCartProducts?.find((product) => product._id === items);
-
-      for (const item in cartItems[items]) {
-        try {
-          if (cartItems[items][item] > 0) {
-            totalAmount += itemInfo.price * cartItems[items][item];
-          }
-        } catch (e) {}
-      }
-    }
-    return totalAmount;
-  };
-
-  const updateQuantity = (itemId, size, quantity) => {
-    // Якщо товар без розмірів → ставимо ключ "nosize"
-    const normalizedSize = size || "nosize";
-
-    let cartData = structuredClone(cartItems);
-
-    cartData[itemId][normalizedSize] = quantity;
-
-    setCartItems(cartData);
-  };
-
-  const removeAllCartProducts = () => {
-    setCartItems({});
-  };
-
-  const getProductsData = async () => {
+  const getCartData = async () => {
     try {
-      setIsLoading(true);
-
-      const response = await axios.get(backendUrl + "/api/product/list");
+      const response = await axios.get(backendUrl + "/api/cart/list", {
+        withCredentials: true,
+      });
 
       if (response.data.success) {
-        setIsLoading(false);
-
-        setProducts(response.data.products);
-        toast.success(response.data.message);
+        setCartData(response.data.cart);
       } else {
-        setIsLoading(false);
-
         toast.error(response.data.message);
       }
     } catch (error) {
-      setIsLoading(false);
-
       console.log(error, "error");
       toast.error(error.message);
     }
   };
 
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    if (isAuthenticated) {
+      getCartData();
+    } else {
+      const storedCart = JSON.parse(localStorage.getItem("cart")) || {};
+      setCartData(storedCart);
+    }
+  }, [isAuthenticated]);
 
-  // const checkAuth = async () => {
-  //   try {
-  //     const response = await axios.get(backendUrl + "/api/user/check-auth", {
-  //       withCredentials: true, // обов'язково, щоб кука була передана на сервер
-  //     });
+  //////////// Для прикладу ///////////////
+  // const addToCart = async (itemId, size, isSizesAvailable) => {
+  //   // Якщо товар без розмірів → ставимо ключ "nosize"
+  //   const normalizedSize = size || "nosize";
 
-  //     console.log(response, "response from checkAuth");
+  //   if (isSizesAvailable && !size) {
+  //     // тут використовується !size, бо я хочу щоб іф виконався коли прийшла пуста стрічка,
+  //     // як би було просто size, то не показувалося б повідомлення та не зупинялася фн addToCart
+  //     toast.error("Choose size");
 
-  //     if (response.data.success) {
-  //       setIsAuthenticated(true);
-  //       toast.success(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.log("Auth check failed:", error);
-  //     setIsAuthenticated(false);
-  //     // toast.error(error.data.message);
+  //     return; // зупиняє фн addToCart
   //   }
+
+  //   let cartData = structuredClone(cartItems); // так робиться глибока копія об`єкта, без зміни оригіналу.
+
+  //   if (cartData[itemId]) {
+  //     if (cartData[itemId][normalizedSize]) {
+  //       cartData[itemId][normalizedSize] += 1; // додаємо кількість товарів конкретного розміру
+  //     } else {
+  //       cartData[itemId][normalizedSize] = 1; // додаємо товар нового розміру
+  //     }
+
+  //     toast.success("Product was added");
+  //   } else {
+  //     cartData[itemId] = {}; // додаємо новий запис (товар)
+  //     cartData[itemId][normalizedSize] = 1; // додаємо новий розмір до щойно зробленого товару
+
+  //     toast.success("Product was added");
+  //   }
+
+  //   // КОЖНІ КВАДРАТНІ ДУЖКИ ЦЕ ЯК КЛЮЧ ОБ'ЄКТА, ПІСЛЯ НИХ МОЖНА СТАВИТИ : (умовно)
+
+  //   ////////////////// отримаємо щось таке
+  //   // {
+  //   //   101: { S: 2, M: 1 }, // Товар із id 101 має 2 розміри S та 1 розмір M
+  //   //   102: { L: 3 }        // Товар із id 102 має 3 розміри L
+  //   // }
+  //   //////////////////
+
+  //   //////////////////
+  //   // ось структура коли є ще кольори
+  //   // cartData[itemId][color][size]
+  //   // addToCart(101, "blue", "L");
+  //   // Результат:
+  //   // cartItems = {
+  //   //   101: {
+  //   //     red: {
+  //   //       M: 2,
+  //   //       S: 1
+  //   //     },
+  //   //     blue: {
+  //   //       L: 1
+  //   //     }
+  //   //   }
+  //   // };
+  //   //////////////////
+
+  //   setCartItems(cartData);
   // };
+  //////////////////////////////////////////////////
 
-  // console.log(isAuthenticated, "isAuthenticated CONTEXT");
+  const [increaseCartQuantity, setIncreaseCartQuantity] = useState(0);
 
-  // useEffect(() => {
-  //   checkAuth();
-  // }, []);
+  const getCartCount = () => {
+    let totalCount = 0;
+    totalCount = cartData?.items?.reduce(
+      (acc, curr) => (acc += curr.quantity),
+      0
+    );
+
+    if (!totalCount) {
+      totalCount = 0;
+    }
+
+    totalCount += increaseCartQuantity;
+
+    return totalCount;
+  };
+
+  const getCartAmount = () => {
+    const allProducts = cartData?.items || [];
+    const cartAmount = allProducts.reduce((acc, curr) => {
+      return (acc += curr.priceAtAdd * curr.quantity);
+    }, 0);
+
+    return cartAmount;
+  };
 
   useEffect(() => {
-    getProductsData();
-  }, []);
+    getCartCount();
+  }, [cartData]);
 
   const [stripeProductData, setStripeProductData] = useState([]);
   const [codProductData, setCodProductData] = useState([]);
+
+  useEffect(() => {
+    const allProducts = cartData?.items || [];
+
+    const paymentProducts = allProducts.map((item) => {
+      const { product } = item;
+
+      return {
+        ...product,
+        quantity: item.quantity,
+        price: item.priceAtAdd,
+      };
+    });
+
+    setStripeProductData(paymentProducts);
+    setCodProductData(paymentProducts);
+  }, [cartData]);
 
   const value = {
     products,
@@ -237,27 +185,25 @@ const ShopContextProvider = (props) => {
     showSearch,
     setShowSearch,
     cartItems,
-    addToCart,
     getCartCount,
-    updateQuantity,
-    removeAllCartProducts,
-    updateCartProduct,
     backendUrl,
     desiredSizesOrder,
     isLoading,
     setIsLoading,
-    // isAuthenticated,
+    isAuthenticated,
+    setIsAuthenticated,
     checkedSize,
     setCheckedSize,
     isSizesAvailable,
     setIsSizesAvailable,
     stripeProductData,
     setStripeProductData,
-    getCartAmount,
-    allCartProducts,
-    setAllCartProducts,
     codProductData,
     setCodProductData,
+    cartData,
+    setCartData,
+    setIncreaseCartQuantity,
+    getCartAmount,
   };
 
   return (

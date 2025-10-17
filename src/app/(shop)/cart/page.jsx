@@ -1,10 +1,12 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
+import debounce from "lodash/debounce";
 // import { Link, useNavigate } from "react-router-dom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import { ShopContext } from "@/context/ShopContext";
 import { assets } from "../../../../public/assets/assets";
@@ -20,118 +22,151 @@ const Cart = () => {
 
   const {
     currency,
-    cartItems,
-    updateQuantity,
-    removeAllCartProducts,
+
     setCheckedSize,
-    setStripeProductData,
-    allCartProducts,
-    setAllCartProducts,
-    setCodProductData,
+    setCartData,
+    cartData,
+    setIncreaseCartQuantity,
+    isAuthenticated,
   } = useContext(ShopContext);
 
-  const [isLoadingState, setIsLoadingState] = useState({
-    isProductsLoading: true,
+  //  створюємо функцію один раз
+  const debouncedSendQuantityRef = useRef();
+
+  const [loadingState, setLoadingState] = useState({
+    getCartDataLoading: true,
+    clearCartLoading: false,
   });
 
-  const [cartData, setCartData] = useState([]);
-
-  useEffect(() => {
-    const tempData = [];
-
-    for (const items in cartItems) {
-      for (const item in cartItems[items]) {
-        if (cartItems[items][item] > 0) {
-          tempData.push({
-            _id: items, // aaaab -- id-шка
-            size: item, // S or M... розмір буквою
-            quantity: cartItems[items][item], // кількість продуктів у даному розмірі
-          });
-        }
-      }
-    }
-
-    setCartData(tempData);
-  }, [cartItems]);
-
-  const fetchProductData = async (productId) => {
+  const getCartData = async () => {
     try {
-      const response = await axios.post(backendUrl + "/api/product/single", {
-        productId,
-        // productId: "67f50cbae3550da216e4c393",
+      setLoadingState((prev) => ({ ...prev, getCartDataLoading: true }));
+
+      const response = await axios.get(backendUrl + "/api/cart/list", {
+        withCredentials: true,
       });
 
       if (response.data.success) {
-        return { data: response.data.product, error: null };
+        setCartData(response.data.cart);
+        setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
       } else {
-        throw new Error(response.data.message);
+        toast.error(response.data.message);
+        setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
       }
     } catch (error) {
       console.log(error, "error");
-      return {
-        data: {},
-        error: error?.response?.data?.message || error?.message,
-      };
+      setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
+      toast.error(error.message);
+    } finally {
+      setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
     }
   };
 
-  const getAllCartProducts = async () => {
-    const promises = cartData.map((item) => fetchProductData(item._id));
-    const results = await Promise.allSettled(promises);
-
-    // відфільтровуємо успішні запити
-    const successfulProducts = results
-      .filter((result) => result.status === "fulfilled")
-      .map((result) => result.value.data);
-
-    // відфільтровуємо НЕ успішні запити
-    const failedProducts = results
-      .filter((result) => result.status === "rejected")
-      .map((result) => result.reason);
-
-    return successfulProducts;
-  };
-
-  // ⚡️ завантажуємо всі продукти, коли змінюється cartData
-  useEffect(() => {
-    setIsLoadingState((prev) => ({ ...prev, isProductsLoading: true }));
-
-    if (!cartData.length) {
-      setIsLoadingState((prev) => ({ ...prev, isProductsLoading: false }));
-      return;
-    }
-
-    const fetchAllCartProducts = async () => {
-      try {
-        const cartProducts = await getAllCartProducts();
-        setAllCartProducts(cartProducts);
-        setIsLoadingState((prev) => ({ ...prev, isProductsLoading: false }));
-      } catch (error) {
-        console.log(error, "error");
-        setIsLoadingState((prev) => ({ ...prev, isProductsLoading: false }));
-      }
-    };
-
-    fetchAllCartProducts();
-  }, [cartData.length]);
-
-  useEffect(() => {
-    const paymentProducts = cartData.map((itemCartData) => {
-      const itemAllCartProducts = allCartProducts.find(
-        (item) => item._id === itemCartData._id
+  const sendQuantity = async (productId, size, quantity) => {
+    try {
+      const response = await axios.patch(
+        backendUrl + "/api/cart/update",
+        {
+          productId,
+          size,
+          quantity,
+        },
+        {
+          withCredentials: true,
+        }
       );
 
-      return {
-        ...itemAllCartProducts,
-        quantity: itemCartData.quantity,
-      };
+      if (!response.data.success) {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error, "error");
+      toast.error(error.message);
+    }
+  };
+
+  // ✅ Ініціалізуємо debounce лише один раз
+  if (!debouncedSendQuantityRef.current) {
+    debouncedSendQuantityRef.current = debounce(
+      (itemId, size, quantity) => sendQuantity(itemId, size, quantity),
+      500
+    );
+  }
+
+  const updateQuantity = (
+    productId,
+    size,
+    quantity,
+    itemId,
+    actionType,
+    qtyForCondition = null
+  ) => {
+    setCartData((prev) => {
+      let updatedCartProducts = prev.items.map((item) => {
+        if (item._id === itemId && item.size === size) {
+          return { ...item, quantity };
+        }
+
+        return item;
+      });
+
+      if (!quantity) {
+        updatedCartProducts = updatedCartProducts.filter(
+          (item) => item?.quantity !== 0
+        );
+      }
+
+      const updatedCart = { ...prev, items: [...updatedCartProducts] };
+
+      if (!isAuthenticated) {
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+      }
+
+      return updatedCart;
     });
 
-    setStripeProductData(paymentProducts);
-    setCodProductData(paymentProducts);
-  }, [cartData, allCartProducts]);
+    if (isAuthenticated) {
+      if (actionType === "minus" && qtyForCondition < 1) {
+        return;
+      } else {
+        debouncedSendQuantityRef.current(productId, size, quantity);
+      }
+    }
+  };
 
-  const isLoading = isLoadingState.isProductsLoading;
+  const clearCart = async () => {
+    try {
+      setLoadingState((prev) => ({ ...prev, clearCartLoading: true }));
+
+      const response = await axios.delete(backendUrl + "/api/cart/clear", {
+        withCredentials: true,
+      });
+
+      if (response.data.success) {
+        setCartData({});
+        setLoadingState((prev) => ({ ...prev, clearCartLoading: false }));
+
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.log(error, "error");
+      toast.error(error.message);
+      setLoadingState((prev) => ({ ...prev, clearCartLoading: false }));
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getCartData();
+      setIncreaseCartQuantity(0);
+    } else {
+      setCartData(JSON.parse(localStorage.getItem("cart")) || { items: [] });
+      setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
+    }
+  }, [isAuthenticated]);
+
+  const isLoading =
+    loadingState.getCartDataLoading || loadingState.clearCartLoading;
 
   return (
     <>
@@ -139,40 +174,46 @@ const Cart = () => {
         <Loader />
       ) : (
         <section className="cart-page">
-          {cartData.length ? (
+          {cartData?.items?.length ? (
             <div className="cart__container">
               <div className="cart__body">
                 <div className="wrap-title-remove-all">
                   <Title text1="ВАША " text2="КОРЗИНА" />
-                  <button onClick={() => removeAllCartProducts()}>
+                  <button
+                    onClick={() => {
+                      if (isAuthenticated) {
+                        clearCart();
+                      } else {
+                        localStorage.removeItem("cart");
+                        setCartData({});
+                      }
+                    }}
+                  >
                     Видалити всі
                   </button>
                 </div>
 
-                {cartData.map((item, index) => {
-                  const productData = allCartProducts?.find(
-                    (product) => product._id === item._id
-                  );
+                {cartData?.items.map((item, index) => {
+                  const { product } = item;
 
-                  // const checkedSize = item.size;
                   return (
-                    <div key={index} className="cart__product">
+                    <div key={item._id} className="cart__product">
                       <Link
-                        href={`/product/${item._id}`}
+                        href={`/product/${product._id}`}
                         onClick={() => setCheckedSize(item?.size)}
                         className="wrap-image-details"
                       >
                         <div className="wrap-cart__product-img">
                           <img
-                            src={productData?.images[0].url}
+                            src={product?.images[0].url}
                             alt="product image"
                           />
                         </div>
                         <div className="cart__product-details">
-                          <p className="details__name">{productData?.name}</p>
+                          <p className="details__name">{product?.name}</p>
                           <div className="wrap-details__price-size">
                             <p className="details__price">
-                              {currency} {productData?.price * item?.quantity}
+                              {currency} {item?.priceAtAdd * item?.quantity}
                             </p>
                             {item?.size !== "nosize" && (
                               <div className="details__size">{item?.size}</div>
@@ -189,7 +230,16 @@ const Cart = () => {
                                 const quantity =
                                   item.quantity - 1 > 1 ? item.quantity - 1 : 1;
 
-                                updateQuantity(item._id, item.size, quantity);
+                                const qtyForCondition = item.quantity - 1;
+
+                                updateQuantity(
+                                  product._id,
+                                  item?.size,
+                                  quantity,
+                                  item._id,
+                                  "minus",
+                                  qtyForCondition
+                                );
                               }}
                               className="decrease"
                             >
@@ -218,7 +268,13 @@ const Cart = () => {
                               onClick={() => {
                                 const quantity = item.quantity + 1;
 
-                                updateQuantity(item._id, item.size, quantity);
+                                updateQuantity(
+                                  product._id,
+                                  item?.size,
+                                  quantity,
+                                  item._id,
+                                  "plus"
+                                );
                               }}
                               className="increase"
                             >
@@ -228,9 +284,15 @@ const Cart = () => {
                         </div>
                         <div className="wrap-trash-icon">
                           <img
-                            onClick={() =>
-                              updateQuantity(item._id, item.size, 0)
-                            }
+                            onClick={() => {
+                              updateQuantity(
+                                product._id,
+                                item.size,
+                                0,
+                                item._id,
+                                "single-remove"
+                              );
+                            }}
                             src={assets.bin_icon}
                             alt="delete icon"
                           />
@@ -241,7 +303,7 @@ const Cart = () => {
                 })}
               </div>
               <div className="cart-total-box">
-                <CartTotal allCartProducts={allCartProducts} />
+                <CartTotal allCartProducts={cartData?.items} />
                 <button onClick={() => router.push("/place-order")}>
                   Оформити замовлення
                 </button>

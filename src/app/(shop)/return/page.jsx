@@ -3,13 +3,15 @@
 import { useEffect, useState, useContext } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 import { ShopContext } from "@/context/ShopContext";
 import Loader from "@/components/Loader";
 import { assets } from "../../../../public/assets/assets";
 
 const Return = () => {
-  const { backendUrl } = useContext(ShopContext);
+  const { backendUrl, isAuthenticated, setCartData } = useContext(ShopContext);
   const searchParams = useSearchParams();
 
   const [status, setStatus] = useState("");
@@ -23,6 +25,32 @@ const Return = () => {
         .then((data) => setStatus(data.status));
     }
   }, [sessionId]);
+
+  const clearCart = async () => {
+    try {
+      const response = await axios.delete(backendUrl + "/api/cart/clear", {
+        withCredentials: true,
+      });
+
+      if (response.data.success) {
+        setCartData({});
+      }
+    } catch (error) {
+      console.log(error, "error");
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (status === "paid" || status === "succeeded" || status === "complete") {
+      if (isAuthenticated) {
+        clearCart();
+      } else {
+        localStorage.removeItem("cart");
+        setCartData({});
+      }
+    }
+  }, [status]);
 
   return (
     <>

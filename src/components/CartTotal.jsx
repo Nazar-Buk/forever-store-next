@@ -4,20 +4,21 @@ import { useContext } from "react";
 import { ShopContext } from "@/context/ShopContext";
 import Title from "@/components/Title";
 
-const CartTotal = ({ allCartProducts }) => {
+const CartTotal = () => {
   const { currency, delivery_fee, getCartAmount } = useContext(ShopContext);
+
+  const cartAmount = getCartAmount();
 
   return (
     <section className="cart-total">
       <div className="cart-total__body">
         <Title text1="РАЗОМ " text2="В КОРЗИНІ" />
-        Разом у корзині
         <div className="cart-totals__info">
           <div className="info__item">
             <div className="info__name">Разом</div>
             <div className="info__price">
               {currency}
-              {getCartAmount()}.00
+              {cartAmount}.00
             </div>
           </div>
           <div className="info__item">
@@ -31,8 +32,7 @@ const CartTotal = ({ allCartProducts }) => {
               <b>Загалом</b>
             </div>
             <div className="info__price">
-              {currency}{" "}
-              {getCartAmount() === 0 ? 0 : getCartAmount() + delivery_fee}.00
+              {currency} {cartAmount === 0 ? 0 : cartAmount + delivery_fee}.00
             </div>
           </div>
         </div>
