@@ -61,7 +61,7 @@ const PlaceOrder = () => {
   const paymentRef = useRef(null);
 
   const scrollToPayment = () => {
-    paymentRef.current?.scrollIntoView({ behavior: "smooth" });
+    paymentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const router = useRouter();
