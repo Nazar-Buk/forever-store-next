@@ -50,7 +50,7 @@ const Return = () => {
         setCartData({});
       }
     }
-  }, [status]);
+  }, [status, isAuthenticated]);
 
   return (
     <>
