@@ -21,10 +21,10 @@ export default function Header() {
   const {
     setShowSearch,
     getCartCount,
-    isLoading,
     setIsLoading,
     backendUrl,
-    // isAuthenticated,
+    setIsAuthenticated,
+    isAuthenticated,
   } = useContext(ShopContext);
   const cartTotalCount = getCartCount();
 
@@ -35,15 +35,11 @@ export default function Header() {
     setVisible(isOpen);
   };
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   const checkAuth = async () => {
     try {
       const response = await axios.get(backendUrl + "/api/user/check-auth", {
         withCredentials: true, // обов'язково, щоб кука була передана на сервер
       });
-
-      console.log(response, "response from checkAuth");
 
       if (response.data.success) {
         setIsAuthenticated(true);
@@ -52,11 +48,8 @@ export default function Header() {
     } catch (error) {
       console.log("Auth check failed:", error);
       setIsAuthenticated(false);
-      // toast.error(error.data.message);
     }
   };
-
-  // console.log(isAuthenticated, "isAuthenticated CONTEXT");
 
   useEffect(() => {
     checkAuth();
@@ -74,7 +67,6 @@ export default function Header() {
       );
 
       if (response.data.success) {
-        // console.log(response, "response Logout");
         setIsLoading(false);
         router.push("/login");
         toast.success(response.data.message);
@@ -183,7 +175,9 @@ export default function Header() {
           </div>
           <Link href="/cart" className="wrap-icon cart-icon">
             <img src={assets.cart_icon} alt="shopping cart" />
-            <p className={`${cartTotalCount && "active"}`}>{cartTotalCount}</p>
+            <p className={`${cartTotalCount && "active"}`}>
+              {cartTotalCount ? cartTotalCount : 0}
+            </p>
           </Link>
           <div
             onClick={() => isOpenMobileMenu(true)}
@@ -378,7 +372,7 @@ export default function Header() {
               <div className="wrap-icon">
                 <img src={assets.cart_icon} alt="shopping cart" />
                 <p className={`${cartTotalCount && "active "} counter`}>
-                  {cartTotalCount}
+                  {cartTotalCount ? cartTotalCount : 0}
                 </p>
               </div>
               <p className="cart__title">КОРЗИНА</p>

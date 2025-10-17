@@ -2,13 +2,43 @@
 
 import { useEffect, useContext, useState } from "react";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 import { ShopContext } from "@/context/ShopContext";
 
 const LiqPayService = ({ setLoadingState }) => {
-  const { backendUrl, getCartAmount } = useContext(ShopContext);
+  const { backendUrl, getCartAmount, setCartData, isAuthenticated } =
+    useContext(ShopContext);
 
   const [isButtonShown, setIsButtonShown] = useState(false);
+  const [status, setStatus] = useState("");
+
+  const clearCart = async () => {
+    try {
+      const response = await axios.delete(backendUrl + "/api/cart/clear", {
+        withCredentials: true,
+      });
+
+      if (response.data.success) {
+        setCartData({});
+      }
+    } catch (error) {
+      console.log(error, "error");
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (status === "ok") {
+      if (isAuthenticated) {
+        clearCart();
+      } else {
+        localStorage.removeItem("cart");
+        setCartData({});
+      }
+    }
+  }, [status, isAuthenticated]);
 
   const downloadLiqPayForm = async (signal) => {
     try {
@@ -60,6 +90,7 @@ const LiqPayService = ({ setLoadingState }) => {
         console.log("liqpay.callback:", result);
         if (result.result === "ok") {
           setIsButtonShown(true);
+          setStatus(result.result);
         }
       })
       .on("liqpay.ready", () => {

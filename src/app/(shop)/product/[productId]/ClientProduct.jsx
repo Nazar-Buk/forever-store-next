@@ -2,6 +2,9 @@
 
 import { useEffect, useState, useContext, useRef } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { nanoid } from "nanoid";
 
 import { ShopContext } from "../../../../context/ShopContext";
 import { assets } from "../../../../../public/assets/assets";
@@ -22,12 +25,16 @@ export default function ClientProduct({
   const {
     desiredSizesOrder,
     currency,
-    addToCart,
-    updateCartProduct,
+
     checkedSize,
     setCheckedSize,
     isSizesAvailable,
     setIsSizesAvailable,
+    backendUrl,
+    setIncreaseCartQuantity,
+    getCartCount,
+    isAuthenticated,
+    setCartData,
   } = useContext(ShopContext);
 
   const mainSwiperRef = useRef(null);
@@ -37,6 +44,128 @@ export default function ClientProduct({
   const [size, setSize] = useState("");
   const [isOpenFullScreen, setIsOpenFullScreen] = useState(false);
   const [slideInd, setSlideInd] = useState(0);
+
+  const addToCart = async (size = "nosize") => {
+    try {
+      const response = await axios.post(
+        backendUrl + "/api/cart/add",
+        {
+          productId: productData._id,
+          size,
+        },
+        {
+          withCredentials: true, // Ось тут передаємо кукі
+        }
+      );
+
+      if (response.data.success) {
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.log(error, "error");
+      toast.error(error.message);
+    }
+  };
+
+  const addToCartGuest = (product) => {
+    const cart = JSON.parse(
+      localStorage.getItem("cart") ||
+        JSON.stringify({ items: [], totalPrice: 0 })
+    );
+
+    const { _id: productId, price, size = "nosize" } = product;
+
+    // Шукаємо чи є такий товар у корзині
+    const existingItemIndex = cart?.items?.findIndex(
+      (item) => item.product._id === productId && item.size === size
+    );
+
+    if (existingItemIndex > -1) {
+      // Якщо є, додаємо до кількості
+      cart.items[existingItemIndex].quantity += 1;
+    } else {
+      // Якщо немає, додаємо новий товар
+      cart.items.push({
+        product,
+        _id: nanoid(),
+        size,
+        quantity: 1,
+        priceAtAdd: price,
+      });
+    }
+
+    // Оновлюємо totalPrice
+    cart.totalPrice = cart.items.reduce((acc, curr) => {
+      return acc + curr.priceAtAdd * curr.quantity;
+    }, 0);
+
+    // Зберігаємо назад у localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    setCartData(cart);
+    toast.success("Продукт додано!");
+  };
+
+  const editProduct = async (productId, oldSize, newSize) => {
+    try {
+      const response = await axios.patch(
+        backendUrl + "/api/cart/edit",
+        { productId, oldSize, newSize },
+        {
+          withCredentials: true, // Ось тут передаємо кукі
+        }
+      );
+
+      if (response.data.success) {
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.log(error, "error");
+      toast.error(error.message);
+    }
+  };
+
+  const editGuestProduct = (productId, oldSize, newSize) => {
+    let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+    // Знаходимо індекс старого товару
+    const oldItemIndex = cart.items.findIndex(
+      (item) => item.product._id === productId && item.size === oldSize
+    );
+
+    if (oldItemIndex !== -1) {
+      // Оновлюємо розмір
+      cart.items[oldItemIndex].size = newSize;
+    }
+
+    //  Перевіряємо, чи тепер не з’явився дублікат (інший такий самий товар)
+    const allSameItems = cart.items.filter(
+      (item) => item.product._id === productId && item.size === newSize
+    );
+
+    if (allSameItems.length > 1) {
+      // Якщо є дублікати — об'єднуємо їх у перший елемент
+      const totalQty = allSameItems.reduce((acc, curr) => {
+        return acc + curr.quantity;
+      }, 0);
+
+      // Беремо дані з першого товару, кількість оновлюємо
+      const mergedItem = { ...allSameItems[0], quantity: totalQty };
+
+      // Прибираємо дублікати і додаємо об'єднаний елемент
+      cart.items = [
+        ...cart.items.filter(
+          (item) =>
+            // ! (знак заперечення), тобто беремо усі елементи, які не відповідають цій умові.
+            !(item.product._id === productId && item.size === newSize)
+        ),
+        mergedItem,
+      ];
+    }
+
+    setCartData(cart);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
 
   {
     /* START OLD SLIDER */
@@ -248,14 +377,28 @@ export default function ClientProduct({
                   onClick={() => {
                     if (isSizesAvailable) {
                       if (checkedSize) {
-                        updateCartProduct(checkedSize, size, productId);
+                        if (isAuthenticated) {
+                          editProduct(productId, checkedSize, size);
+                        } else {
+                          editGuestProduct(productId, checkedSize, size);
+                        }
 
                         router.push("/cart");
                       } else {
-                        addToCart(productId, size, isSizesAvailable);
+                        if (isAuthenticated) {
+                          addToCart(size);
+                          setIncreaseCartQuantity((prev) => prev + 1);
+                        } else {
+                          addToCartGuest({ ...productData, size });
+                        }
                       }
                     } else {
-                      addToCart(productId, size, isSizesAvailable);
+                      if (isAuthenticated) {
+                        addToCart();
+                        setIncreaseCartQuantity((prev) => prev + 1);
+                      } else {
+                        addToCartGuest({ ...productData, size: "nosize" });
+                      }
                     }
                   }}
                   className="add-to-cart-btn"
@@ -264,12 +407,10 @@ export default function ClientProduct({
                 </button>
                 <hr />
                 <div className="details__policy">
-                  <p className="policy">100% Original product.</p>
+                  <p className="policy">100% Оригінальний продукт.</p>
+                  <p className="policy">Цей товар можна оплатити на пошті.</p>
                   <p className="policy">
-                    Cash on delivery is available on this product.
-                  </p>
-                  <p className="policy">
-                    Easy return and exchange policy within 7 days.
+                    Можна повернути або обміняти товар протягом 7 днів.
                   </p>
                 </div>
               </div>
