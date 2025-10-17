@@ -58,10 +58,11 @@ const paymentMethodTitles = {
 };
 
 const PlaceOrder = () => {
-  const paymentRef = useRef(null);
+  // const paymentRef = useRef(null);
 
   const scrollToPayment = () => {
-    paymentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    // paymentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const router = useRouter();
@@ -206,7 +207,7 @@ const PlaceOrder = () => {
     <>
       {loading && <Loader />}
 
-      <section ref={paymentRef} className="payment-page">
+      <section className="payment-page">
         <div
           className={`payment__container ${
             checkPaymentMethodType !== "cod" ? "custom-payment-container" : ""
