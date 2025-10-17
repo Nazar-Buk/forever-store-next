@@ -199,6 +199,10 @@ section.product-page {
           font-weight: v.$product-small-desc-fw;
           color: v.$product-small-desc-color;
           margin-bottom: 30px;
+
+          // це помагає щоб текст мав переноси
+          white-space: pre-wrap; // зберігає переноси рядків
+          word-break: break-word; // розбиває довгі слова, щоб не ламати верстку
         }
 
         .details__choose-size {
