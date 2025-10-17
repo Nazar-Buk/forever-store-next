@@ -391,12 +391,12 @@ export default function ClientProduct({
                     if (isSizesAvailable) {
                       if (checkedSize) {
                         if (isAuthenticated) {
-                          editProduct(productId, checkedSize, size);
+                          await editProduct(productId, checkedSize, size);
                         } else {
-                          editGuestProduct(productId, checkedSize, size);
+                          await editGuestProduct(productId, checkedSize, size);
                         }
 
-                        await router.push("/cart");
+                        router.push("/cart");
                       } else {
                         if (isAuthenticated) {
                           addToCart(size);
