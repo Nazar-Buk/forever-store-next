@@ -22,8 +22,8 @@ const ShopContextProvider = (props) => {
   }, [searchParams]);
 
   const [showSearch, setShowSearch] = useState(false);
-  const [cartItems, setCartItems] = useState({});
-  const [products, setProducts] = useState([]);
+  // const [cartItems, setCartItems] = useState({});
+  // const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [checkedSize, setCheckedSize] = useState("");
@@ -177,14 +177,14 @@ const ShopContextProvider = (props) => {
   }, [cartData]);
 
   const value = {
-    products,
+    // products,
     currency,
     delivery_fee,
     search,
     setSearch,
     showSearch,
     setShowSearch,
-    cartItems,
+    // cartItems,
     getCartCount,
     backendUrl,
     desiredSizesOrder,

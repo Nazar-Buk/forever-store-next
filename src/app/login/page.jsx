@@ -16,10 +16,12 @@ import { ShopContext } from "@/context/ShopContext";
 
 const Login = () => {
   //   const navigate = useNavigate();
+  const { backendUrl } = useContext(ShopContext);
   const router = useRouter();
   const [currentState, setCurrentState] = useState("Логін"); // Sign Up  // Login
-  const { backendUrl, isLoading, setIsLoading } = useContext(ShopContext);
+
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const schema = yup.object({
     name: yup
