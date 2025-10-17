@@ -12,6 +12,7 @@ import ToastSSRMessage from "@/utils/ToastSSRMessage";
 import RelatedProducts from "@/components/RelatedProducts";
 import ProductSwiperSlider from "@/components/sliders/ProductSwiperSlider";
 import FullScreenSliderModal from "@/components/modals/FullScreenSliderModal";
+import Loader from "@/components/Loader";
 
 export default function ClientProduct({
   initialProductData,
@@ -32,7 +33,6 @@ export default function ClientProduct({
     setIsSizesAvailable,
     backendUrl,
     setIncreaseCartQuantity,
-    getCartCount,
     isAuthenticated,
     setCartData,
   } = useContext(ShopContext);
@@ -45,8 +45,14 @@ export default function ClientProduct({
   const [isOpenFullScreen, setIsOpenFullScreen] = useState(false);
   const [slideInd, setSlideInd] = useState(0);
 
+  const [loadingState, setLoadingState] = useState({
+    addCartLoading: false,
+  });
+
   const addToCart = async (size = "nosize") => {
     try {
+      setLoadingState((prev) => ({ ...prev, addCartLoading: true }));
+
       const response = await axios.post(
         backendUrl + "/api/cart/add",
         {
@@ -59,11 +65,14 @@ export default function ClientProduct({
       );
 
       if (response.data.success) {
+        setLoadingState((prev) => ({ ...prev, addCartLoading: false }));
+
         toast.success(response.data.message);
       }
     } catch (error) {
       console.log(error, "error");
       toast.error(error.message);
+      setLoadingState((prev) => ({ ...prev, addCartLoading: false }));
     }
   };
 
@@ -226,6 +235,10 @@ export default function ClientProduct({
     setIsSizesAvailable(!!productData.sizes.length);
   }, []);
 
+  const loading = loadingState.addCartLoading;
+
+  if (loading) return <Loader />;
+
   return (
     <>
       {productError && <ToastSSRMessage message={productError} type="error" />}
@@ -374,7 +387,7 @@ export default function ClientProduct({
                   </div>
                 )}
                 <button
-                  onClick={() => {
+                  onClick={async () => {
                     if (isSizesAvailable) {
                       if (checkedSize) {
                         if (isAuthenticated) {
@@ -383,7 +396,7 @@ export default function ClientProduct({
                           editGuestProduct(productId, checkedSize, size);
                         }
 
-                        router.push("/cart");
+                        await router.push("/cart");
                       } else {
                         if (isAuthenticated) {
                           addToCart(size);
