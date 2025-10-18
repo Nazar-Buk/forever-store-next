@@ -28,6 +28,8 @@ section.product-page {
               align-items: flex-start;
               background: v.$primary-color;
 
+              position: relative;
+
               img {
                 display: block;
                 max-height: 100%;
@@ -48,6 +50,8 @@ section.product-page {
               width: 42px;
               height: 42px;
               opacity: 0.4;
+
+              position: relative;
 
               &.swiper-slide-thumb-active img {
                 border-color: v.$active-color;

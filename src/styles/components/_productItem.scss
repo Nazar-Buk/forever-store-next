@@ -17,10 +17,14 @@
       overflow: clip;
       width: 100%;
 
-      img {
-        transition: all ease-in-out 0.3s;
+      position: relative;
+      aspect-ratio: 260/300;
 
-        aspect-ratio: 260/300;
+      img {
+        // img має position absolute, бо є Image і в ньому є fill
+
+        transition: all ease-in-out 0.3s;
+        // aspect-ratio: 260/300;
         object-fit: cover;
 
         &:hover {
@@ -35,6 +39,9 @@
       font-size: v.$product-card-name-font-size;
       font-weight: v.$product-card-name-font-weight;
       color: v.$product-card-name-color;
+
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     .product-card__price {
