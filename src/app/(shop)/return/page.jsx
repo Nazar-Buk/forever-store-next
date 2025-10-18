@@ -3,6 +3,8 @@
 import { useEffect, useState, useContext } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -60,11 +62,23 @@ const Return = () => {
         <div className="success__container ">
           <div className="success-payment-box">
             <h1>✅ Оплата успішна!</h1>
-            <img
+            {/* <img
               className="success-payment"
               src={assets.success_payment}
               alt="success payment"
-            />
+            /> */}
+            <div className="wrap-success-img">
+              <Image
+                className="success-payment"
+                src={assets.success_payment}
+                alt="success payment"
+                fill
+                quality={80}
+                loading="eager"
+                sizes="(max-width: 1920px) 100vw"
+                priority
+              />
+            </div>
 
             <Link
               href={{

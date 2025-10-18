@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Title from "@/components/Title";
 import Newsletter from "@/components/Newsletter";
 import { assets } from "../../../../public/assets/assets";
@@ -14,7 +15,16 @@ export default function About() {
           <Title text1="Про " text2="Нас" />
           <div className="about__info-box">
             <div className="info__image">
-              <img src={assets.about_img} alt="about page image" />
+              {/* <img src={assets.about_img} alt="about page image" /> */}
+              <Image
+                src={assets.about_img}
+                alt="about page image"
+                fill
+                quality={80}
+                loading="eager"
+                sizes="(max-width: 1920px) 80vw"
+                priority
+              />
             </div>
             <div className="info__text">
               <p>

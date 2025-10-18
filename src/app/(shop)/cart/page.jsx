@@ -4,6 +4,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import debounce from "lodash/debounce";
 // import { Link, useNavigate } from "react-router-dom";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -22,7 +23,6 @@ const Cart = () => {
 
   const {
     currency,
-
     setCheckedSize,
     setCartData,
     cartData,
@@ -204,9 +204,18 @@ const Cart = () => {
                         className="wrap-image-details"
                       >
                         <div className="wrap-cart__product-img">
-                          <img
+                          {/* <img
                             src={product?.images[0].url}
                             alt="product image"
+                          /> */}
+                          <Image
+                            src={product?.images[0].url}
+                            alt="product image"
+                            fill
+                            quality={80}
+                            loading="eager"
+                            sizes="(max-width: 768px) 30vw, (max-width: 1920px) 20vw"
+                            priority
                           />
                         </div>
                         <div className="cart__product-details">

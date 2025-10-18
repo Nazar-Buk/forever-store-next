@@ -5,6 +5,9 @@ section.success-page {
     .success-payment-box {
       text-align: center;
       margin: 40px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
       h1 {
         margin: 20px 0;
@@ -13,11 +16,18 @@ section.success-page {
         color: v.$color-success;
       }
 
-      img.success-payment {
+      .wrap-success-img {
+        position: relative;
         width: 40%;
         aspect-ratio: 1/1;
-        border-radius: 36px;
         margin-bottom: 30px;
+
+        img.success-payment {
+          // width: 40%;
+          // aspect-ratio: 1/1;
+          border-radius: 36px;
+          margin-bottom: 30px;
+        }
       }
 
       a {

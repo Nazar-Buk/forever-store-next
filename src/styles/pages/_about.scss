@@ -22,9 +22,11 @@ section.about-page {
         .info__image {
           flex: 0 0 686px;
           min-width: 300px;
+          position: relative;
+          aspect-ratio: 686/697;
 
           img {
-            aspect-ratio: 686/697;
+            // aspect-ratio: 686/697;
           }
         }
 

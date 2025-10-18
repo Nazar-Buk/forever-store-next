@@ -1,5 +1,8 @@
+import Image from "next/image";
+
 import Title from "@/components/Title";
 import Newsletter from "@/components/Newsletter";
+import Skeleton from "@/components/Skeleton";
 import { assets } from "../../../../public/assets/assets";
 
 export const metadata = {
@@ -14,7 +17,16 @@ export default async function Contact() {
           <Title text1="Наші " text2="Контакти" />
           <div className="contact-content">
             <div className="image-box">
-              <img src={assets.contact_img} alt="contact image" />
+              {/* <img src={assets.contact_img} alt="contact image" /> */}
+              <Image
+                src={assets.contact_img}
+                alt="contact image"
+                fill
+                quality={80}
+                loading="eager"
+                sizes="(max-width: 1920px) 80vw"
+                priority
+              />
             </div>
             <div className="contact__description">
               <div className="description__title">Наш Магазин</div>

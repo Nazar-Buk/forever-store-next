@@ -15,6 +15,8 @@ import "swiper/css/thumbs";
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 
+import Skeleton from "../Skeleton";
+
 const ProductSwiperSlider = ({
   productData,
   setIsOpenFullScreen,
@@ -23,6 +25,7 @@ const ProductSwiperSlider = ({
   setSlideInd,
 }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [isImgLoad, setIsImgLoad] = useState(true);
 
   return (
     <>
@@ -50,12 +53,15 @@ const ProductSwiperSlider = ({
           {productData.images?.map((imageData) => (
             <SwiperSlide>
               {/* <img src={imageData?.url} /> */}
+              {isImgLoad && <Skeleton />}
               <Image
                 src={imageData?.url}
                 alt="slider image"
                 fill
-                quality={80}
+                quality={70}
                 loading="eager"
+                onLoad={() => setIsImgLoad(false)}
+                sizes="(max-width: 1920px) 10vw"
               />
             </SwiperSlide>
           ))}
@@ -97,15 +103,16 @@ const ProductSwiperSlider = ({
               }}
             >
               {/* <img src={imageData?.url} /> */}
-              <div className="wrap-imh">
-                <Image
-                  src={imageData?.url}
-                  alt="slider image"
-                  fill
-                  quality={80}
-                  loading="eager"
-                />
-              </div>
+              {isImgLoad && <Skeleton />}
+              <Image
+                src={imageData?.url}
+                alt="slider image"
+                fill
+                quality={70}
+                loading="eager"
+                onLoad={() => setIsImgLoad(false)}
+                sizes="(max-width: 768px) 100vw"
+              />
             </SwiperSlide>
           ))}
         </Swiper>

@@ -65,8 +65,9 @@ const FullScreenSliderModal = (props) => {
                   // Тому його батьківський контейнер повинен мати:
                   // position: relative;
                   // і фіксовані пропорції (aspect-ratio або фіксовану висоту).
-                  quality={80}
+                  quality={70}
                   loading="eager"
+                  sizes="(max-width: 1920px) 10vw"
                 />
               </SwiperSlide>
             ))}
@@ -113,6 +114,7 @@ const FullScreenSliderModal = (props) => {
                   // і фіксовані пропорції (aspect-ratio або фіксовану висоту).
                   quality={80}
                   loading="eager"
+                  sizes="(max-width: 768px) 100vw"
                 />
               </SwiperSlide>
             ))}
