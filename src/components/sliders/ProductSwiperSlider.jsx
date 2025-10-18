@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -48,7 +49,14 @@ const ProductSwiperSlider = ({
         >
           {productData.images?.map((imageData) => (
             <SwiperSlide>
-              <img src={imageData?.url} />
+              {/* <img src={imageData?.url} /> */}
+              <Image
+                src={imageData?.url}
+                alt="slider image"
+                fill
+                quality={80}
+                loading="eager"
+              />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -88,7 +96,16 @@ const ProductSwiperSlider = ({
                 setSlideInd(ind);
               }}
             >
-              <img src={imageData?.url} />
+              {/* <img src={imageData?.url} /> */}
+              <div className="wrap-imh">
+                <Image
+                  src={imageData?.url}
+                  alt="slider image"
+                  fill
+                  quality={80}
+                  loading="eager"
+                />
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>

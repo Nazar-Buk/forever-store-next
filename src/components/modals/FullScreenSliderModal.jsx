@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -56,7 +57,17 @@ const FullScreenSliderModal = (props) => {
           >
             {productData.images?.map((imageData) => (
               <SwiperSlide>
-                <img src={imageData?.url} />
+                {/* <img src={imageData?.url} /> */}
+                <Image
+                  src={imageData?.url}
+                  alt={"Product picture"}
+                  fill // будь з тим акуратгий, fill робить <Image> абсолютно позиціонованим (position: absolute;)
+                  // Тому його батьківський контейнер повинен мати:
+                  // position: relative;
+                  // і фіксовані пропорції (aspect-ratio або фіксовану висоту).
+                  quality={80}
+                  loading="eager"
+                />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -92,7 +103,17 @@ const FullScreenSliderModal = (props) => {
           >
             {productData.images?.map((imageData) => (
               <SwiperSlide>
-                <img src={imageData?.url} />
+                {/* <img src={imageData?.url} /> */}
+                <Image
+                  src={imageData?.url}
+                  alt={"Product picture"}
+                  fill // будь з тим акуратгий, fill робить <Image> абсолютно позиціонованим (position: absolute;)
+                  // Тому його батьківський контейнер повинен мати:
+                  // position: relative;
+                  // і фіксовані пропорції (aspect-ratio або фіксовану висоту).
+                  quality={80}
+                  loading="eager"
+                />
               </SwiperSlide>
             ))}
           </Swiper>
