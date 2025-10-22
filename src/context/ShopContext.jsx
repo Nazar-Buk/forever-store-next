@@ -25,10 +25,14 @@ const ShopContextProvider = (props) => {
   // const [cartItems, setCartItems] = useState({});
   // const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState({
+    isLoggedIn: true,
+    role: "",
+  });
   const [checkedSize, setCheckedSize] = useState("");
 
-  const currency = "$";
+  // const currency = "$";
+  const currency = "грн";
   const delivery_fee = 10; // вартість доставки
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -56,7 +60,7 @@ const ShopContextProvider = (props) => {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated.isLoggedIn) {
       getCartData();
     } else {
       const storedCart = JSON.parse(localStorage.getItem("cart")) || {};

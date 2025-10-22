@@ -43,8 +43,8 @@ const ProductItem = ({ id, images, price, name, setSize }) => {
       </div>
       <p className="product-card__name">{name}</p>
       <p className="product-card__price">
-        {currency}
         {price}
+        {currency}
       </p>
     </Link>
   );

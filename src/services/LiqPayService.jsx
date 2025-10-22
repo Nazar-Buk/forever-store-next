@@ -31,7 +31,7 @@ const LiqPayService = ({ setLoadingState }) => {
 
   useEffect(() => {
     if (status === "ok") {
-      if (isAuthenticated) {
+      if (isAuthenticated.isLoggedIn) {
         clearCart();
       } else {
         localStorage.removeItem("cart");
