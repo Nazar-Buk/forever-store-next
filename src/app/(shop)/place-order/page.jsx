@@ -20,27 +20,29 @@ import { ShopContext } from "@/context/ShopContext";
 
 import { assets } from "../../../../public/assets/assets";
 
-const frontendUrl = process.env.NEXT_PUBLIC_SITE_URL;
-
 const schema = yup.object({
-  firstName: yup.string().required("This field is required!"),
-  lastName: yup.string().required("This field is required!"),
-  email: yup
-    .string()
-    // .email("Email format is incorrect!") до сраки така валідація
-    .required("Це поле обовʼязкове!")
-    .matches(
-      /[a-z0-9\._%+!$&*=^|~#%'`?{}/\-]+@([a-z0-9\-]+\.){1,}([a-z]{2,16})/,
-      "Email format is incorrect!"
-    ),
-  street: yup.string().required("Це поле обовʼязкове!"),
-  city: yup.string().required("Це поле обовʼязкове!"),
-  state: yup.string(),
-  zip_code: yup
-    .number()
-    .typeError("Поштовий індекс має бути додатнім числом!")
-    .required("Це поле обовʼязкове!"),
-  country: yup.string().required("Це поле обовʼязкове!"),
+  firstName: yup.string().required("Це поле обовʼязкове!"),
+  lastName: yup.string().required("Це поле обовʼязкове!"),
+  // email: yup
+  //   .string()
+  //   // .email("Email format is incorrect!") до сраки така валідація
+  //   .required("Це поле обовʼязкове!")
+  //   .matches(
+  //     /[a-z0-9\._%+!$&*=^|~#%'`?{}/\-]+@([a-z0-9\-]+\.){1,}([a-z]{2,16})/,
+  //     "Email format is incorrect!"
+  //   ),
+  // street: yup.string().required("Це поле обовʼязкове!"),
+  postName: yup.object({
+    optionLabel: yup.string(),
+    optionValue: yup.string().required("Виберіть Пошту!"),
+  }),
+  region: yup.string().required("Це поле обовʼязкове!"),
+  state: yup.string().required("Це поле обовʼязкове!"),
+  // zip_code: yup
+  //   .number()
+  //   .typeError("Поштовий індекс має бути додатнім числом!")
+  //   .required("Це поле обовʼязкове!"),
+  branchNumber: yup.string().required("Це поле обовʼязкове!"),
   phone: yup
     .string()
     .matches(
@@ -77,8 +79,8 @@ const PlaceOrder = () => {
   const router = useRouter();
   const {
     backendUrl,
-    codProductData,
-    getCartAmount,
+    // codProductData,
+    // getCartAmount,
     setCartData,
     isAuthenticated,
   } = useContext(ShopContext);
@@ -87,18 +89,23 @@ const PlaceOrder = () => {
     loadingStripe: false,
     loadingLiqPay: false,
     getCartDataLoading: true,
+    createOrderLoading: false,
   });
 
   const form = useForm({
     defaultValues: {
       firstName: "",
       lastName: "",
-      email: "",
-      street: "",
-      city: "",
+      // email: "",
+      // street: "",
+      postName: {
+        optionLabel: "",
+        optionValue: "",
+      },
+      region: "",
       state: "",
-      zip_code: "",
-      country: "",
+      // zip_code: "",
+      branchNumber: "",
       phone: "",
       payment_method: "cod",
     },
@@ -126,53 +133,125 @@ const PlaceOrder = () => {
   };
 
   const onSubmit = async (data) => {
-    try {
-      console.log(data, "Form Submitted!");
-      const orderId = "23213129834238";
-      const totalAmount = getCartAmount();
+    console.log(data, "Form Submitted!");
 
-      const telegramProductsData = codProductData.map((product) => ({
-        quantity: product.quantity,
-        link: `${frontendUrl}/product/${product._id}`,
-        name: product.name,
-      }));
+    const createOrder = async () => {
+      try {
+        setLoadingState((prev) => ({ ...prev, createOrderLoading: true }));
 
-      if (isDirty && isValid && !isSubmitting) {
         const response = await axios.post(
-          `${backendUrl}/api/tg-bot/send-tg-form`,
+          backendUrl + "/api/order/add",
           {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            street: data.street,
-            city: data.city,
-            state: data.state,
-            zipCode: data.zip_code,
-            country: data.country,
-            phone: data.phone,
-            orderId,
-            productsData: telegramProductsData,
-            price: totalAmount,
-          }
+            shippingAddress: {
+              postBranchName: data.branchNumber,
+              firstName: data.firstName,
+              lastName: data.lastName,
+              payment_method: data.payment_method,
+              phone: data.phone,
+              postName: data.postName,
+              region: data.region,
+              city: data.state,
+            },
+          },
+          { withCredentials: true } // кукіси, тут є токен
         );
 
         if (response.data.success) {
-          toast.success(response.data.message);
-          if (isAuthenticated) {
-            clearCart();
-          } else {
-            localStorage.removeItem("cart");
-            setCartData({});
-          }
+          setLoadingState((prev) => ({ ...prev, createOrderLoading: false }));
 
-          router.push("/orders");
+          return response.data.order;
         } else {
+          setLoadingState((prev) => ({ ...prev, createOrderLoading: false }));
           toast.error(response.data.message);
+          return false;
         }
+      } catch (error) {
+        console.log(error, "error");
+        setLoadingState((prev) => ({ ...prev, createOrderLoading: false }));
       }
-    } catch (error) {
-      console.log(error, "error");
-      toast.error(error?.response?.data?.message);
+    };
+
+    const createGuestOrder = async () => {
+      try {
+        setLoadingState((prev) => ({ ...prev, createOrderLoading: true }));
+        const productsDataInCart =
+          JSON.parse(localStorage.getItem("cart")) || {};
+        const items = productsDataInCart.items.map((value) => {
+          return {
+            productId: value.product._id,
+            quantity: value.quantity,
+            size: value.size,
+            priceAtAdd: value.priceAtAdd,
+          };
+        });
+
+        const response = await axios.post(backendUrl + "/api/order/guest-add", {
+          shippingAddress: {
+            postBranchName: data.branchNumber,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            payment_method: data.payment_method,
+            phone: data.phone,
+            postName: data.postName,
+            region: data.region,
+            city: data.state,
+          },
+          items,
+        });
+
+        if (response.data.success) {
+          setLoadingState((prev) => ({ ...prev, createOrderLoading: false }));
+          return response.data.order;
+        } else {
+          setLoadingState((prev) => ({ ...prev, createOrderLoading: false }));
+
+          return false;
+        }
+      } catch (error) {
+        console.log(error, "error");
+        setLoadingState((prev) => ({ ...prev, createOrderLoading: false }));
+        toast.error(error.message);
+      }
+    };
+
+    const orderResponse = isAuthenticated
+      ? await createOrder()
+      : await createGuestOrder();
+
+    if (orderResponse) {
+      const sendOrderToTgBot = async (orderId) => {
+        try {
+          if (isDirty && isValid && !isSubmitting) {
+            const response = await axios.post(
+              `${backendUrl}/api/tg-bot/send-tg-form`,
+              {
+                orderId,
+              }
+            );
+
+            if (response.data.success) {
+              toast.success(response.data.message);
+              if (isAuthenticated) {
+                clearCart();
+              } else {
+                localStorage.removeItem("cart");
+                setCartData({});
+              }
+
+              router.push("/orders");
+            } else {
+              toast.error(response.data.message);
+            }
+          }
+        } catch (error) {
+          console.log(error, "error");
+          toast.error(error?.response?.data?.message);
+        }
+      };
+
+      await sendOrderToTgBot(orderResponse._id);
+    } else {
+      toast.error("Не вдалося відправити в телеграм замовлення!");
     }
   };
 
@@ -210,7 +289,10 @@ const PlaceOrder = () => {
   }, [isAuthenticated]);
 
   const loading =
-    loadingState.loadingStripe || loadingState.loadingLiqPay || isSubmitting;
+    loadingState.loadingStripe ||
+    loadingState.loadingLiqPay ||
+    loadingState.createOrderLoading ||
+    isSubmitting;
 
   return (
     <>
@@ -246,6 +328,7 @@ const PlaceOrder = () => {
                 onSubmit={onSubmit}
                 register={register}
                 errors={errors}
+                control={control}
               />
             )}
 
