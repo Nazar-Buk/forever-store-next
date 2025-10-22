@@ -26,7 +26,7 @@ const ShopContextProvider = (props) => {
   // const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState({
-    isLoggedIn: true,
+    isLoggedIn: false,
     role: "",
   });
   const [checkedSize, setCheckedSize] = useState("");

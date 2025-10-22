@@ -233,12 +233,12 @@ const PlaceOrder = () => {
               toast.success(response.data.message);
               if (isAuthenticated.isLoggedIn) {
                 clearCart();
+                router.push("/orders");
               } else {
                 localStorage.removeItem("cart");
                 setCartData({});
+                router.push("/");
               }
-
-              router.push("/orders");
             } else {
               toast.error(response.data.message);
             }
