@@ -454,13 +454,15 @@ export default function ClientProduct({
               </div>
             </div>
           </section>
-          {relatedProductsError && (
+          {/* {relatedProductsError && (
             <ToastSSRMessage message={relatedProductsError} type="error" />
+          )} */}
+          {relatedProducts.length > 0 && (
+            <RelatedProducts
+              relatedProducts={relatedProducts}
+              setSize={setSize}
+            />
           )}
-          <RelatedProducts
-            relatedProducts={relatedProducts}
-            setSize={setSize}
-          />
         </section>
       ) : (
         <div>No Products!</div>
