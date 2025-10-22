@@ -1,7 +1,18 @@
 "use client";
 
+import { useState } from "react";
+import { Controller } from "react-hook-form";
+import CustomSelect from "../CustomSelect";
+
+const postNames = [
+  { optionLabel: "Нова Пошта", optionValue: "nova-poshta" },
+  { optionLabel: "УкрПошта", optionValue: "ukr-poshta" },
+  { optionLabel: "Delivery", optionValue: "delivery" },
+];
+
 const CODForm = (props) => {
-  const { handleSubmit, onSubmit, register, errors } = props;
+  const { handleSubmit, onSubmit, register, errors, control } = props;
+  const [isPostNameSelectOpen, setIsPostNameSelectOpen] = useState(false);
 
   return (
     <form
@@ -34,40 +45,47 @@ const CODForm = (props) => {
               <p className="error">{errors.lastName?.message}</p>
             </div>
           </div>
-          <div className="wrap-input">
-            <input
-              type="email"
-              id="email"
-              className="delivery-info__field long-field"
-              placeholder="Ел. адреса"
-              {...register("email")}
-            />
-            <p className="error">{errors.email?.message}</p>
-          </div>
-
-          <div className="wrap-input">
-            <input
-              type="text"
-              id="street"
-              className="delivery-info__field long-field"
-              placeholder="Вулиця"
-              {...register("street")}
-            />
-            <p className="error">{errors.street?.message}</p>
-          </div>
 
           <div className="wrap-short-fields">
             <div className="wrap-input">
-              <input
-                type="text"
-                id="city"
-                className="delivery-info__field"
-                placeholder="Місто"
-                {...register("city")}
+              <Controller
+                name="postName"
+                control={control}
+                render={({ field }) => {
+                  // field -- містить value, onChange, onBlur, name, ref
+                  const { value, onChange, onBlur } = field;
+                  return (
+                    <CustomSelect
+                      value={value}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      isSelectOpen={isPostNameSelectOpen}
+                      setIsCustomSelectOpen={setIsPostNameSelectOpen}
+                      emptyLabel="Виберіть пошту"
+                      selectData={postNames.map((item) => ({
+                        optionLabel: item.optionLabel,
+                        optionValue: item.optionValue,
+                      }))}
+                    />
+                  );
+                }}
               />
-              <p className="error">{errors.city?.message}</p>
+              <p className="error">{errors.postName?.optionValue.message}</p>
             </div>
 
+            <div className="wrap-input">
+              <input
+                type="text"
+                id="region"
+                className="delivery-info__field"
+                placeholder="Область"
+                {...register("region")}
+              />
+              <p className="error">{errors.region?.message}</p>
+            </div>
+          </div>
+
+          <div className="wrap-short-fields">
             <div className="wrap-input">
               <input
                 type="text"
@@ -78,28 +96,16 @@ const CODForm = (props) => {
               />
               <p className="error">{errors.state?.message}</p>
             </div>
-          </div>
-          <div className="wrap-short-fields">
-            <div className="wrap-input">
-              <input
-                type="number"
-                id="zip-code"
-                className="delivery-info__field"
-                placeholder="Поштовий індекс"
-                {...register("zip_code")}
-              />
-              <p className="error">{errors.zip_code?.message}</p>
-            </div>
 
             <div className="wrap-input">
               <input
                 type="text"
-                id="country"
+                id="branchNumber"
                 className="delivery-info__field"
-                placeholder="Країна"
-                {...register("country")}
+                placeholder="Відділення № "
+                {...register("branchNumber")}
               />
-              <p className="error">{errors.country?.message}</p>
+              <p className="error">{errors.branchNumber?.message}</p>
             </div>
           </div>
           <div className="wrap-input">
