@@ -214,7 +214,7 @@ const PlaceOrder = () => {
       }
     };
 
-    const orderResponse = isAuthenticated
+    const orderResponse = isAuthenticated.isLoggedIn
       ? await createOrder()
       : await createGuestOrder();
 
@@ -231,7 +231,7 @@ const PlaceOrder = () => {
 
             if (response.data.success) {
               toast.success(response.data.message);
-              if (isAuthenticated) {
+              if (isAuthenticated.isLoggedIn) {
                 clearCart();
               } else {
                 localStorage.removeItem("cart");
@@ -280,7 +280,7 @@ const PlaceOrder = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated.isLoggedIn) {
       getCartData();
     } else {
       setCartData(JSON.parse(localStorage.getItem("cart")) || { items: [] });

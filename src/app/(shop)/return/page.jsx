@@ -45,7 +45,7 @@ const Return = () => {
 
   useEffect(() => {
     if (status === "paid" || status === "succeeded" || status === "complete") {
-      if (isAuthenticated) {
+      if (isAuthenticated.isLoggedIn) {
         clearCart();
       } else {
         localStorage.removeItem("cart");

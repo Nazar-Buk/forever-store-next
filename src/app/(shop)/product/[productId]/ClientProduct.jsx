@@ -363,8 +363,8 @@ export default function ClientProduct({
                   <div className="rating__counts">(122)</div>
                 </div>
                 <div className="details__price">
-                  {currency}
                   {productData.price}
+                  {currency}
                 </div>
                 <p className="details__small-desc">{productData.description}</p>
                 {isSizesAvailable && (
@@ -389,7 +389,7 @@ export default function ClientProduct({
                   onClick={async () => {
                     if (isSizesAvailable) {
                       if (checkedSize) {
-                        if (isAuthenticated) {
+                        if (isAuthenticated.isLoggedIn) {
                           await editProduct(productId, checkedSize, size);
                         } else {
                           await editGuestProduct(productId, checkedSize, size);
@@ -397,7 +397,7 @@ export default function ClientProduct({
 
                         router.push("/cart");
                       } else {
-                        if (isAuthenticated) {
+                        if (isAuthenticated.isLoggedIn) {
                           addToCart(size);
                           setIncreaseCartQuantity((prev) => prev + 1);
                         } else {
@@ -405,7 +405,7 @@ export default function ClientProduct({
                         }
                       }
                     } else {
-                      if (isAuthenticated) {
+                      if (isAuthenticated.isLoggedIn) {
                         addToCart();
                         setIncreaseCartQuantity((prev) => prev + 1);
                       } else {

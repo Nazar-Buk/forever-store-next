@@ -17,14 +17,14 @@ const CartTotal = () => {
           <div className="info__item">
             <div className="info__name">Разом</div>
             <div className="info__price">
-              {currency}
               {cartAmount}.00
+              {currency}
             </div>
           </div>
           <div className="info__item">
             <div className="info__name">Вартість доставки</div>
             <div className="info__price">
-              {currency} {delivery_fee}.00
+              {delivery_fee}.00 {currency}
             </div>
           </div>
           <div className="info__item">
@@ -32,7 +32,7 @@ const CartTotal = () => {
               <b>Загалом</b>
             </div>
             <div className="info__price">
-              {currency} {cartAmount === 0 ? 0 : cartAmount + delivery_fee}.00
+              {cartAmount === 0 ? 0 : cartAmount + delivery_fee}.00 {currency}
             </div>
           </div>
         </div>

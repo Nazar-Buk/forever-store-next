@@ -45,7 +45,11 @@ section.orders-page {
               .description__title {
                 margin-top: clamp(0rem, -0.22rem + 0.7vw, 0.625rem); // 10px
                 font-weight: 500;
-                font-size: clamp(1.063rem, 1.025rem + 0.19vw, 1.25rem); // 20px
+                font-size: clamp(
+                  0.688rem,
+                  0.575rem + 0.56vw,
+                  1.25rem
+                ); // 20px-11px
               }
 
               .description__info {
@@ -58,16 +62,6 @@ section.orders-page {
                 .info__price {
                   font-weight: 300;
                   font-size: clamp(1.125rem, 1.05rem + 0.38vw, 1.5rem); // 24px
-                }
-
-                .info__quantity {
-                  font-weight: 400;
-                  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem); // 20px
-                }
-
-                .info__size {
-                  font-weight: 400;
-                  font-size: clamp(1.125rem, 1.1rem + 0.13vw, 1.25rem); // 20px
                 }
               }
 
@@ -103,7 +97,7 @@ section.orders-page {
                 width: 12px;
                 height: 12px;
                 border-radius: 50%;
-                background-color: v.$color-success;
+                // background-color: v.$color-success;
               }
 
               .status__text {
@@ -119,6 +113,52 @@ section.orders-page {
               button.secondary-btn {
                 font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem); // 20px
               }
+            }
+          }
+        }
+
+        .order__derails {
+          padding: 10px;
+
+          .details__products {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+
+            .wrap-img {
+              img {
+                width: 40px;
+                height: 50px;
+                object-fit: cover;
+              }
+            }
+
+            .product-name {
+            }
+
+            .product-size {
+            }
+
+            .product-price {
+            }
+          }
+
+          .details__address {
+            padding: 5px;
+            margin-top: 5px;
+
+            b {
+              font-weight: 600;
+            }
+
+            b.address-item {
+              display: block;
+              font-weight: 600;
+              margin-bottom: 10px;
+            }
+
+            .address-item {
+              margin-bottom: 5px;
             }
           }
         }

@@ -118,14 +118,14 @@ const Cart = () => {
 
       const updatedCart = { ...prev, items: [...updatedCartProducts] };
 
-      if (!isAuthenticated) {
+      if (!isAuthenticated.isLoggedIn) {
         localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
 
       return updatedCart;
     });
 
-    if (isAuthenticated) {
+    if (isAuthenticated.isLoggedIn) {
       if (actionType === "minus" && qtyForCondition < 1) {
         return;
       } else {
@@ -156,7 +156,7 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated.isLoggedIn) {
       getCartData();
       setIncreaseCartQuantity(0);
     } else {
@@ -181,7 +181,7 @@ const Cart = () => {
                   <Title text1="ВАША " text2="КОРЗИНА" />
                   <button
                     onClick={() => {
-                      if (isAuthenticated) {
+                      if (isAuthenticated.isLoggedIn) {
                         clearCart();
                       } else {
                         localStorage.removeItem("cart");
@@ -222,7 +222,7 @@ const Cart = () => {
                           <p className="details__name">{product?.name}</p>
                           <div className="wrap-details__price-size">
                             <p className="details__price">
-                              {currency} {item?.priceAtAdd * item?.quantity}
+                              {item?.priceAtAdd * item?.quantity} {currency}
                             </p>
                             {item?.size !== "nosize" && (
                               <div className="details__size">{item?.size}</div>

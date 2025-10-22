@@ -42,12 +42,19 @@ export default function Header() {
       });
 
       if (response.data.success) {
-        setIsAuthenticated(true);
+        setIsAuthenticated((prev) => ({
+          ...prev,
+          isLoggedIn: true,
+          role: response.data.role,
+        }));
         toast.success(response.data.message);
       }
     } catch (error) {
       console.log("Auth check failed:", error);
-      setIsAuthenticated(false);
+      setIsAuthenticated((prev) => ({
+        ...prev,
+        isLoggedIn: false,
+      }));
     }
   };
 
@@ -153,16 +160,21 @@ export default function Header() {
           <div className="wrap-icon profile">
             <img src={assets.profile_icon} alt="profile-icon" />
             <div className="profile__menu">
-              {isAuthenticated && (
-                <p
-                  className="profile__item"
-                  onClick={() => router.push(adminPanelUrl)}
-                >
-                  <a href={adminPanelUrl}>Мій кабінет</a>
-                </p>
-              )}
-              <p className="profile__item">Замовлення</p>
-              {isAuthenticated ? (
+              {isAuthenticated.isLoggedIn &&
+                isAuthenticated?.role.includes("admin") && (
+                  <>
+                    <p
+                      className="profile__item"
+                      onClick={() => router.push(adminPanelUrl)}
+                    >
+                      <a href={adminPanelUrl}>Мій кабінет</a>
+                    </p>
+                    <p className="profile__item">
+                      <Link href="/orders">Замовлення</Link>
+                    </p>
+                  </>
+                )}
+              {isAuthenticated.isLoggedIn ? (
                 <p className="profile__item" onClick={logout}>
                   Вихід
                 </p>
@@ -317,16 +329,19 @@ export default function Header() {
                   onClick={() => isOpenMobileMenu(false)}
                   className="profile__menu"
                 >
-                  {isAuthenticated && (
-                    <a href={adminPanelUrl} target="_blank">
-                      <li className="profile__item">МІЙ КАБІНЕТ</li>
-                    </a>
-                  )}
+                  {isAuthenticated.isLoggedIn &&
+                    isAuthenticated?.role.includes("admin") && (
+                      <>
+                        <a href={adminPanelUrl} target="_blank">
+                          <li className="profile__item">МІЙ КАБІНЕТ</li>
+                        </a>
+                        <Link href="/orders">
+                          <li className="profile__item">ЗАМОВЛЕННЯ</li>
+                        </Link>
+                      </>
+                    )}
 
-                  <Link href="/orders">
-                    <li className="profile__item">ЗАМОВЛЕННЯ</li>
-                  </Link>
-                  {isAuthenticated ? (
+                  {isAuthenticated.isLoggedIn ? (
                     <Link href="/" onClick={logout}>
                       <li className="profile__item">ВИХІД</li>
                     </Link>
