@@ -74,116 +74,125 @@ const Orders = () => {
       <div className="orders__container">
         <div className="orders__body">
           <Title text1="МОЇ " text2="ЗАМОВЛЕННЯ" />
-          <div className="orders__table">
-            {orders.map((order) => {
-              const date = new Date(order.createdAt);
+          {orders.length ? (
+            <div className="orders__table">
+              {orders.map((order) => {
+                const date = new Date(order.createdAt);
 
-              return (
-                <div key={order._id}>
-                  <div className="orders__order">
-                    <div className="order__description">
-                      <div className="warp-img-description">
-                        <img
-                          src={order?.items[0]?.product?.images[0].url}
-                          alt="order image"
-                        />
-                      </div>
-                      <div className="description-box">
-                        <div className="description__title">№ {order._id}</div>
-                        <div className="description__info">
-                          <div className="info__price">
-                            {order.totalPrice}
-                            {currency}
+                return (
+                  <div key={order._id}>
+                    <div className="orders__order">
+                      <div className="order__description">
+                        <div className="warp-img-description">
+                          <img
+                            src={order?.items[0]?.images[0].url}
+                            alt="order image"
+                          />
+                        </div>
+                        <div className="description-box">
+                          <div className="description__title">
+                            № {order._id}
+                          </div>
+                          <div className="description__info">
+                            <div className="info__price">
+                              {order.totalPrice}
+                              {currency}
+                            </div>
+                          </div>
+                          <div className="wrap-description__date">
+                            <div className="description__date">Створено: </div>
+                            <p> {date.toLocaleDateString("uk-UA")}</p>
                           </div>
                         </div>
-                        <div className="wrap-description__date">
-                          <div className="description__date">Створено: </div>
-                          <p> {date.toLocaleDateString("uk-UA")}</p>
+                      </div>
+                      <div className="wrap-status-order-btn-box">
+                        <div className="order__status">
+                          <div
+                            className="status__circle"
+                            style={{
+                              backgroundColor: statuses[order.status].color,
+                            }}
+                          ></div>
+                          <div className="status__text">
+                            {statuses[order.status].title}
+                          </div>
+                        </div>
+                        <div className="order__btn">
+                          <button
+                            onClick={() => {
+                              toggleAccordion(order._id);
+                            }}
+                            className="secondary-btn"
+                          >
+                            {`${
+                              isOpenDetails === order._id
+                                ? "Приховати"
+                                : "Показати"
+                            } `}{" "}
+                            Деталі
+                          </button>
                         </div>
                       </div>
                     </div>
-                    <div className="wrap-status-order-btn-box">
-                      <div className="order__status">
-                        <div
-                          className="status__circle"
-                          style={{
-                            backgroundColor: statuses[order.status].color,
-                          }}
-                        ></div>
-                        <div className="status__text">
-                          {statuses[order.status].title}
+                    {isOpenDetails === order._id && (
+                      <div className="order__derails">
+                        {order.items.map((item, ind) => (
+                          <div key={ind} className="details__products">
+                            <div className="wrap-img">
+                              <img
+                                src={item?.images[0]?.url}
+                                alt={item?.name}
+                              />
+                            </div>
+                            <div className="product-name">
+                              {item?.name.length > 30
+                                ? `${item?.name.slice(0, 30)}...`
+                                : item?.name}
+                            </div>
+                            {item?.size !== "nosize" && (
+                              <div className="product-size">{item?.size}</div>
+                            )}
+
+                            <div className="product-price">
+                              {item?.priceAtAdd}
+                              {currency}/1шт.
+                            </div>
+                          </div>
+                        ))}
+
+                        <div className="details__address">
+                          <b className="address-item">Адреса доставки:</b>
+                          <div className="address-item">
+                            Пошта:{" "}
+                            <b>
+                              {order?.shippingAddress?.postName.optionLabel}
+                            </b>
+                            ,
+                          </div>
+                          <div className="address-item">
+                            Область: <b>{order?.shippingAddress?.region}</b>,
+                          </div>
+                          <div className="address-item">
+                            Населений пункт:{" "}
+                            <b>{order?.shippingAddress?.city}</b>,
+                          </div>
+                          <div className="address-item">
+                            Відділення №:{" "}
+                            <b>{order?.shippingAddress?.postBranchName}</b>,
+                          </div>
+                          <div className="address-item">
+                            Телефон: <b>{order?.shippingAddress?.phone}</b>
+                          </div>
                         </div>
                       </div>
-                      <div className="order__btn">
-                        <button
-                          onClick={() => {
-                            toggleAccordion(order._id);
-                          }}
-                          className="secondary-btn"
-                        >
-                          {`${
-                            isOpenDetails === order._id
-                              ? "Приховати"
-                              : "Показати"
-                          } `}{" "}
-                          Деталі
-                        </button>
-                      </div>
-                    </div>
+                    )}
                   </div>
-                  {isOpenDetails === order._id && (
-                    <div className="order__derails">
-                      {order.items.map((item, ind) => (
-                        <div key={ind} className="details__products">
-                          <div className="wrap-img">
-                            <img
-                              src={item?.product?.images[0]?.url}
-                              alt={item?.product?.name}
-                            />
-                          </div>
-                          <div className="product-name">
-                            {item?.product?.name.length > 30
-                              ? `${item?.product?.name.slice(0, 30)}...`
-                              : item?.product?.name}
-                          </div>
-                          {item?.size !== "nosize" && (
-                            <div className="product-size">{item?.size}</div>
-                          )}
-
-                          <div className="product-price">
-                            {item?.priceAtAdd}
-                            {currency}/1шт.
-                          </div>
-                        </div>
-                      ))}
-
-                      <div className="details__address">
-                        <b className="address-item">Адреса доставки:</b>
-                        <div className="address-item">
-                          Пошта:{" "}
-                          <b>{order?.shippingAddress?.postName.optionLabel}</b>,
-                        </div>
-                        <div className="address-item">
-                          Область: <b>{order?.shippingAddress?.region}</b>,
-                        </div>
-                        <div className="address-item">
-                          Населений пункт: <b>{order?.shippingAddress?.city}</b>
-                          ,
-                        </div>
-                        <div className="address-item">
-                          Відділення №:{" "}
-                          <b>{order?.shippingAddress?.postBranchName}</b>,
-                        </div>
-                        <div className="address-item">
-                          Телефон: <b>{order?.shippingAddress?.phone}</b>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          ) : (
+            <h2 className="empty-order-list">Поки немає замовлень</h2>
+          )}
         </div>
       </div>
     </section>
