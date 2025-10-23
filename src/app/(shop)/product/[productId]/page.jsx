@@ -2,6 +2,7 @@
 // а от компоненти вже можуть піддаватися гідрації та використовувати реакт через "use client"
 
 import axios from "axios";
+import { redirect, notFound } from "next/navigation"; // 🔹 додано import notFound / redirect
 
 import ClientProduct from "./ClientProduct"; // компонент, який буде гідратуватися на клієнті
 
@@ -83,6 +84,11 @@ export default async function Product({ params }) {
   const { data: productData, error: productError } = await fetchProductData(
     productId
   );
+
+  if (!productData || productError) {
+    // варіант 1 — 404 сторінка:
+    notFound();
+  }
 
   const { data: relatedProducts, error: relatedProductsError } =
     await getRelatedProducts(productData);

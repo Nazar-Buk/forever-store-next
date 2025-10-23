@@ -10,6 +10,10 @@ section.orders-page {
         margin-bottom: clamp(1.25rem, 1rem + 1.25vw, 2.5rem); // 40px
       }
 
+      h2.empty-order-list {
+        text-align: center;
+      }
+
       .orders__table {
         .orders__order {
           display: flex;

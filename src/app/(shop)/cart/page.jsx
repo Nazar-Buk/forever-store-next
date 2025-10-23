@@ -36,6 +36,7 @@ const Cart = () => {
   const [loadingState, setLoadingState] = useState({
     getCartDataLoading: true,
     clearCartLoading: false,
+    checkIsExistGuestProductsLoading: false,
   });
 
   const getCartData = async () => {
@@ -49,6 +50,10 @@ const Cart = () => {
       if (response.data.success) {
         setCartData(response.data.cart);
         setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
+
+        if (response.data.message) {
+          toast.info(response.data.message);
+        }
       } else {
         toast.error(response.data.message);
         setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
@@ -155,18 +160,93 @@ const Cart = () => {
     }
   };
 
+  const checkIsExistGuestProducts = async () => {
+    try {
+      setLoadingState((prev) => ({
+        ...prev,
+        checkIsExistGuestProductsLoading: true,
+      }));
+
+      const ids = JSON.parse(localStorage.getItem("cart"))?.items.map(
+        (item) => item.product._id
+      );
+
+      if (!ids || ids.length === 0) {
+        return { items: [], totalPrice: 0 };
+      }
+
+      const response = await axios.post(backendUrl + "/api/cart/check-exist", {
+        ids,
+      });
+
+      if (response.data.success) {
+        const existingIds = response.data.existingIds;
+
+        const guestCart = JSON.parse(localStorage.getItem("cart"));
+
+        if (existingIds.length === guestCart.items.length) {
+          return guestCart;
+        }
+
+        const filteredProducts = guestCart.items.filter((item) =>
+          existingIds.includes(item.product._id)
+        );
+
+        const totalPrice = filteredProducts.reduce(
+          (acc, curr) => acc + curr.quantity * curr.product.price,
+          0
+        );
+
+        const filteredCart = {
+          items: filteredProducts,
+          totalPrice,
+        };
+
+        localStorage.setItem("cart", JSON.stringify(filteredCart));
+        toast.info(response.data.message);
+
+        setLoadingState((prev) => ({
+          ...prev,
+          checkIsExistGuestProductsLoading: false,
+        }));
+
+        return filteredCart;
+      }
+    } catch (error) {
+      console.log(error, "error");
+      toast.error(error.message);
+      setLoadingState((prev) => ({
+        ...prev,
+        checkIsExistGuestProductsLoading: false,
+      }));
+      return JSON.parse(localStorage.getItem("cart")) || { items: [] };
+    } finally {
+      setLoadingState((prev) => ({
+        ...prev,
+        checkIsExistGuestProductsLoading: false,
+      }));
+    }
+  };
+
   useEffect(() => {
     if (isAuthenticated.isLoggedIn) {
       getCartData();
       setIncreaseCartQuantity(0);
     } else {
-      setCartData(JSON.parse(localStorage.getItem("cart")) || { items: [] });
-      setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
+      const init = async () => {
+        const localFilteredCart = await checkIsExistGuestProducts();
+
+        setCartData(localFilteredCart || { items: [] });
+        setLoadingState((prev) => ({ ...prev, getCartDataLoading: false }));
+      };
+      init();
     }
   }, [isAuthenticated]);
 
   const isLoading =
-    loadingState.getCartDataLoading || loadingState.clearCartLoading;
+    loadingState.getCartDataLoading ||
+    loadingState.clearCartLoading ||
+    loadingState.checkIsExistGuestProductsLoading;
 
   return (
     <>
