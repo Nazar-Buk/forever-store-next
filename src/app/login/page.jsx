@@ -257,7 +257,24 @@ const Login = () => {
                 {currentState === "Логін" ? "Увійти" : "Створити"}
               </button>
             </form>
-            <Link href="/">Перейти До Покупок</Link>
+
+            <Link
+              href={{
+                pathname: "/collection",
+                query: {
+                  page: 1,
+                  limit: 10,
+                  category: "",
+                  subCategory: "",
+                  priceFrom: "",
+                  priceTo: "",
+                  sort: "date_new",
+                  search: "",
+                },
+              }}
+            >
+              <button>Сторінка з товарами</button>
+            </Link>
           </div>
         </div>
       </div>

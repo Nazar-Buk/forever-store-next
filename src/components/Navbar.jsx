@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import { assets } from "../../public/assets/assets";
 import { ShopContext } from "../context/ShopContext";
 import NavItem from "../components/NavItem";
-// import Loader from "./Loader";
 
 export default function Header() {
   const pathName = usePathname();
@@ -159,6 +158,14 @@ export default function Header() {
           </div>
           <div className="wrap-icon profile">
             <img src={assets.profile_icon} alt="profile-icon" />
+            <div
+              className="profile-circle"
+              style={{
+                backgroundColor: isAuthenticated.isLoggedIn
+                  ? "#67A110"
+                  : "#494949",
+              }}
+            ></div>
             <div className="profile__menu">
               {isAuthenticated.isLoggedIn &&
                 isAuthenticated?.role.includes("admin") && (
@@ -169,15 +176,20 @@ export default function Header() {
                     >
                       <a href={adminPanelUrl}>Мій кабінет</a>
                     </p>
-                    <p className="profile__item">
-                      <Link href="/orders">Замовлення</Link>
-                    </p>
                   </>
                 )}
               {isAuthenticated.isLoggedIn ? (
-                <p className="profile__item" onClick={logout}>
-                  Вихід
-                </p>
+                <>
+                  <p className="profile__item">
+                    <Link href="/orders">Замовлення</Link>
+                  </p>
+                  <p className="profile__item">
+                    <Link href="/account-settings">Особисті дані</Link>
+                  </p>
+                  <p className="profile__item" onClick={logout}>
+                    Вихід
+                  </p>
+                </>
               ) : (
                 <p className="profile__item">
                   <Link href="/login">Вхід</Link>
@@ -236,7 +248,7 @@ export default function Header() {
                 />{" "}
               </g>
             </svg>
-            <p>Back</p>
+            <p>Назад</p>
           </div>
         </div>
         <div className="wrap-menu-content">
@@ -288,7 +300,15 @@ export default function Header() {
                 onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                 className="profile__icon-title-block"
               >
-                <div className="wrap-icon ">
+                <div className="wrap-icon profile-icon">
+                  <div
+                    className="profile-circle"
+                    style={{
+                      backgroundColor: isAuthenticated.isLoggedIn
+                        ? "#67A110"
+                        : "#494949",
+                    }}
+                  ></div>
                   <img src={assets.profile_icon} alt="profile-icon" />
                 </div>
                 <p>ПРОФІЛЬ</p>
@@ -331,20 +351,23 @@ export default function Header() {
                 >
                   {isAuthenticated.isLoggedIn &&
                     isAuthenticated?.role.includes("admin") && (
-                      <>
-                        <a href={adminPanelUrl} target="_blank">
-                          <li className="profile__item">МІЙ КАБІНЕТ</li>
-                        </a>
-                        <Link href="/orders">
-                          <li className="profile__item">ЗАМОВЛЕННЯ</li>
-                        </Link>
-                      </>
+                      <a href={adminPanelUrl} target="_blank">
+                        <li className="profile__item">МІЙ КАБІНЕТ</li>
+                      </a>
                     )}
 
                   {isAuthenticated.isLoggedIn ? (
-                    <Link href="/" onClick={logout}>
-                      <li className="profile__item">ВИХІД</li>
-                    </Link>
+                    <>
+                      <Link href="/orders">
+                        <li className="profile__item">ЗАМОВЛЕННЯ</li>
+                      </Link>
+                      <Link href="/account-settings">
+                        <li className="profile__item">ОСОБИСТІ ДАНІ</li>
+                      </Link>
+                      <Link href="/" onClick={logout}>
+                        <li className="profile__item">ВИХІД</li>
+                      </Link>
+                    </>
                   ) : (
                     <Link href="/login">
                       <li className="profile__item">ВХІД</li>

@@ -73,6 +73,17 @@ header.header__container {
           position: relative;
           padding: 0 10px;
 
+          .profile-circle {
+            position: absolute;
+            bottom: -3px;
+            right: 5px;
+            z-index: 9;
+
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+          }
+
           .profile__menu {
             display: none;
             position: absolute;
@@ -87,7 +98,7 @@ header.header__container {
           }
 
           a {
-            display: inline-block;
+            display: block;
           }
 
           &:hover .profile__menu {

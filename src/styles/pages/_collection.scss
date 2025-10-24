@@ -153,7 +153,7 @@ section.collection-page {
     margin-top: 60px;
     border-top: 1px solid v.$border-color;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin-bottom: clamp(2.5rem, -1.688rem + 20.94vw, 23.438rem);
     padding-right: 30px;
   }
