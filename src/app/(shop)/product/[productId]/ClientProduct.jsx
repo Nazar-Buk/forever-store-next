@@ -49,6 +49,11 @@ export default function ClientProduct({
   });
 
   const addToCart = async (size = "nosize") => {
+    if (!size) {
+      toast.error("Виберіть розмір!");
+      return;
+    }
+
     try {
       setLoadingState((prev) => ({ ...prev, addCartLoading: true }));
 
@@ -82,6 +87,11 @@ export default function ClientProduct({
     );
 
     const { _id: productId, price, size = "nosize" } = product;
+
+    if (!size) {
+      toast.error("Виберіть розмір!");
+      return;
+    }
 
     // Шукаємо чи є такий товар у корзині
     const existingItemIndex = cart?.items?.findIndex(
@@ -399,7 +409,10 @@ export default function ClientProduct({
                       } else {
                         if (isAuthenticated.isLoggedIn) {
                           addToCart(size);
-                          setIncreaseCartQuantity((prev) => prev + 1);
+
+                          if (size) {
+                            setIncreaseCartQuantity((prev) => prev + 1);
+                          }
                         } else {
                           addToCartGuest({ ...productData, size });
                         }

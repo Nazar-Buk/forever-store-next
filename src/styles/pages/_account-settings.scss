@@ -1,0 +1,103 @@
+@use "../base/variables" as v;
+
+section.account-settings-page {
+  padding-top: clamp(1.875rem, 9.38vw, 11.25rem); // 180px
+  padding-bottom: clamp(1.875rem, 9.38vw, 11.25rem); // 180px
+
+  .account-settings__container {
+    .account-settings__body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .title {
+        h2 {
+          span {
+          }
+        }
+
+        margin-bottom: 20px;
+      }
+
+      .form-box {
+        max-width: 100%;
+        width: 517px;
+
+        form.change-name__form {
+          display: flex;
+          gap: 20px;
+          margin-bottom: 24px;
+
+          .wrap-input {
+            width: 100%;
+            position: relative;
+
+            input.account-settings__input {
+              width: 100%;
+              height: 54px;
+              padding-left: 18px;
+              border: 1px solid v.$accent-color;
+            }
+
+            p {
+              margin-top: 10px;
+              margin-left: 10px;
+              font-size: 16px;
+            }
+          }
+
+          button {
+            padding: 8px 8px;
+            align-self: baseline;
+            border-radius: 6px;
+          }
+        }
+
+        form.change-password__form {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+
+          .wrap-input-password-fields {
+            width: 100%;
+
+            .wrap-input {
+              margin-bottom: 24px;
+              width: 100%;
+              position: relative;
+
+              input.account-settings__input {
+                width: 100%;
+                height: 54px;
+                padding-left: 18px;
+                padding-right: 45px;
+                border: 1px solid v.$accent-color;
+              }
+
+              .eye-password {
+                width: 30px;
+                aspect-ratio: 1/1;
+                position: absolute;
+                right: 10px;
+                top: 10px;
+              }
+
+              p {
+                margin-top: 10px;
+                margin-left: 10px;
+                font-size: 16px;
+              }
+            }
+          }
+
+          button {
+            padding: 8px 8px;
+            align-self: baseline;
+            border-radius: 6px;
+          }
+        }
+      }
+    }
+  }
+}
