@@ -2,6 +2,8 @@
 // children -- це всі сторінки, вони сюди тягнуться
 
 import { Suspense } from "react";
+// Google Analytics
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Geist, Geist_Mono, Outfit, Poppins, Prata } from "next/font/google";
 import "../styles/main.scss"; // підключив стилі до всього застосунку
 
@@ -67,6 +69,8 @@ export default function RootLayout({ children }) {
         <Suspense fallback={<div>Loading...</div>}>
           <ClientProviders>{children}</ClientProviders>
         </Suspense>
+        {/* Google Analytics */}
+        <GoogleAnalytics gaId="G-G0MKC99YZ3" />
       </body>
     </html>
   );
