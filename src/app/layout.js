@@ -69,10 +69,10 @@ export default function RootLayout({ children }) {
         </div> */}
         <Suspense fallback={<div>Loading...</div>}>
           <ClientProviders>{children}</ClientProviders>
+          <AnalyticsTracker />
         </Suspense>
         {/* Google Analytics */}
         <GoogleAnalytics gaId="G-G0MKC99YZ3" />
-        <AnalyticsTracker />
       </body>
     </html>
   );
