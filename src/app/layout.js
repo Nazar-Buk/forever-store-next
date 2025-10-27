@@ -8,6 +8,7 @@ import { Geist, Geist_Mono, Outfit, Poppins, Prata } from "next/font/google";
 import "../styles/main.scss"; // підключив стилі до всього застосунку
 
 import ClientProviders from "@/components/ClientProviders";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 import { assets } from "../../public/assets/assets";
 
 const outfit = Outfit({
@@ -71,6 +72,7 @@ export default function RootLayout({ children }) {
         </Suspense>
         {/* Google Analytics */}
         <GoogleAnalytics gaId="G-G0MKC99YZ3" />
+        <AnalyticsTracker />
       </body>
     </html>
   );
