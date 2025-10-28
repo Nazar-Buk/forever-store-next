@@ -1,6 +1,13 @@
+"use client";
+
+import { useState } from "react";
+
+import Skeleton from "./Skeleton";
 import { assets } from "../../public/assets/assets";
 
 const Hero = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <section className="hero">
       <div className="hero__container">
@@ -14,7 +21,16 @@ const Hero = () => {
           </div>
           <div className="hero__picture">
             {/* <img src={assets.hero_img} alt="banner picture" /> */}
-            <video autoPlay muted loop playsInline preload="auto">
+            {isLoading && <Skeleton />}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              onCanPlayThrough={() => setIsLoading(false)}
+              style={{ display: isLoading ? "none" : "block" }}
+            >
               <source src={assets.hero_video} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
