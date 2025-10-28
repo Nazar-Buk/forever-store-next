@@ -53,7 +53,6 @@ const Hero = () => {
               onLoadedData={() => setIsLoading(false)}
               onCanPlay={() => setIsLoading(false)}
               onCanPlayThrough={() => setIsLoading(false)}
-              poster="/assets/hero_poster.jpg" // fallback для моб і якщо щось не так
               style={{ opacity: isLoading ? 0 : 1, transition: "opacity .35s" }}
             >
               <source src={assets.hero_video} type="video/mp4" />
