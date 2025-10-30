@@ -30,6 +30,8 @@ const ClientCollection = ({
   const [isLoadingState, setIsLoadingState] = useState({
     isProductsLoading: false,
     isCategoryLoading: false,
+    isLoadingPDF: false,
+    isLoadingExcel: false,
   });
 
   //   const [searchParams, setSearchParams] = useSearchParams() // з реакту
@@ -108,7 +110,7 @@ const ClientCollection = ({
         setProducts(response.data.products);
         setTotalCount(response.data.totalCount);
 
-        toast.success(response.data.message);
+        // toast.success(response.data.message);
       } else {
         setIsLoadingState((prev) => ({ ...prev, isProductsLoading: false }));
 
@@ -174,6 +176,68 @@ const ClientCollection = ({
     // setSearchParams,
   ]);
 
+  const downloadPDF = async () => {
+    try {
+      setIsLoadingState((prev) => ({ ...prev, isLoadingPDF: true }));
+
+      const response = await axios.get(
+        backendUrl + "/api/product/price-list/pdf",
+        {
+          responseType: "blob", // важливо! щоб отримати файл, а не текст
+        }
+      );
+
+      setIsLoadingState((prev) => ({ ...prev, isLoadingPDF: false }));
+
+      // створюємо посилання на файл
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "price-list.pdf");
+      document.body.appendChild(link);
+      link.click();
+
+      // очищаємо
+      link.remove();
+      window.URL.revokeObjectURL(url);
+
+      toast.success("Файл PDF завантажено!");
+    } catch (error) {
+      console.log(error, "error");
+      setIsLoadingState((prev) => ({ ...prev, isLoadingPDF: false }));
+      toast.error("Не вдалося завантажити PDF");
+    } finally {
+      setIsLoadingState((prev) => ({ ...prev, isLoadingPDF: false }));
+    }
+  };
+
+  const downloadExcel = async () => {
+    try {
+      setIsLoadingState((prev) => ({ ...prev, isLoadingExcel: true }));
+
+      const response = await axios.get(
+        backendUrl + "/api/product/price-list/excel",
+        { responseType: "blob" }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "price-list.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+
+      toast.success("Файл XLS завантажено!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Не вдалося завантажити XLS");
+    } finally {
+      setIsLoadingState((prev) => ({ ...prev, isLoadingExcel: false }));
+    }
+  };
+
   const isLoading =
     isLoadingState.isCategoryLoading || isLoadingState.isProductsLoading;
 
@@ -181,10 +245,14 @@ const ClientCollection = ({
     <section className="collection-page">
       <div className="collection-page__container collection-page__body">
         <div className="wrap-download-buttons">
-          <button type="button" className="download-file">
+          <button type="button" className="download-file" onClick={downloadPDF}>
             Завантажити Прайс PDF
           </button>
-          <button type="button" className="download-file">
+          <button
+            type="button"
+            className="download-file"
+            onClick={downloadExcel}
+          >
             Завантажити Прайс XLS
           </button>
         </div>
