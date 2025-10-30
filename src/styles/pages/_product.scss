@@ -184,8 +184,40 @@ section.product-page {
             }
           }
 
-          .rating__counts {
-            font-weight: 400;
+          .is-in-stock {
+            font-weight: 700;
+
+            .in-stock {
+              background-color: #4caf501a;
+              color: #4caf50;
+              display: inline-block;
+              padding: 5px;
+              border-radius: 4px;
+            }
+
+            .not-in-stock {
+              background-color: rgb(155 169 0 / 15%);
+              color: #d2c102;
+              display: inline-block;
+              padding: 5px;
+              border-radius: 4px;
+            }
+          }
+        }
+
+        .product__code {
+          font-size: 16px;
+          margin-bottom: 20px;
+          font-style: italic;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+
+          svg.copy-icon {
+            width: 16px;
+            aspect-ratio: 1/1;
+            fill: gray;
           }
         }
 

@@ -180,116 +180,126 @@ const ClientCollection = ({
   return (
     <section className="collection-page">
       <div className="collection-page__container collection-page__body">
-        <div className="filter-options__box">
-          <div className="filter-options">
-            <div
-              className="wrap-filter-heading"
-              onClick={() => setShowFilter(!showFilter)}
-            >
-              <h5>ФІЛЬТРИ</h5>
-              <svg
-                style={
-                  showFilter
-                    ? { transform: "rotate(180deg)" }
-                    : { transform: "rotate(0)" }
-                }
-                className="drop-down-arrow"
-                fill="#ccc"
-                version="1.1"
-                id="Layer_1"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlnsXlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 330 330"
-                xmlSpace="preserve"
-                stroke="#000000"
-                strokeWidth="0.0033"
-              >
-                <g id="SVGRepo_bgCarrier" strokeWidth="0" />
-
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-
-                <g id="SVGRepo_iconCarrier">
-                  {" "}
-                  <path
-                    id="XMLID_222_"
-                    d="M250.606,154.389l-150-149.996c-5.857-5.858-15.355-5.858-21.213,0.001 c-5.857,5.858-5.857,15.355,0.001,21.213l139.393,139.39L79.393,304.394c-5.857,5.858-5.857,15.355,0.001,21.213 C82.322,328.536,86.161,330,90,330s7.678-1.464,10.607-4.394l149.999-150.004c2.814-2.813,4.394-6.628,4.394-10.606 C255,161.018,253.42,157.202,250.606,154.389z"
-                  />{" "}
-                </g>
-              </svg>
-            </div>
-
-            <CollectionsFilters
-              showFilter={showFilter}
-              backendUrl={backendUrl}
-              category={category}
-              setCategory={setCategory}
-              subCategory={subCategory}
-              setSubCategory={setSubCategory}
-              priceFrom={priceFrom}
-              setPriceFrom={setPriceFrom}
-              priceTo={priceTo}
-              setPriceTo={setPriceTo}
-              //   setIsLoadingState={setIsLoadingState}
-              productsSectionRef={productsSectionRef}
-              initialCategoryData={initialCategoryData}
-              categoriesError={categoriesError}
-            />
-          </div>
+        <div className="wrap-download-buttons">
+          <button type="button" className="download-file">
+            Завантажити Прайс PDF
+          </button>
+          <button type="button" className="download-file">
+            Завантажити Прайс XLS
+          </button>
         </div>
-        <div className="collection__content">
-          <div
-            ref={productsSectionRef}
-            className="collection-content__settings"
-          >
-            <Title text1="Наші " text2="Новинки" />
-            <div className="wrap-sorting-select">
-              <select
-                onChange={(e) => setSort(e.target.value)}
-                className="sorting-box"
-                name="sorting"
-                defaultValue={sort}
+
+        <div className="wrap-filters-and-content">
+          <div className="filter-options__box">
+            <div className="filter-options">
+              <div
+                className="wrap-filter-heading"
+                onClick={() => setShowFilter(!showFilter)}
               >
-                <option value="date_new">Сортувати за: Найновіші</option>
-                <option value="date_old">Сортувати за: Найстаріші</option>
-                <option value="price_asc">
-                  Сортувати за: Від дешевих до дорогих
-                </option>
-                <option value="price_desc">
-                  Сортувати за: Від дорогих до дешевих
-                </option>
-              </select>
+                <h5>ФІЛЬТРИ</h5>
+                <svg
+                  style={
+                    showFilter
+                      ? { transform: "rotate(180deg)" }
+                      : { transform: "rotate(0)" }
+                  }
+                  className="drop-down-arrow"
+                  fill="#ccc"
+                  version="1.1"
+                  id="Layer_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 330 330"
+                  xmlSpace="preserve"
+                  stroke="#000000"
+                  strokeWidth="0.0033"
+                >
+                  <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+
+                  <g id="SVGRepo_iconCarrier">
+                    {" "}
+                    <path
+                      id="XMLID_222_"
+                      d="M250.606,154.389l-150-149.996c-5.857-5.858-15.355-5.858-21.213,0.001 c-5.857,5.858-5.857,15.355,0.001,21.213l139.393,139.39L79.393,304.394c-5.857,5.858-5.857,15.355,0.001,21.213 C82.322,328.536,86.161,330,90,330s7.678-1.464,10.607-4.394l149.999-150.004c2.814-2.813,4.394-6.628,4.394-10.606 C255,161.018,253.42,157.202,250.606,154.389z"
+                    />{" "}
+                  </g>
+                </svg>
+              </div>
+
+              <CollectionsFilters
+                showFilter={showFilter}
+                backendUrl={backendUrl}
+                category={category}
+                setCategory={setCategory}
+                subCategory={subCategory}
+                setSubCategory={setSubCategory}
+                priceFrom={priceFrom}
+                setPriceFrom={setPriceFrom}
+                priceTo={priceTo}
+                setPriceTo={setPriceTo}
+                //   setIsLoadingState={setIsLoadingState}
+                productsSectionRef={productsSectionRef}
+                initialCategoryData={initialCategoryData}
+                categoriesError={categoriesError}
+              />
             </div>
           </div>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <>
-              {products.length ? (
-                <div className="product__cards">
-                  {products?.map((item) => (
-                    <ProductItem
-                      key={item._id}
-                      id={item._id}
-                      images={item.images}
-                      price={item.price}
-                      name={item.name}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="empty-page">
-                  <h2>Немає продуктів</h2>
-                  <img src={assets.empty_products} alt="no product" />
-                </div>
-              )}
-            </>
-          )}
+          <div className="collection__content">
+            <div
+              ref={productsSectionRef}
+              className="collection-content__settings"
+            >
+              <Title text1="Наші " text2="Новинки" />
+              <div className="wrap-sorting-select">
+                <select
+                  onChange={(e) => setSort(e.target.value)}
+                  className="sorting-box"
+                  name="sorting"
+                  defaultValue={sort}
+                >
+                  <option value="date_new">Сортувати за: Найновіші</option>
+                  <option value="date_old">Сортувати за: Найстаріші</option>
+                  <option value="price_asc">
+                    Сортувати за: Від дешевих до дорогих
+                  </option>
+                  <option value="price_desc">
+                    Сортувати за: Від дорогих до дешевих
+                  </option>
+                </select>
+              </div>
+            </div>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <>
+                {products.length ? (
+                  <div className="product__cards">
+                    {products?.map((item) => (
+                      <ProductItem
+                        key={item._id}
+                        id={item._id}
+                        images={item.images}
+                        price={item.price}
+                        name={item.name}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-page">
+                    <h2>Немає продуктів</h2>
+                    <img src={assets.empty_products} alt="no product" />
+                  </div>
+                )}
+              </>
+            )}
 
-          {/* <>
+            {/* <>
             {products.length ? (
               <div className="product__cards">
                 {products?.map((item) => (
@@ -309,6 +319,7 @@ const ClientCollection = ({
               </div>
             )}
           </> */}
+          </div>
         </div>
       </div>
       <div className="wrap-pagination">
