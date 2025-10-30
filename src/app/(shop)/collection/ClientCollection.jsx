@@ -239,7 +239,10 @@ const ClientCollection = ({
   };
 
   const isLoading =
-    isLoadingState.isCategoryLoading || isLoadingState.isProductsLoading;
+    isLoadingState.isCategoryLoading ||
+    isLoadingState.isProductsLoading ||
+    isLoadingState.isLoadingExcel ||
+    isLoadingState.isLoadingPDF;
 
   return (
     <section className="collection-page">
