@@ -13,13 +13,24 @@ const Hero = () => {
     const v = vRef.current;
     if (!v) return;
 
+    const tryPlay = () => {
+      v.play().catch(() => {
+        // autoplay заблоковано — ігноруємо
+      });
+    };
+
     // якщо відео вже готове
     if (v.readyState >= 2) {
       setIsLoading(false);
+      tryPlay();
       return;
     }
 
-    const onReady = () => setIsLoading(false);
+    const onReady = () => {
+      setIsLoading(false);
+      tryPlay();
+    };
+
     v.addEventListener("loadeddata", onReady);
     v.addEventListener("canplay", onReady);
 
