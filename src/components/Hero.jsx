@@ -6,49 +6,14 @@ import Skeleton from "./Skeleton";
 import { assets } from "../../public/assets/assets";
 
 const Hero = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const vRef = useRef(null);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const videoRef = useRef(null);
 
-  useEffect(() => {
-    const v = vRef.current;
-    if (!v) return;
+  // console.log(isLoading, "isLoading");
 
-    const tryPlay = () => {
-      v.load(); // важливо для iOS
-      const playPromise = v.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // якщо autoplay заблоковано — чекаємо першої взаємодії
-          const onFirstTouch = () => {
-            v.play().catch(() => {});
-            window.removeEventListener("touchstart", onFirstTouch);
-            window.removeEventListener("click", onFirstTouch);
-          };
-          window.addEventListener("touchstart", onFirstTouch, { once: true });
-          window.addEventListener("click", onFirstTouch, { once: true });
-        });
-      }
-    };
-
-    if (v.readyState >= 2) {
-      setIsLoading(false);
-      tryPlay();
-      return;
-    }
-
-    const onReady = () => {
-      setIsLoading(false);
-      tryPlay();
-    };
-
-    v.addEventListener("loadeddata", onReady);
-    v.addEventListener("canplay", onReady);
-
-    return () => {
-      v.removeEventListener("loadeddata", onReady);
-      v.removeEventListener("canplay", onReady);
-    };
-  }, []);
+  // const logEvent = (e) => {
+  //   console.log(e.type);
+  // };
 
   return (
     <section className="hero">
@@ -63,22 +28,29 @@ const Hero = () => {
           </div>
           <div className="hero__picture">
             {/* <img src={assets.hero_img} alt="banner picture" /> */}
-            {isLoading && <Skeleton />}
+            {/* {isLoading && <Skeleton />} */}
             <video
-              ref={vRef}
               autoPlay
               muted
               loop
               playsInline
-              preload="auto"
-              /// це допомогло
-              webkit-playsinline="true"
-              x5-playsinline="true"
-              x-webkit-airplay="allow"
-              onLoadedData={() => setIsLoading(false)}
-              onCanPlay={() => setIsLoading(false)}
-              onCanPlayThrough={() => setIsLoading(false)}
-              style={{ opacity: isLoading ? 0 : 1, transition: "opacity .35s" }}
+              preload="none"
+              // onLoadStart={logEvent}
+              // onLoadedMetadata={logEvent}
+              // onLoadedData={logEvent}
+              // onCanPlay={logEvent}
+              // onCanPlayThrough={logEvent}
+              // onProgress={logEvent}
+              // onPlay={logEvent}
+              // onPlaying={logEvent}
+              // onPause={logEvent}
+              // onEnded={logEvent}
+              // onTimeUpdate={logEvent}
+              // onWaiting={logEvent}
+              // // /// це допомогло
+              // webkit-playsinline="true"
+              // x5-playsinline="true"
+              // x-webkit-airplay="allow"
             >
               <source src={assets.hero_video} type="video/mp4" />
               Your browser does not support the video tag.
