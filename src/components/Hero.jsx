@@ -61,6 +61,9 @@ const Hero = () => {
               loop
               playsInline
               preload="auto"
+              webkit-playsinline="true"
+              x5-playsinline="true"
+              x-webkit-airplay="allow"
               onLoadedData={() => setIsLoading(false)}
               onCanPlay={() => setIsLoading(false)}
               onCanPlayThrough={() => setIsLoading(false)}
