@@ -14,12 +14,22 @@ const Hero = () => {
     if (!v) return;
 
     const tryPlay = () => {
-      v.play().catch(() => {
-        // autoplay заблоковано — ігноруємо
-      });
+      v.load(); // важливо для iOS
+      const playPromise = v.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // якщо autoplay заблоковано — чекаємо першої взаємодії
+          const onFirstTouch = () => {
+            v.play().catch(() => {});
+            window.removeEventListener("touchstart", onFirstTouch);
+            window.removeEventListener("click", onFirstTouch);
+          };
+          window.addEventListener("touchstart", onFirstTouch, { once: true });
+          window.addEventListener("click", onFirstTouch, { once: true });
+        });
+      }
     };
 
-    // якщо відео вже готове
     if (v.readyState >= 2) {
       setIsLoading(false);
       tryPlay();
@@ -61,6 +71,7 @@ const Hero = () => {
               loop
               playsInline
               preload="auto"
+              /// це допомогло
               webkit-playsinline="true"
               x5-playsinline="true"
               x-webkit-airplay="allow"
