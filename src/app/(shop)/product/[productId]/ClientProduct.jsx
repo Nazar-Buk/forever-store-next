@@ -403,7 +403,6 @@ export default function ClientProduct({
                   {productData.price}
                   {currency}
                 </div>
-                <p className="details__small-desc">{productData.description}</p>
                 {isSizesAvailable && (
                   <div className="details__choose-size">
                     <p className="choose-size__title">Select Size</p>
@@ -473,22 +472,34 @@ export default function ClientProduct({
               <div className="description__body">
                 <b className="description__title-tab">Опис</b>
                 <div className="description-text-box">
+                  <p className="details__small-desc">
+                    {productData.description}
+                  </p>
+                </div>
+              </div>
+              <div className="description__body">
+                <b className="description__title-tab">Деталі доставки</b>
+                <div className="description-text-box">
                   <p className="description__text">
-                    E-commerce вебсайт — це онлайн-платформа, яка забезпечує
-                    купівлю та продаж товарів або послуг через інтернет. Він
-                    слугує віртуальним ринком, де бізнеси та приватні особи
-                    можуть демонструвати свої продукти, взаємодіяти з клієнтами
-                    та проводити транзакції без необхідності фізичної
-                    присутності. E-commerce сайти здобули величезну популярність
-                    завдяки зручності, доступності та глобальному охопленню, яке
-                    вони надають.
+                    <b>Доставка товарів від ND Market</b>
+                  </p>
+
+                  <p className="description__text">
+                    Ми пропонуємо доставку замовлень трьома способами:{" "}
+                    <b>Нова Пошта</b>, <b>УкрПошта</b> та <b>Delivery</b>.
+                    Вартість доставки дізнавайтеся безпосередньо на сайті
+                    обраної поштової служби.
+                  </p>
+
+                  <p className="description__text">
+                    Для зареєстрованих користувачів доступна функція відстеження
+                    замовлень на сторінці “Мої замовлення”. Інформацію про
+                    прибуття товару у відділення пошти покупець може отримати
+                    через додаток або сайт обраної служби доставки.
                   </p>
                   <p className="description__text">
-                    E-commerce websites typically display products or services
-                    along with detailed descriptions, images, prices, and any
-                    available variations (e.g., sizes, colors). Each product
-                    usually has its own dedicated page with relevant
-                    information.
+                    Ми пакуємо товари ретельно, щоб вони дісталися до вас у
+                    повній цілісності та без пошкоджень.
                   </p>
                 </div>
               </div>

@@ -10,7 +10,7 @@ const BestSeller = ({ bestsellers, bestsellersError }) => {
       )}
       <div className="best-sellers__container">
         <div className="wrap-best-sellers__content">
-          <Title text1="Хіти " text2="Продажів" />
+          <Title text1="Часто " text2="Купують" />
           <p className="sub-title">
             Топ-продажі, що завоювали серця покупців. Ознайомтеся з
             найпопулярнішими товарами сезону, які поєднують стиль, комфорт та

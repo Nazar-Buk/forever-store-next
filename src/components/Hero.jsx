@@ -21,9 +21,9 @@ const Hero = () => {
         <div className="wrap-hero__content">
           <div className="hero__text">
             <div className="wrap-hero__text-content">
-              <p className="hero__top-title">our bestsellers</p>
-              <h1>Latest Arrivals</h1>
-              <p className="hero__bottom-title">Shop Now</p>
+              <p className="hero__top-title">Обирайте Найкраще</p>
+              <h1>Якість Перевірена</h1>
+              <p className="hero__bottom-title">Часом</p>
             </div>
           </div>
           <div className="hero__picture">

@@ -34,13 +34,19 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/" className="second-column__menu-item">
-                      Доставка
+                    <Link
+                      href="/privacy-and-policy"
+                      className="second-column__menu-item"
+                    >
+                      Політика конфіденційності
                     </Link>
                   </li>
                   <li>
-                    <Link href="/" className="second-column__menu-item">
-                      Політика конфіденційності
+                    <Link
+                      href="/terms-and-conditions"
+                      className="second-column__menu-item"
+                    >
+                      Умови використання
                     </Link>
                   </li>
                 </ul>
